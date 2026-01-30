@@ -1,0 +1,106 @@
+.vc-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.vc-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    160deg,
+    #2f3b6f,
+    #3f4f8f,
+    #2a345f
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+
+  color: white;
+}
+
+.vc-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.vc-card {
+  width: 520px;
+  padding: 30px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+.vc-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.vc-tag {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.25);
+}
+
+.vc-select {
+  background: rgba(255,255,255,.25);
+  border: none;
+  color: rgba(94, 90, 90, 0.685);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.vc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vc-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.vc-footer {
+  margin-top: 26px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.vc-btn {
+  padding: 8px 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: white;
+
+  background: linear-gradient(90deg,#9fd3ff,#f5a6d6);
+}
+
+.vc-btn-outline {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 999px;
+  padding: 8px 26px;
+  color: white;
+}
+
+.vc-share {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.vc-icons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 22px;
+}

@@ -1,0 +1,160 @@
+/* ===== PAGE ===== */
+.fp-bg {
+  width: 100vw;
+  height: 100vh;
+
+  background: linear-gradient(
+    135deg,
+    #ffd6e8 0%,
+    #e7d7ff 40%,
+    #cfe9ff 100%
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+/* ===== TITLE ===== */
+.fp-title {
+  font-size: 40px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 18px;
+}
+
+/* ===== DESC ===== */
+.fp-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,.85);
+  line-height: 1.6;
+  margin-bottom: 46px;
+}
+
+/* ===== OTP BOX ===== */
+.fp-otp {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.fp-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+
+  background: rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.45);
+  backdrop-filter: blur(12px);
+
+  font-size: 24px;
+  text-align: center;
+  color: white;
+
+  outline: none;
+}
+
+
+/* ===== SEND OTP BUTTON ===== */
+.fp-send {
+  width: 180px;
+  height: 48px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    #9fd3ff,
+    #f4a6d6
+  );
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.18),
+    0 0 24px rgba(255,255,255,.25);
+
+  transition: transform .15s ease;
+}
+
+.fp-send:hover {
+  transform: translateY(-1px);
+}
+
+/* ===== BACK BUTTON ===== */
+.fp-back {
+  margin-top: 26px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ===== MAIN BUTTON ===== */
+.fp-btn-main {
+  margin-top: 36px;
+
+  width: 200px;
+  height: 50px;
+
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+
+  background: linear-gradient(
+    90deg,
+    #9fd3ff,
+    #f5a6d6
+  );
+
+  box-shadow:
+    0 14px 32px rgba(0,0,0,.18),
+    0 0 24px rgba(255,255,255,.25);
+
+  backdrop-filter: blur(12px);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.fp-btn-main:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.22),
+    0 0 28px rgba(255,255,255,.35);
+}
+
+/* ===== SUB BUTTON ===== */
+.fp-btn-sub {
+  margin-top: 18px;
+
+  width: 200px;
+  height: 44px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.45);
+
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(10px);
+
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+
+  transition: background .15s ease;
+}
+
+.fp-btn-sub:hover {
+  background: rgba(255,255,255,.35);
+}

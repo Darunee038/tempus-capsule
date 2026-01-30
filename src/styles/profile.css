@@ -1,0 +1,156 @@
+/* full screen */
+.pf-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* background (ปรับได้ตามสีใน figma) */
+.pf-bg {
+  width: 100%;
+  height: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    14deg,
+    #ffd6e8 0%,
+    #ffe2ad 35%,
+    #eac9ff 65%,
+    #bee8ff 100%
+  );
+
+  display: grid;
+  place-items: center;
+}
+
+.pf-wrap {
+  width: min(900px, 92vw);
+  height: min(780px, 92vh);
+  border-radius: 18px;
+
+  border: 1px solid rgba(255,255,255,.30);
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: 0 22px 70px rgba(0,0,0,.12);
+
+  padding: 28px 26px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pf-title {
+  width: 100%;
+  margin: 0 0 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,.85);
+}
+
+.pf-avatar {
+  margin-top: 6px;
+}
+
+.pf-avatar-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 6px solid rgba(255,255,255,.65);
+  background: rgba(255,255,255,.12);
+  box-shadow: 0 18px 55px rgba(0,0,0,.12);
+}
+
+.pf-avatar-icon {
+  font-size: 44px;
+  opacity: 0.95;
+}
+
+.pf-name {
+  margin: 18px 0 16px;
+  font-size: 34px;
+  font-weight: 500;
+  color: rgba(255,255,255,.90);
+  text-shadow: 0 18px 60px rgba(0,0,0,.12);
+}
+
+.pf-btn {
+  border: none;
+  cursor: pointer;
+
+  height: 44px;
+  padding: 0 34px;
+  border-radius: 999px;
+
+  color: rgba(255,255,255,.92);
+  font-size: 14px;
+  font-weight: 500;
+
+  background: rgba(166, 200, 255, .40);
+  border: 1px solid rgba(255,255,255,.30);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow: 0 18px 45px rgba(0,0,0,.12);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.pf-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 55px rgba(0,0,0,.14);
+}
+
+.pf-feedback-label {
+  width: min(700px, 92%);
+  margin: 34px 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,.85);
+  align-self: center;
+}
+
+.pf-form {
+  width: min(700px, 92%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.pf-textarea {
+  width: 100%;
+  height: 140px;
+  resize: none;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.30);
+  background: rgba(255,255,255,.10);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow: 0 18px 50px rgba(0,0,0,.08);
+
+  padding: 14px 16px;
+  box-sizing: border-box;
+
+  outline: none;
+  color: rgba(255,255,255,.90);
+  font-size: 14px;
+}
+
+.pf-textarea:focus {
+  border-color: rgba(255,255,255,.55);
+}
+
+.pf-btn-small {
+  height: 42px;
+  padding: 0 30px;
+}

@@ -1,0 +1,608 @@
+/* ================= RESET ================= */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  overflow-y: auto !important;
+  background: linear-gradient(180deg, #cbb7e2, #e8b7c8, #f5d2a5);
+  color: #fff;
+}
+
+.page-center {
+  width: 100%;
+}
+
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 120px;
+  display: block;
+}
+
+.page-center {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  background: rgba(255,255,255,.35);
+  backdrop-filter: blur(10px);
+}
+
+.menu span {
+  margin: 0 12px;
+  font-size: 14px;
+  opacity: .7;
+}
+
+.menu .active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.profile {
+  font-size: 18px;
+}
+
+/* ================= MAIN LAYOUT ================= */
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 90px;
+  display: block;
+  align-items: center;
+}
+
+/* ================= TITLE ================= */
+.title-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title-section h1 {
+  font-size: 44px;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,.25);
+}
+
+.title-section p {
+  margin-top: 8px;
+  opacity: .9;
+}
+
+/* ================= BOOK ================= */
+.book-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 34px;
+}
+
+.book.unified {
+  position: relative;
+  width: 760px;
+  height: 504px;
+  padding: 22px;
+  background: rgba(255,255,255,.4);
+  border-radius: 44px;
+  box-shadow: 0 40px 90px rgba(0,0,0,.25);
+}
+
+/* visual pages (display only) */
+.book.unified .page {
+  position: absolute;
+  top: 22px;
+  width: 360px;
+  height: 460px;
+  background: #fff;
+  border-radius: 28px;
+  pointer-events: none;
+}
+
+.book.unified .page.left {
+  left: 22px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.book.unified .page.right {
+  right: 22px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+/* drawing canvas */
+.book.unified canvas {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  width: 720px;
+  height: 460px;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* spine */
+.book.unified .spine {
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0),
+    rgba(0,0,0,1),
+    rgba(0,0,0,0)
+  );
+}
+
+/* ================= TOOLBAR ================= */
+.toolbar-section {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 36px;
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,.75);
+  border-radius: 26px;
+  color: #444;
+  max-width: 760px;          /* เท่ากับ book */
+  width: 100%;
+}
+
+/* left tools */
+.tools-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tools-left button {
+  border: none;
+  border-radius: 12px;
+  padding: 6px 10px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.color-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #000;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.color-box input[type="color"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* divider */
+.divider {
+  width: 1px;
+  height: 36px;
+  background: #ccc;
+}
+
+/* right tools (background) */
+.tools-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.bg-list {
+  display: flex;
+  gap: 6px;
+}
+
+.bg-item {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+/* ================= BOTTOM SECTION ================= */
+.bottom-section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 24px;
+}
+
+.field {
+  width: 45%;
+}
+
+.field label {
+  font-size: 13px;
+  opacity: .85;
+}
+
+.field input,
+.dropdown {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 16px;
+  border: none;
+  background: rgba(255,255,255,.4);
+  color: #fff;
+}
+
+/* ================= NEXT BUTTON ================= */
+.next-btn {
+  display: block;
+  margin-left: auto;   /* ดันไปขวา */
+  margin-top: 24px;
+
+  padding: 10px 28px;
+  border-radius: 20px;
+  border: none;
+  background: rgba(255,255,255,.4);
+  color: #fff;
+  cursor: pointer;
+}
+
+.next-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; /* 👈 ชิดขวาแน่นอน */
+  margin-top: 24px;
+}
+
+/* ================= SMOOTH HOVER (TOOLBAR) ================= */
+
+/* เตรียม transition ให้ทุกปุ่ม */
+.tools-left button,
+.bg-item {
+  position: relative;
+  transition:
+    background-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.12s ease;
+}
+
+/* hover ทีละปุ่ม */
+.tools-left button:hover,
+.bg-item:hover {
+  background-color: rgba(0, 0, 0, 0.06);   /* เทาอ่อนมาก */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);  /* เงาบาง ๆ */
+  transform: translateY(-1px);             /* ลอยนิดเดียว */
+}
+
+/* กดแล้ว (active) */
+.tools-left button:active,
+.bg-item:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* hover color-box ด้วย */
+.color-box:hover {
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.08);
+}
+
+/* ================= TEXT TOOL POPUP ================= */
+.text-popup {
+  position: fixed;          
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 9999;            
+  background: white;
+  border-radius: 16px;
+  filter: none !important;
+  padding: 16px;
+  backdrop-filter: none !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+  z-index: 10000;
+  display: none;
+
+  color: #333;
+}
+
+.text-popup input[type="text"] {
+  width: 260px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.text-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.text-controls button {
+  border: none;
+  background: #eee;
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.text-controls button.active {
+  background: #ccc;
+}
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 99;
+}
+
+/* ปุ่ม T ตอน active */
+.tools-left button.active {
+  background: rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+}
+
+
+.tool-btn {
+  width: 34px;
+  height: 34px;
+  font-size: 18px;
+  font-weight: 600;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tool-btn:hover {
+  background: #f2f2f2;
+}
+
+.tool-btn:active {
+  background: #e6e6e6;
+}
+
+/* ================= DATE POPUP FIX ================= */
+
+.date-popup {
+  background: #fff;
+  color: #333;
+}
+
+.date-popup h3 {
+  color: #333;
+}
+
+.date-popup select {
+  background: #f7f7f7;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.date-popup button {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.date-popup button:hover {
+  background: #ddd;
+}
+
+/* ================= DATE DROPDOWN (FIX) ================= */
+
+.date-dropdown {
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.4);
+  color: #fff;
+  cursor: pointer;
+
+  /* กัน text selection แปลก ๆ */
+  user-select: none;
+}
+
+.date-dropdown:hover {
+  background: rgba(255,255,255,0.55);
+}
+
+.date-dropdown.placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+
+  z-index: 900;               /* ต่ำกว่า popup */
+}
+
+/* ===== DATE POPUP ===== */
+.date-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 340px;
+  padding: 26px 30px 28px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  z-index: 10001;
+
+  /* จัด layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-popup h3 {
+  margin: 0 0 14px;   /* 👈 เพิ่มระยะด้านล่าง */
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.date-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 18px; /* 👈 เว้นจากปุ่ม */
+}
+
+.date-row select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.date-popup .row.end {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 4px;   /* 👈 แยกจาก select เล็กน้อย */
+}
+
+.date-popup button {
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #f2f2f2;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#dateDoneBtn {
+  background: #111;
+  color: #fff;
+}
+
+#dateDoneBtn:hover {
+  background: #000;
+}
+
+/* ===== STICKER POPUP ===== */
+.sticker-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 360px;
+  max-height: 70vh;          /* 🔥 ไม่ให้สูงเกินจอ */
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+
+  z-index: 1001;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sticker-popup h3 {
+  margin: 0 0 12px;
+  text-align: center;
+  color: #333;
+}
+
+/* ===== GRID ===== */
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 🔥 แถวละ 5 */
+  gap: 8px;
+
+  overflow-y: auto;         /* 🔥 เลื่อนขึ้นลง */
+  padding-right: 4px;
+}
+
+/* ===== STICKER ITEM ===== */
+.sticker-item {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 4px;
+
+  transition: 
+    background 0.15s ease,
+    transform 0.12s ease;
+}
+
+.sticker-item:hover {
+  background: rgba(0,0,0,0.06);
+  transform: scale(1.05);
+}
+
+/* ===== GENERATE CODE ===== */
+.generate-btn {
+  padding: 0 14px;
+  height: 36px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition: background 0.2s, border 0.2s, transform 0.1s;
+}
+
+.generate-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.generate-btn:active {
+  transform: translateY(1px);
+}
+

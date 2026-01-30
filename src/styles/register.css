@@ -1,0 +1,221 @@
+/* พื้นหลังเต็มจอ */
+.reg-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* pastel sky background */
+.reg-bg {
+  width: 100%;
+  min-height: 100vh;
+  padding: 60px 16px;
+  text-align: center;
+
+  background: linear-gradient(
+    120deg,
+    #F08787,
+    #FFC7A7,
+    #FEE2AD,
+    #F8FAB4
+  );
+  background-size: 400% 400%;
+
+  animation: bgShift 28s ease-in-out infinite;
+
+}
+/* Title */
+.reg-brand {
+  margin: 6px 0 10px;
+  font-size: clamp(42px, 5vw, 64px);
+  letter-spacing: 0.2px;
+  color: rgba(70, 55, 60, 0.70);
+  text-align: center;
+}
+
+/* Subtitle */
+.reg-sub {
+  margin: 0 0 30px;
+  font-size: 18px;
+  color: rgba(70, 55, 60, 0.62);
+  text-align: center;
+}
+
+/* Glass card */
+.reg-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 28px 26px;
+
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+/* form */
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* field */
+.reg-field {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 8px;
+}
+
+/* label */
+.reg-label {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgba(85, 71, 61, 0.75);
+}
+
+/* input */
+.reg-input {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.45);
+  color: #5a5055;
+  font-size: 14px;
+  outline: none;
+}
+
+/* checkbox row */
+.reg-checkrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(80, 70, 75, 0.65);
+}
+
+/* sign up button */
+/* ✅ Sign up button (glass + glow แบบในรูป) */
+.reg-btn{
+  /* ทำให้ปุ่ม "สั้นลง" ด้วยตัวเอง */
+  width: 240px;              /* ปรับสั้น/ยาวตรงนี้ */
+  height: 52px;
+
+  display: block;
+  margin: 14px auto 0;       /* auto = อยู่กลาง */
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.55);
+  cursor: pointer;
+
+  /* ตัวอักษร */
+  color: rgba(255,255,255,.95);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: .1px;
+
+  /* Gradient แบบ pastel */
+  background: linear-gradient(
+    90deg,
+    rgba(140, 205, 255, .65),
+    rgba(207, 182, 255, .65),
+    rgba(255, 170, 220, .65)
+  );
+
+  /* Glass */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* Glow + เงานุ่ม */
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.15),
+    0 0 26px rgba(255,255,255,.18);
+
+  position: relative;
+  overflow: hidden;
+
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+/* ✅ ไฮไลต์ขาวนุ่ม ๆ ที่ขอบ/ด้านบน (เหมือนรูป) */
+.reg-btn::before{
+  content:"";
+  position: absolute;
+  inset: 2px;                 /* ทำเป็นขอบใน */
+  border-radius: inherit;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,.65),
+    rgba(255,255,255,.18)
+  );
+
+  opacity: .35;
+  pointer-events: none;
+}
+
+/* ✅ แสงวิ่งเบา ๆ */
+.reg-btn::after{
+  content:"";
+  position:absolute;
+  top:-40%;
+  left:-40%;
+  width: 70%;
+  height: 180%;
+  transform: rotate(20deg);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.55),
+    transparent
+  );
+
+  opacity: .35;
+  pointer-events:none;
+  transition: left .35s ease;
+}
+
+.reg-btn:hover{
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.18),
+    0 0 34px rgba(255,255,255,.22);
+}
+
+.reg-btn:hover::after{
+  left: 90%;
+  opacity: .85;
+  filter: blur(18px);
+}
+
+.reg-btn:active{
+  transform: translateY(0px) scale(.99);
+}
+
+
+/* footer */
+.reg-footer {
+  margin-top: 14px;
+  font-size: 13px;
+  color: rgba(80, 70, 75, 0.6);
+}
+
+.reg-link {
+  color: #6b6eff;
+  text-decoration: none;
+}
+
+@keyframes bgShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

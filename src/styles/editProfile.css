@@ -1,0 +1,88 @@
+.ep-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.ep-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #ffd6e8,
+    #e7d7ff,
+    #cfe9ff
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.ep-title {
+  color: white;
+  font-size: 36px;
+  margin-bottom: 28px;
+}
+
+.ep-card {
+  width: 380px;
+  padding: 30px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,.25);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,.4);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ep-card label {
+  color: white;
+  font-size: 13px;
+}
+
+.ep-card input {
+  height: 38px;
+  border-radius: 999px;
+  border: none;
+  padding: 0 16px;
+
+  background: rgba(255,255,255,.4);
+  color: white;
+  outline: none;
+}
+
+.ep-password {
+  position: relative;
+}
+
+.ep-check {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #9fd3ff;
+  color: #333;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.ep-btn {
+  margin-top: 30px;
+  width: 200px;
+  height: 46px;
+
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+
+  color: white;
+  font-size: 15px;
+
+  background: linear-gradient(90deg,#9fd3ff,#f5a6d6);
+  box-shadow: 0 14px 32px rgba(0,0,0,.2);
+}

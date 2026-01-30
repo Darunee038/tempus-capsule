@@ -1,0 +1,183 @@
+/* ===== PAGE WRAPPER ===== */
+.lova-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.lova-bg{
+  width: 100%;
+  height: 100%;
+  padding: 22px;
+  box-sizing: border-box;
+
+  /* Gradient แบบ LovaNote */
+  background: linear-gradient(
+    -14deg,
+    #F6D6EA 0%,
+    #E7CFF4 40%,
+    #D8CFFF 70%,
+    #EDE7FF 95%
+  );
+
+  position: relative;
+}
+.lova-nav{
+  width: 100%;
+  margin-top: 8px;
+}
+/* ===== CONTENT WIDTH ===== */
+.lova-content{
+  width: min(980px, 92vw);
+  margin: 40px auto 0;
+  text-align: center;
+}
+.lova-nav-inner{
+  width: min(980px, 92vw);
+  height: 54px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: 140px 1fr 54px;
+  align-items: center;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  border: 2px solid rgba(255,255,255,0.18);
+  background: rgba(247, 240, 246, 0.096);
+  backdrop-filter: blur(16px);
+}
+/* logo */
+
+.lova-logo-img{
+  height: 36px;
+  align-items: center;
+  padding: 8px 25px;
+  filter: drop-shadow(0 0 12px rgba(180,220,255,.8));
+}
+
+/* menu */
+.lova-menu{
+  display: flex;
+  justify-content: center;
+  gap: 110px;
+}
+.lova-menu-item{
+  font-size: 18px;
+  text-decoration: none;
+  color: rgba(255,255,255,.82);
+}
+.lova-menu-item.active{
+  color: rgba(255, 255, 255, .96);
+  text-shadow: 0 0 12px rgba(180,220,255,.6);
+}
+.lova-user{
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.12);
+}
+
+/* ===== TITLE ===== */
+.lova-title{
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,.95);
+  text-shadow: 0 20px 60px rgba(0,0,0,.12);
+}
+
+/* ===== SECTION ===== */
+.lova-section{
+  width: 100%;
+  text-align: left;
+  margin-bottom: 42px;
+}
+
+.lova-section-title{
+  margin-bottom: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255,255,255,.88);
+}
+
+
+/* ===== GRID ===== */
+.lova-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+/* ===== CAPSULE CARD ===== */
+.lova-card{
+  height: 150px;
+  width: 250px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,.28);
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: 0 18px 50px rgba(0,0,0,.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== CREATE BUTTON ===== */
+.lova-create{
+  display: inline-block;
+  margin: 40px auto 0;
+  padding: 16px 40px;
+
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+
+  color: rgba(255,255,255,.95);
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.18);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  box-shadow: 0 20px 60px rgba(0,0,0,.12);
+}
+
+.lova-create:hover{
+  transform: translateY(-1px);
+  transition: transform .15s ease, box-shadow .15s ease;
+
+}
+
+/* ===== ACTIVE MENU (Lova) ===== */
+.lova-page .hp-menu-item.active{
+  font-weight: 600;
+  text-shadow: 0 0 12px rgba(255,255,255,.7);
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 820px){
+  .lova-title{
+    font-size: 36px;
+  }
+
+  .lova-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .lova-create{
+    width: 100%;
+    text-align: center;
+  }
+}

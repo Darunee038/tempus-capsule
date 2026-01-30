@@ -1,0 +1,201 @@
+body {
+  margin: 0;
+}
+
+/* 1) พื้นหลังทั้งหน้า (เหมือนฟิกม่า: มีสี 4 มุม + ไล่โทนกลาง) */
+.home{
+  min-height: 100vh;
+  padding: 18px 14px 50px;
+  background:
+    radial-gradient(800px 600px at 18% 12%, rgba(255,185,233,1), transparent 120%),
+    radial-gradient(900px 650px at 78% 18%, rgba(170,220,255,1), transparent 100%),
+    radial-gradient(900px 700px at 82% 88%, rgba(206,190,255,1), transparent 100%),
+    radial-gradient(900px 700px at 22% 89%, rgba(178,255,235,1), transparent 100%),
+    linear-gradient(135deg, rgba(255,244,250,.92), rgba(240,252,255,.92));
+}
+
+/* 2) แถบปุ่มบน: ในเรฟอยู่กลางบน */
+.topbar{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-right: 120px;
+}
+
+/* กลุ่มปุ่ม Login/Register */
+.pill-group{
+  display: inline-flex;
+  gap: 10px;
+}
+
+/* ปุ่มแคปซูลเล็กด้านบน (glass + border) */
+.pill{
+  font-size: 18px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  text-decoration: none;
+
+  color: rgba(133, 176, 224, 0.616);
+  border: 1px solid rgba(255, 255, 255, 0.675);
+  background: rgba(245, 240, 240, 0.548);
+
+  /* Background blur = ฟีล glass */
+  backdrop-filter: blur(12px);
+
+  /* เงาเบา ๆ เหมือนในฟิกม่า */
+  box-shadow: 0 10px 28px rgba(0,0,0,.08);
+}
+
+/* 3) กล่องเนื้อหาให้ “แคบ” เหมือนเฟรมมือถือในฟิกม่า */
+.hero{
+  width: 30vw;
+  margin: 34px auto 0;
+  text-align: center;
+  /* background: red; */
+}
+
+/* 4) Tempus / Calsule */
+.brand{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 58px 8vh;
+  padding: 0 6px;
+
+  font-weight: 300;
+  letter-spacing: .2px;
+
+  color: rgba(255,255,255,.92);
+  text-shadow: 0 12px 40px rgba(0,0,0,.12);
+}
+
+.brand-left, .brand-right{
+  font-size: 60px;
+  line-height: 1;
+}
+
+/* 5) ข้อความกลาง */
+.tagline{
+  margin: 10px auto 18px;
+  max-width: 320px;
+  font-size: 20px;   /* หรือ 16px */
+  line-height: 1.7;  /* อ่านสบายขึ้น */
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+
+
+  line-height: 1.7;
+  color: rgba(255,255,255,.75);
+}
+
+/* 6) ปุ่ม Create Capsule (ให้เหมือนฟิกม่า: นุ่ม, ขอบ, ใส, เงาเบา) */
+.cta{
+  display: inline-block;
+  padding: 12px 34px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 20px;   /* ← เพิ่มบรรทัดนี้ */
+  font-weight: 500;  /* ทำให้ดูชัดขึ้น */
+
+
+
+  /* สีตัวอักษร */
+  color: rgba(255,255,255,.90);
+
+  /* Stroke (ขอบขาวในฟิกม่า) */
+  border: 1px solid rgba(255,255,255,1);
+
+  /* 🔴 Linear Gradient จาก Figma (opacity 20%) */
+  background: linear-gradient(
+    -125deg,
+    rgba(255,184,255,0.35),   /* #FFB8FF */
+    rgba(127,234,255,0.40),   /* #7FEAFF */
+    rgba(200,181,255,0.60)    /* #C8B5FF */
+  );
+
+  /* Background blur = Figma */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* Drop shadow */
+  box-shadow: 0 16px 34px rgba(0,0,0,.10);
+
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+
+.cta:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 22px 44px rgba(0,0,0,.14);
+}
+
+.cta:active{
+  transform: scale(.98);
+}
+
+
+/* 7) การ์ด 4 ใบ: ในเรฟเป็น 2x2 ขนาดไม่ยาว */
+.grid{
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  width: fit-content;
+  height: auto;
+  /* background-color: red; */
+}
+
+/* กล่องการ์ด (glass + drop shadow) */
+.card{
+  padding: 22px 16px;
+  height: 18vh;
+  width: 25vh;
+  border-radius: 18px;
+  text-decoration: none;
+
+  border: 1px solid rgba(255,255,255,.50);
+  background: linear-gradient(
+  135deg,
+  rgba(255,255,255,0.45),
+  rgba(223,243,255,0.10)
+);
+
+
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 44px rgba(0,0,0,.10);
+
+  transition: transform .15s ease, background .15s ease;
+  justify-self: center;
+  display: flexbox;
+}
+
+.card:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.20);
+}
+
+.card-title{
+  color: rgba(255,255,255,.90);
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  justify-self: center;
+}
+
+.card-desc{
+  color: rgba(255, 255, 255, 0.849);
+  font-size: 18px;
+  line-height: 1.6;
+  line-height: 1.55;
+  height: 70%;
+  display: flex;
+  align-items: center;
+}
+
+/* มือถือจริง ๆ ให้เป็น 1 คอลัมน์ */
+@media (max-width: 560px){
+  .brand-left, .brand-right{ font-size: 46px; }
+  .grid{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,57 @@
+.otp-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.otp-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #ffd6e8,
+    #e0d4ff,
+    #cde9ff
+  );
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: white;
+}
+
+.otp-box {
+  display: flex;
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.otp-input {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: none;
+  font-size: 26px;
+  text-align: center;
+  background: rgba(255,255,255,.35);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  outline: none;
+}
+
+.otp-btn {
+  padding: 12px 36px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(90deg,#9fd3ff,#f5a6d6);
+  margin-top: 12px;
+}
+
+.otp-back {
+  margin-top: 18px;
+  background: transparent;
+  border: none;
+  color: white;
+  opacity: .8;
+  cursor: pointer;
+}
