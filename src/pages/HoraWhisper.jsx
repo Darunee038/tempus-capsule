@@ -25,9 +25,7 @@ function formatOpenDate(value) {
   }).format(date);
 }
 
-function getStrokeCount(canvasState) {
-  return Array.isArray(canvasState?.strokes) ? canvasState.strokes.length : 0;
-}
+
 
 function getCapsulePreview(capsule) {
   return capsule.capsulePreviewUrl || "";
@@ -120,6 +118,10 @@ export default function HoraWhisper() {
     setVerifyingPassword(false);
   };
 
+  function getStrokeCount(canvasState) {
+    return Array.isArray(canvasState?.strokes) ? canvasState.strokes.length : 0;
+  }
+
   const handleOpenCapsule = async () => {
     if (!unlockingCapsule) return;
 
@@ -127,7 +129,7 @@ export default function HoraWhisper() {
       closePasswordModal();
       navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`, {
         state: {
-          flowType : "hora"
+          flowType: "hora"
         }
       });
       return;
@@ -152,7 +154,7 @@ export default function HoraWhisper() {
       navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`,
         {
           state: {
-            flowType : "hora"
+            flowType: "hora"
           }
         }
       );
@@ -241,12 +243,12 @@ export default function HoraWhisper() {
       </button>
     );
   };
-  
 
-  const goToCreatePage = () =>{
+
+  const goToCreatePage = () => {
     navigate("/feature/hora/create", {
       state: {
-        flowType : "hora"
+        flowType: "hora"
       }
     });
   }
@@ -282,10 +284,10 @@ export default function HoraWhisper() {
             </div>
           </section>
 
-          <Link 
-            className="hora-create" 
+          <Link
+            className="hora-create"
             to="/feature/hora/create"
-            state={{flowType: "hora"}}
+            state={{ flowType: "hora" }}
           >
 
             Create Capsule

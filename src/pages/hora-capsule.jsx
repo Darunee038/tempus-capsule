@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams, useLocation } from "react-router-do
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows, useTexture } from "@react-three/drei";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc,  query, where, getDocs  } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import * as THREE from "three";
 import "../styles/home.css";
@@ -11,7 +11,7 @@ import "../styles/hora-capsule.css";
 import { CapsuleModel } from "../scripts/capsule.jsx";
 import { auth, db, storage } from "../firebase";
 import Navbar from "../components/Navbar";
-
+import logo from "../assets/logo/logo-text.png";
 const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
 const capsuleHeader = (
@@ -676,6 +676,9 @@ export default function HoraCapsule({ onBack }) {
     offsetY: 0,
   });
   const photoShapeMask = getPhotoShapeMask(photoShape);
+
+
+
   const handleBackToCreate = () => {
     if (typeof onBack === "function") {
       onBack();
@@ -1375,15 +1378,25 @@ export default function HoraCapsule({ onBack }) {
       persistLocalCapsuleDraft(uploadedSnapshot);
 
 
-      if (state?.flowType === "lova") {
-        const emailReceiver = doc(db, "users", backupEmail);
-        const snap = await getDoc(emailReceiver);
+      
+      let receiverId = null;
 
-        console.log("Receiver snap:", snap);
-        if (!snap.exists()) {
+      if (state?.flowType === "lova") {
+
+        const q = query(
+          collection(db, "users"),
+          where("user_email", "==", backupEmail)
+        );
+
+        const snap = await getDocs(q);
+        if (snap.empty) {
           setErrorMessage("The backup email does not correspond to a valid user.");
           return;
         }
+
+        receiverId = snap.docs[0].id;
+        console.log("Found receiver ID for Lova note:", receiverId);
+       
       }
 
 
@@ -1398,8 +1411,8 @@ export default function HoraCapsule({ onBack }) {
         capsuleState: serializeCapsuleState(uploadedSnapshot),
         draftStage: "complete",
         updatedAt: serverTimestamp(),
-        ...(state?.flowType !== "hora" && {
-          reciverId: state?.receiverId || null,
+        ...(state?.flowType === "lova" && {
+          reciverId: receiverId,
         })
       };
 
@@ -1422,6 +1435,8 @@ export default function HoraCapsule({ onBack }) {
         throw payloadTooLargeError;
       }
 
+      console.log(capsuleId)
+      
       if (capsuleId) {
         await updateDoc(doc(db, state?.flowType === "hora" ? "horaCapsules" : "lovaNotes", finalCapsuleId), payload);
       } else {
@@ -1433,7 +1448,7 @@ export default function HoraCapsule({ onBack }) {
 
       setStatusMessage("Capsule saved successfully.");
       window.sessionStorage.removeItem(HORA_DRAFT_STORAGE_KEY);
-      navigate("/feature/hora");
+      navigate(state?.flowType === "hora" ? "/feature/hora" : "/feature/lova");
     } catch (error) {
       console.error("Failed to save final capsule:", error);
       setErrorMessage(describeSaveError(error));
