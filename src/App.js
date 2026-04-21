@@ -43,9 +43,11 @@ export default function App() {
       <Route path="/feature/vermis" element={<VermissSandglass />} />
       <Route path="/feature/vermiss/create" element={<VermissCreate />} />
       <Route path="/feature/vermiss/view" element={<VermissView/>} />
+      
       <Route path="/feature/eterea" element={<EtereaMoment />} />
       <Route path="/feature/eterea/create" element={<EtereaCreate />} />
       <Route path="/feature/eterea/capsule" element={<EtereaCapsule />} />
+
       <Route path="/forgot" element={<ForgotPassword />} />
       <Route path="/otp" element={<OTPVerify />} />
       <Route path="/profile/edit" element={<EditProfile />} />

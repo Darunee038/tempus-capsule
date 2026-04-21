@@ -29,9 +29,6 @@ export default function HoraCreate() {
   const [errorMessage, setErrorMessage] = useState("");
   const [capsuleRecord, setCapsuleRecord] = useState(null);
 
-  useEffect(() => {
-    console.log( "State passed to HoraCreate:", state);
-  }, [state]);
 
   const lockedMessage = useMemo(() => {
     const openDate = capsuleRecord?.openAt?.toDate?.();
@@ -84,7 +81,7 @@ export default function HoraCreate() {
         setErrorMessage("");
 
 
-        const capsuleRef = state.flowType === "lova" 
+        const capsuleRef = state.flowType === "lova"
           ? doc(db, "lovaNotes", capsuleId)
           : doc(db, "horaCapsules", capsuleId);
         const capsuleSnap = await getDoc(capsuleRef);
@@ -200,7 +197,7 @@ export default function HoraCreate() {
       window.sessionStorage.setItem(HORA_DRAFT_STORAGE_KEY, JSON.stringify(localDraft));
 
       setStatusMessage("Moving to capsule design...");
-      navigate(capsuleId ? `/feature/hora/capsule?capsuleId=${capsuleId}` : "/feature/hora/capsule", { state: { flowType: state?.flowType }});
+      navigate(capsuleId ? `/feature/hora/capsule?capsuleId=${capsuleId}` : "/feature/hora/capsule", { state: { flowType: state?.flowType } });
     } catch (err) {
       console.error("Failed to prepare capsule draft:", err);
       setErrorMessage("Could not continue to capsule design. Please try again.");
@@ -209,6 +206,8 @@ export default function HoraCreate() {
     }
   };
 
+
+ 
   return (
     <>
       <Navbar variant="hp" activeFeature="hora" />

@@ -1,13 +1,41 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { use, useEffect, useMemo, useState } from "react";
+
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
+
 import "../styles/home.css";
 import "../styles/eterea-create.css";
 import "../scripts/eterea-create.js";
 import Navbar from "../components/Navbar";
+import { auth, db } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+const eterea_DRAFT_STORAGE_KEY = "etereaCapsuleDraft";
+
 
 export default function EtereaCreate({ onNext }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+  const [searchParams] = useSearchParams();
+  const capsuleId = searchParams.get("capsuleId");
+  const mode = searchParams.get("mode");
+  const isViewMode = mode === "view";
   const [code, setCode] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loadingCapsule, setLoadingCapsule] = useState(Boolean(capsuleId));
+  const [saving, setSaving] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [capsuleRecord, setCapsuleRecord] = useState(null);
+
+
+  // useEffect(() => {
+  //   handleGenerateCode();
+  // }, []);
+
+  // useEffect(() => {
+  //   handleCreateRoom(code);
+  // }, [code]);
 
   const handleGenerateCode = () => {
     const generatedCode = Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -25,6 +53,204 @@ export default function EtereaCreate({ onNext }) {
       document.body.classList.remove("eterea-create-route");
     };
   }, []);
+
+
+  const lockedMessage = useMemo(() => {
+    const openDate = capsuleRecord?.openAt?.toDate?.();
+    if (!isViewMode || !openDate) return "";
+    if (openDate.getTime() <= Date.now()) return "";
+    return `This capsule is still locked until ${openDate.toLocaleDateString("en-GB")}.`;
+  }, [capsuleRecord, isViewMode]);
+
+  useEffect(() => {
+    document.body.dataset.etereaReadOnly = isViewMode ? "true" : "false";
+
+    return () => {
+      delete document.body.dataset.etereaReadOnly;
+    };
+  }, [isViewMode]);
+
+  useEffect(() => {
+    if (window.initetereaCreate) {
+      window.initetereaCreate();
+    }
+
+    return () => {
+      window.__etereaCreateInited = false;
+      delete window.etereaCreateApi;
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("Setting up auth state listener for etereaCreate. Current user:", auth);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth state changed. Current user:", user);
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!capsuleId) {
+      setLoadingCapsule(false);
+      setCapsuleRecord(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadCapsule = async () => {
+      try {
+        setLoadingCapsule(true);
+        setErrorMessage("");
+
+
+        const capsuleRef = state.flowType === "lova"
+          ? doc(db, "lovaNotes", capsuleId)
+          : doc(db, "etereaCapsules", capsuleId);
+        const capsuleSnap = await getDoc(capsuleRef);
+
+        if (!capsuleSnap.exists()) {
+          if (!cancelled) {
+            setErrorMessage("Capsule not found.");
+            setCapsuleRecord(null);
+          }
+          return;
+        }
+
+        const data = { id: capsuleSnap.id, ...capsuleSnap.data() };
+
+        if (!cancelled) {
+          setCapsuleRecord(data);
+        }
+      } catch (err) {
+        console.error("Failed to load capsule:", err);
+        if (!cancelled) {
+          setErrorMessage("Could not load this capsule.");
+          setCapsuleRecord(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingCapsule(false);
+        }
+      }
+    };
+
+    loadCapsule();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [capsuleId]);
+
+  useEffect(() => {
+    if (!window.etereaCreateApi?.loadSnapshot) return;
+    if (lockedMessage) return;
+
+    if (isViewMode) {
+      if (capsuleRecord?.canvasState) {
+        window.etereaCreateApi.loadSnapshot(capsuleRecord.canvasState);
+      }
+      return;
+    }
+
+    try {
+      const localDraftRaw = window.sessionStorage.getItem(eterea_DRAFT_STORAGE_KEY);
+      const localDraft = localDraftRaw ? JSON.parse(localDraftRaw) : null;
+      const localDraftCapsuleId = localDraft?.capsuleId || null;
+      const localDraftMatchesRoute = capsuleId
+        ? localDraftCapsuleId === capsuleId
+        : Boolean(localDraft?.canvasState);
+
+      if (localDraftMatchesRoute && localDraft?.canvasState) {
+        window.etereaCreateApi.loadSnapshot(localDraft.canvasState);
+        return;
+      }
+    } catch (error) {
+      console.warn("Failed to restore local eterea draft:", error);
+    }
+
+    if (capsuleRecord?.canvasState) {
+      window.etereaCreateApi.loadSnapshot(capsuleRecord.canvasState);
+    }
+  }, [capsuleId, capsuleRecord, isViewMode, lockedMessage]);
+
+  const handleNextStep = async () => {
+    setStatusMessage("");
+    setErrorMessage("");
+
+    if (isViewMode) {
+      navigate("/feature/eterea");
+      return;
+    }
+
+    if (!currentUser) {
+      setErrorMessage("Please log in before saving a capsule.");
+      return;
+    }
+
+    if (!window.etereaCreateApi?.getSnapshot) {
+      setErrorMessage("The page editor is not ready yet.");
+      return;
+    }
+
+    const snapshot = window.etereaCreateApi.getSnapshot();
+
+    if (!snapshot.backupEmail) {
+      setErrorMessage("Please enter a backup email.");
+      return;
+    }
+
+    if (!snapshot.openDate) {
+      setErrorMessage("Please choose the capsule open date.");
+      return;
+    }
+
+    try {
+      setSaving(true);
+
+      const localDraft = {
+        capsuleId: capsuleId || null,
+        userId: currentUser.uid,
+        backupEmail: snapshot.backupEmail,
+        openDate: snapshot.openDate,
+        canvasState: snapshot,
+        updatedAt: Date.now(),
+      };
+
+      window.sessionStorage.setItem(eterea_DRAFT_STORAGE_KEY, JSON.stringify(localDraft));
+
+      setStatusMessage("Moving to capsule design...");
+      navigate(capsuleId ? `/feature/eterea/capsule?capsuleId=${capsuleId}` : "/feature/eterea/capsule", { state: { flowType: state?.flowType } });
+    } catch (err) {
+      console.error("Failed to prepare capsule draft:", err);
+      setErrorMessage("Could not continue to capsule design. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+
+  const handleCreateRoom = async (capsuleId) => {
+    // console.log("Creating room with code:", code, "and capsuleId:", capsuleId);
+    const newCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+
+    setCode(newCode); // อัพ UI
+
+    await setDoc(doc(db, "etereaRooms", code), {
+      code: code,
+      capsuleId: capsuleId,
+      ownerId: auth.currentUser.uid,
+      createdAt: serverTimestamp(),
+    });
+  };
+
+  useEffect(() => {
+    if (!code) return;
+    console.log("Code changed, creating room with code:", code, "and capsuleId:", capsuleId);
+    // handleCreateRoom(capsuleId);
+  }, [code, capsuleId]);
 
   return (
     <>
@@ -122,13 +348,7 @@ export default function EtereaCreate({ onNext }) {
                     onChange={(e) => setCode(e.target.value)}
                   />
 
-                  <button
-                    type="button"
-                    className="generate-btn"
-                    onClick={handleGenerateCode}
-                  >
-                    Generate
-                  </button>
+
                 </div>
               </div>
 

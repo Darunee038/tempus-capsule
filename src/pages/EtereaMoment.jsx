@@ -1,14 +1,34 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
+
 import "../styles/eterea.css";
 import Navbar from "../components/Navbar";
 import { notify } from "../utils/notify";
+import { auth, db } from "../firebase";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export default function EtereaMoment() {
-  const handleJoin = (e) => {
-    e.preventDefault();
-    // เดี๋ยวค่อยทำระบบจริงทีหลัง
-    notify.info("Code received ✨ (demo)");
+  const navigate = useNavigate();
+  
+  // const handleJoin = (e) => {
+  //   e.preventDefault();
+  //   // เดี๋ยวค่อยทำระบบจริงทีหลัง
+  //   notify.info("Code received ✨ (demo)");
+  // };
+
+  const handleJoin = async (joinCode) => {
+    const roomRef = doc(db, "etereaRooms", joinCode);
+    const snap = await getDoc(roomRef);
+
+    if (!snap.exists()) {
+       notify.info("Invalid code");
+      return;
+    }
+
+    const data = snap.data();
+
+    // 👉 ไปหน้า editor
+    navigate(`/feature/eterea/create?capsuleId=${data.capsuleId}`);
   };
 
   return (
@@ -43,8 +63,13 @@ export default function EtereaMoment() {
           <div className="et-join">
             <div className="et-join-title">Join Group</div>
 
-            <form className="et-join-bar" onSubmit={handleJoin}>
-              <input className="et-join-input" placeholder="Enter Code" />
+            <form className="et-join-bar" onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              const joinCode = formData.get("joinCode");
+              handleJoin(joinCode);
+            }}>
+              <input className="et-join-input" name="joinCode" placeholder="Enter Code" />
               <button className="et-join-btn" type="submit">Join</button>
             </form>
           </div>
@@ -52,7 +77,7 @@ export default function EtereaMoment() {
           <Link to="/feature/eterea/create" className="et-create-btn">
             Create Capsule
           </Link>
-          
+
         </main>
       </div>
     </div>
