@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/vermiss-create.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 export default function HoraCreate({ onNext }) {
     useEffect(() => {
@@ -14,23 +13,7 @@ export default function HoraCreate({ onNext }) {
   return (
     <>
       {/* HEADER */}
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-          
-        </div>
-      </header>
+      <Navbar variant="hp" activeFeature="vermis" />
 
       {/* MAIN */}
       <main className="layout">

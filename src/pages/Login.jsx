@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
+import { notify } from "../utils/notify";
 
 // 🔥 เพิ่ม 2 อันนี้
 import { auth } from "../firebase";
@@ -21,20 +22,20 @@ export default function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      alert("Login successful 🎉");
+      notify.success("Login successful 🎉");
 
       navigate("/home");
 
     }
     catch (error) {
       if (error.code === "auth/wrong-password") {
-        alert("Wrong password ❌");
+        notify.error("Wrong password ❌");
       } else if (error.code === "auth/user-not-found") {
-        alert("User not found ❌");
+        notify.error("User not found ❌");
       } else if (error.code === "auth/invalid-credential") {
-        alert("Email or password is incorrect ❌");
+        notify.error("Email or password is incorrect ❌");
       } else {
-        alert(error.message);
+        notify.error(error.message);
       }
     }
   };

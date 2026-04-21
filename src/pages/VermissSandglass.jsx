@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/vermiss.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 export default function VermissSandglass() {
   const navigate = useNavigate();
@@ -44,22 +44,7 @@ export default function VermissSandglass() {
         </div>
 
         {/* NAV */}
-        <header className="ver-nav">
-          <div className="ver-nav-inner">
-            <Link to="/home" className="ver-logo">
-              <img src={logo} alt="Tempus Capsule" className="ver-logo-img" />
-            </Link>
-
-            <nav className="ver-menu">
-              <Link className="ver-menu-item" to="/feature/hora">HoraWhisper+</Link>
-              <Link className="ver-menu-item" to="/feature/lova">LovaNote</Link>
-              <Link className="ver-menu-item active" to="/feature/eterea">EtereaMoment</Link>
-              <Link className="ver-menu-item" to="/feature/vermiss">VermissSandglass</Link>
-            </nav>
-
-            <Link className="ver-user" to="/profile">👤</Link>
-          </div>
-        </header>
+        <Navbar variant="ver" activeFeature="vermis" />
 
         {/* CONTENT */}
         <main className="ver-main">

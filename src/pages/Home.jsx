@@ -1,30 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/home.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 
 export default function Home() {
 
   const [username, setUsername] = useState("");
-  const navigate = useNavigate();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      alert("Logged out successfully 👋");
-      navigate("/login");
-    } catch (err) {
-      console.error(err);
-      alert("Logout failed ❗");
-    }
-  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -46,25 +33,7 @@ export default function Home() {
       <div className="hp-bg">
         <div className="hp-main">
           {/* NAV */}
-          <header className="hp-nav">
-            <div className="hp-nav-inner">
-              <Link to="/home" className="et-logo">
-                <img src={logo} alt="Tempus Capsule" className="et-logo-img" />
-              </Link>
-
-              <nav className="hp-menu">
-                <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-                <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-                <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-                <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-              </nav>
-          
-              <Link className="hp-user" to="/profile" aria-label="Profile">
-                <span className="hp-user-icon">👤</span>
-              </Link>
-              
-            </div>
-          </header>
+          <Navbar variant="hp" />
 
 
           {/* CONTENT */}

@@ -1,173 +1,341 @@
 /* full screen */
+
 .pf-page {
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 }
 
-/* background (ปรับได้ตามสีใน figma) */
 .pf-bg {
-  width: 100%;
-  height: 100%;
-  padding: 22px;
-  box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 22px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(860px 640px at 8% 10%, rgba(255, 228, 240, 0.9) 0%, rgba(255, 228, 240, 0) 66%), radial-gradient(820px 620px at 92% 12%, rgba(218, 234, 255, 0.85) 0%, rgba(218, 234, 255, 0) 64%), radial-gradient(880px 720px at 70% 88%, rgba(238, 224, 255, 0.85) 0%, rgba(238, 224, 255, 0) 66%), linear-gradient(145deg, #f7ddec 0%, #f5e4bf 35%, #e8d5f6 67%, #d8e9ff 100%);
+    display: grid;
+    place-items: center;
+}
 
-  background: linear-gradient(
-    14deg,
-    #ffd6e8 0%,
-    #ffe2ad 35%,
-    #eac9ff 65%,
-    #bee8ff 100%
-  );
+.pf-bg::before,
+.pf-bg::after {
+    content: "";
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    z-index: 0;
+}
 
-  display: grid;
-  place-items: center;
+.pf-bg::before {
+    width: 300px;
+    height: 300px;
+    top: -90px;
+    left: -70px;
+    background: rgba(255, 255, 255, 0.28);
+    filter: blur(8px);
+}
+
+.pf-bg::after {
+    width: 240px;
+    height: 240px;
+    bottom: -70px;
+    right: -50px;
+    background: rgba(255, 255, 255, 0.2);
+    filter: blur(10px);
 }
 
 .pf-wrap {
-  width: min(900px, 92vw);
-  height: min(780px, 92vh);
-  border-radius: 18px;
-
-  border: 1px solid rgba(255,255,255,.30);
-  background: rgba(255,255,255,.12);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  box-shadow: 0 22px 70px rgba(0,0,0,.12);
-
-  padding: 28px 26px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: min(900px, 92vw);
+    height: min(780px, 92vh);
+    border-radius: 22px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 24px 68px rgba(120, 98, 140, 0.2);
+    padding: 28px 26px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pf-title {
-  width: 100%;
-  margin: 0 0 20px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255,255,255,.85);
+    width: 100%;
+    margin: 0 0 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(73, 56, 92, 0.75);
 }
 
 .pf-avatar {
-  margin-top: 6px;
+    margin-top: 6px;
 }
 
 .pf-avatar-circle {
-  width: 110px;
-  height: 110px;
-  border-radius: 999px;
-
-  display: grid;
-  place-items: center;
-
-  border: 6px solid rgba(255,255,255,.65);
-  background: rgba(255,255,255,.12);
-  box-shadow: 0 18px 55px rgba(0,0,0,.12);
+    width: 110px;
+    height: 110px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    border: 6px solid rgba(255, 255, 255, 0.78);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 236, 246, 0.72));
+    box-shadow: 0 18px 48px rgba(120, 98, 140, 0.2);
 }
 
 .pf-avatar-icon {
-  font-size: 44px;
-  opacity: 0.95;
+    font-size: 44px;
+    opacity: 0.96;
 }
 
 .pf-name {
-  margin: 18px 0 16px;
-  font-size: 34px;
-  font-weight: 500;
-  color: rgba(255,255,255,.90);
-  text-shadow: 0 18px 60px rgba(0,0,0,.12);
+    margin: 18px 0 16px;
+    font-size: 34px;
+    font-weight: 600;
+    color: #5e4a78;
+    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.58);
 }
 
 .pf-btn {
-  border: none;
-  cursor: pointer;
-
-  height: 44px;
-  padding: 0 34px;
-  border-radius: 999px;
-
-  color: rgba(255,255,255,.92);
-  font-size: 14px;
-  font-weight: 500;
-
-  background: rgba(166, 200, 255, .40);
-  border: 1px solid rgba(255,255,255,.30);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-
-  box-shadow: 0 18px 45px rgba(0,0,0,.12);
-  transition: transform .15s ease, box-shadow .15s ease;
+    border: none;
+    cursor: pointer;
+    height: 44px;
+    padding: 0 34px;
+    border-radius: 999px;
+    color: #4c3b64;
+    font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(232, 216, 255, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow: 0 14px 34px rgba(120, 98, 140, 0.18);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .pf-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 22px 55px rgba(0,0,0,.14);
+    transform: translateY(-1px);
+    box-shadow: 0 18px 42px rgba(120, 98, 140, 0.24);
 }
 
 .pf-feedback-label {
-  width: min(700px, 92%);
-  margin: 34px 0 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255,255,255,.99);
-  align-self: center;
+    width: min(700px, 92%);
+    margin: 34px 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #5f4a7a;
+    align-self: center;
 }
 
 .pf-form {
-  width: min(700px, 92%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
+    width: min(700px, 92%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
 }
 
 .pf-textarea {
-  width: 100%;
-  height: 140px;
-  resize: none;
+    width: 100%;
+    height: 140px;
+    resize: none;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.66);
+    box-shadow: 0 14px 38px rgba(120, 98, 140, 0.14);
+    padding: 14px 16px;
+    box-sizing: border-box;
+    outline: none;
+    color: #3d324d;
+    font-size: 14px;
+}
 
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.30);
-  background: rgba(255,255,255,.10);
-
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-
-  box-shadow: 0 18px 50px rgba(0,0,0,.08);
-
-  padding: 14px 16px;
-  box-sizing: border-box;
-
-  outline: none;
-  color: rgba(2, 1, 1, 0.9);
-  font-size: 14px;
+.pf-textarea::placeholder {
+    color: rgba(86, 72, 109, 0.55);
 }
 
 .pf-textarea:focus {
-  border-color: rgba(255,255,255,.55);
+    border-color: rgba(198, 159, 236, 0.85);
+    box-shadow: 0 0 0 3px rgba(213, 183, 244, 0.25);
 }
 
 .pf-btn-small {
-  height: 42px;
-  padding: 0 30px;
+    height: 42px;
+    padding: 0 30px;
 }
 
 .pf-footer {
-  width: 100%;
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  padding-top: 24px;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    padding-top: 24px;
 }
 
 .pf-btn-back {
-  min-width: 110px;
+    min-width: 110px;
 }
 
 .pf-btn-logout {
-  min-width: 110px;
+    min-width: 110px;
+    background: linear-gradient(135deg, rgba(255, 243, 247, 0.95), rgba(255, 219, 230, 0.86));
+}
+
+
+/* Tablet & Small Screens */
+
+@media (max-width: 1024px) {
+    .pf-page {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    .pf-bg {
+        padding: 16px;
+    }
+}
+
+
+/* Mobile Devices */
+
+@media (max-width: 768px) {
+    .pf-page {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    .pf-bg {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        padding: 14px;
+        overflow-x: hidden;
+    }
+    .pf-bg::before {
+        width: 200px;
+        height: 200px;
+        top: -80px;
+        left: -60px;
+    }
+    .pf-bg::after {
+        width: 160px;
+        height: 160px;
+        bottom: -60px;
+        right: -40px;
+    }
+    .pf-wrap {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 18px 14px;
+        border-radius: 18px;
+        box-shadow: 0 12px 36px rgba(120, 98, 140, 0.15);
+    }
+    .pf-title {
+        font-size: 12px;
+        margin-bottom: 14px;
+    }
+    .pf-avatar {
+        margin-top: 4px;
+    }
+    .pf-avatar-circle {
+        width: 90px;
+        height: 90px;
+        border-width: 5px;
+        box-shadow: 0 12px 32px rgba(120, 98, 140, 0.15);
+    }
+    .pf-avatar-icon {
+        font-size: 36px;
+    }
+    .pf-name {
+        font-size: 24px;
+        margin: 12px 0 12px;
+        text-shadow: 0 6px 20px rgba(255, 255, 255, 0.48);
+    }
+    .pf-btn {
+        height: 40px;
+        padding: 0 28px;
+        font-size: 13px;
+        box-shadow: 0 10px 24px rgba(120, 98, 140, 0.14);
+    }
+    .pf-btn:hover {
+        box-shadow: 0 12px 30px rgba(120, 98, 140, 0.18);
+    }
+    .pf-feedback-label {
+        width: 100%;
+        max-width: 100%;
+        margin: 20px 0 8px;
+        font-size: 13px;
+    }
+    .pf-form {
+        width: 100%;
+        max-width: 100%;
+        gap: 14px;
+    }
+    .pf-textarea {
+        height: 120px;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-size: 13px;
+        box-shadow: 0 8px 24px rgba(120, 98, 140, 0.1);
+    }
+    .pf-textarea:focus {
+        box-shadow: 0 0 0 2px rgba(213, 183, 244, 0.25), 0 8px 24px rgba(120, 98, 140, 0.1);
+    }
+    .pf-btn-small {
+        height: 38px;
+        padding: 0 24px;
+        font-size: 13px;
+    }
+    .pf-footer {
+        width: 100%;
+        margin-top: 18px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-top: 16px;
+    }
+    .pf-btn-back,
+    .pf-btn-logout {
+        min-width: 100px;
+        width: 100%;
+    }
+}
+
+
+/* Small Mobile Phones */
+
+@media (max-width: 480px) {
+    .pf-wrap {
+        padding: 14px 10px;
+    }
+    .pf-name {
+        font-size: 20px;
+        margin: 10px 0 10px;
+    }
+    .pf-avatar-circle {
+        width: 80px;
+        height: 80px;
+        border-width: 4px;
+    }
+    .pf-avatar-icon {
+        font-size: 32px;
+    }
+    .pf-btn {
+        height: 38px;
+        padding: 0 24px;
+        font-size: 12px;
+    }
+    .pf-textarea {
+        height: 110px;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    .pf-btn-back,
+    .pf-btn-logout {
+        min-width: 90px;
+    }
 }

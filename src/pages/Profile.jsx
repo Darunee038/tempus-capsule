@@ -10,6 +10,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import "../styles/profile.css";
+import { notify } from "../utils/notify";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -46,10 +47,11 @@ export default function Profile() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      notify.success("Logged out successfully 👋");
       navigate("/");
     } catch (error) {
       console.error(error);
-      alert("Logout failed");
+      notify.error("Logout failed");
     }
   };
 
@@ -61,12 +63,12 @@ export default function Profile() {
       const user = auth.currentUser;
 
       if (!user) {
-        alert("Please login first");
+        notify.error("Please login first");
         return;
       }
 
       if (!feedback.trim()) {
-        alert("Please enter message");
+        notify.error("Please enter message");
         return;
       }
 
@@ -77,12 +79,12 @@ export default function Profile() {
         createdAt: serverTimestamp(),
       });
 
-      alert("✅ Feedback sent!");
+      notify.success("✅ Feedback sent!");
       setFeedback("");
 
     } catch (error) {
       console.error("🔥 ERROR:", error);
-      alert("❌ Failed to send feedback");
+      notify.error("❌ Failed to send feedback");
     }
   };
 

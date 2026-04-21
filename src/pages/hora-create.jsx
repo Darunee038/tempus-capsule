@@ -9,7 +9,7 @@ import "../styles/home.css";
 import "../styles/hora-create.css";
 import "../scripts/hora-create.js";
 import { auth, db } from "../firebase";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
@@ -208,22 +208,7 @@ export default function HoraCreate() {
 
   return (
     <>
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
+      <Navbar variant="hp" activeFeature="hora" />
 
       <div className={`hora-create-page ${isViewMode ? "hora-create-readonly" : ""}`}>
         <div className="dreamscape-layer" aria-hidden="true">
