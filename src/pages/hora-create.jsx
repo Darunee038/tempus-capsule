@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   doc,
@@ -15,6 +15,8 @@ const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
 export default function HoraCreate() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
   const [searchParams] = useSearchParams();
   const capsuleId = searchParams.get("capsuleId");
   const mode = searchParams.get("mode");
@@ -26,6 +28,10 @@ export default function HoraCreate() {
   const [statusMessage, setStatusMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [capsuleRecord, setCapsuleRecord] = useState(null);
+
+  useEffect(() => {
+    console.log( "State passed to HoraCreate:", state);
+  }, [state]);
 
   const lockedMessage = useMemo(() => {
     const openDate = capsuleRecord?.openAt?.toDate?.();
@@ -239,7 +245,7 @@ export default function HoraCreate() {
         <main className="layout">
           <div className="page-center">
             <section className="title-section">
-              <h1>HoraWhisper+</h1>
+              <h1>{state?.flowType === "hora" ? "HoraWhisper+" : "LovaNote"}</h1>
               <p>
                 {isViewMode
                   ? "Your saved capsule page is shown exactly as it was created."
