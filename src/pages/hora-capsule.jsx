@@ -1,7 +1,7 @@
-import { useEffect, useRef,useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { use, useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, ContactShadows, useTexture} from "@react-three/drei";
+import { OrbitControls, Environment, ContactShadows, useTexture } from "@react-three/drei";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -12,27 +12,28 @@ import { CapsuleModel } from "../scripts/capsule.jsx";
 import { auth, db, storage } from "../firebase";
 import logo from "../assets/logo/tempus-logo.png";
 
+
 const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
 const capsuleHeader = (
   <>
-      {/* HEADER */}
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
+    {/* HEADER */}
+    <header className="hp-nav">
+      <div className="hp-nav-inner">
+        <Link to="/home" className="hp-logo">
+          <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
+        </Link>
+        <nav className="hp-menu">
+          <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
+          <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
+          <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
+          <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
+        </nav>
+        <Link className="hp-user" to="/profile" aria-label="Profile">
+          <span className="hp-user-icon">👤</span>
+        </Link>
+      </div>
+    </header>
 
   </>
 );
@@ -257,10 +258,10 @@ function cloneSticker(sticker) {
     normal: sticker?.normal?.clone?.() ?? sticker?.normal ?? null,
     photoEdit: sticker?.photoEdit
       ? {
-          ...sticker.photoEdit,
-          offset: sticker.photoEdit.offset ? { ...sticker.photoEdit.offset } : { x: 0, y: 0 },
-          meta: sticker.photoEdit.meta ? { ...sticker.photoEdit.meta } : { width: 1, height: 1 },
-        }
+        ...sticker.photoEdit,
+        offset: sticker.photoEdit.offset ? { ...sticker.photoEdit.offset } : { x: 0, y: 0 },
+        meta: sticker.photoEdit.meta ? { ...sticker.photoEdit.meta } : { width: 1, height: 1 },
+      }
       : null,
     textEdit: sticker?.textEdit ? { ...sticker.textEdit } : null,
   };
@@ -376,26 +377,26 @@ function serializeSticker(sticker) {
     normal: serializeVector3(sticker.normal),
     photoEdit: sticker.photoEdit
       ? {
-          source: sticker.photoEdit.source || "",
-          shape: sticker.photoEdit.shape || "normal",
-          zoom: Number(sticker.photoEdit.zoom || 1),
-          offset: {
-            x: Number(sticker.photoEdit.offset?.x || 0),
-            y: Number(sticker.photoEdit.offset?.y || 0),
-          },
-          meta: {
-            width: Number(sticker.photoEdit.meta?.width || 1),
-            height: Number(sticker.photoEdit.meta?.height || 1),
-          },
-        }
+        source: sticker.photoEdit.source || "",
+        shape: sticker.photoEdit.shape || "normal",
+        zoom: Number(sticker.photoEdit.zoom || 1),
+        offset: {
+          x: Number(sticker.photoEdit.offset?.x || 0),
+          y: Number(sticker.photoEdit.offset?.y || 0),
+        },
+        meta: {
+          width: Number(sticker.photoEdit.meta?.width || 1),
+          height: Number(sticker.photoEdit.meta?.height || 1),
+        },
+      }
       : null,
     textEdit: sticker.textEdit
       ? {
-          text: sticker.textEdit.text || "",
-          fontFamily: sticker.textEdit.fontFamily || "modern",
-          fontStyle: sticker.textEdit.fontStyle || "regular",
-          fontSize: Number(sticker.textEdit.fontSize || 88),
-        }
+        text: sticker.textEdit.text || "",
+        fontFamily: sticker.textEdit.fontFamily || "modern",
+        fontStyle: sticker.textEdit.fontStyle || "regular",
+        fontSize: Number(sticker.textEdit.fontSize || 88),
+      }
       : null,
   };
 }
@@ -610,6 +611,10 @@ async function hashPassword(value) {
 
 export default function HoraCapsule({ onBack }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+
+
   const [searchParams] = useSearchParams();
   const capsuleId = searchParams.get("capsuleId");
   const [selectedPart, setSelectedPart] = useState(null);
@@ -688,6 +693,7 @@ export default function HoraCapsule({ onBack }) {
       navigate(capsuleId ? `/feature/hora/create?capsuleId=${capsuleId}` : "/feature/hora/create");
     }
   };
+
   const activeCreativeTool = showTextPanel
     ? "text"
     : showStickerPanel
@@ -1071,12 +1077,12 @@ export default function HoraCapsule({ onBack }) {
           prev.map((item, index) =>
             index === editingPhotoStickerIndex
               ? {
-                  ...item,
-                  texture: originalPayload.texture,
-                  aspectRatio: originalPayload.aspectRatio,
-                  kind: originalPayload.kind,
-                  photoEdit: originalPayload.photoEdit,
-                }
+                ...item,
+                texture: originalPayload.texture,
+                aspectRatio: originalPayload.aspectRatio,
+                kind: originalPayload.kind,
+                photoEdit: originalPayload.photoEdit,
+              }
               : item
           )
         );
@@ -1131,12 +1137,12 @@ export default function HoraCapsule({ onBack }) {
           prev.map((item, index) =>
             index === editingPhotoStickerIndex
               ? {
-                  ...item,
-                  texture: shapedPayload.texture,
-                  aspectRatio: shapedPayload.aspectRatio,
-                  kind: shapedPayload.kind,
-                  photoEdit: shapedPayload.photoEdit,
-                }
+                ...item,
+                texture: shapedPayload.texture,
+                aspectRatio: shapedPayload.aspectRatio,
+                kind: shapedPayload.kind,
+                photoEdit: shapedPayload.photoEdit,
+              }
               : item
           )
         );
@@ -1227,12 +1233,12 @@ export default function HoraCapsule({ onBack }) {
         prev.map((item, index) =>
           index === editingTextStickerIndex
             ? {
-                ...item,
-                texture: payload.texture,
-                aspectRatio: payload.aspectRatio,
-                kind: payload.kind,
-                textEdit: payload.textEdit,
-              }
+              ...item,
+              texture: payload.texture,
+              aspectRatio: payload.aspectRatio,
+              kind: payload.kind,
+              textEdit: payload.textEdit,
+            }
             : item
         )
       );
@@ -1345,16 +1351,16 @@ export default function HoraCapsule({ onBack }) {
       const capsulePreviewUrlPromise = captureCapsulePreview().then((previewDataUrl) =>
         previewDataUrl
           ? withTimeout(
-              uploadDataUrlAsset(
-                previewDataUrl,
-                `horaCapsules/${currentUser.uid}/${finalCapsuleId}/capsule-preview-${Date.now()}.jpg`
-              ),
-              FAST_SAVE_TIMEOUT_MS,
-              "Capsule preview upload timed out"
-            ).catch((error) => {
-              console.warn("Using inline capsule preview after timeout:", error);
-              return previewDataUrl;
-            })
+            uploadDataUrlAsset(
+              previewDataUrl,
+              `horaCapsules/${currentUser.uid}/${finalCapsuleId}/capsule-preview-${Date.now()}.jpg`
+            ),
+            FAST_SAVE_TIMEOUT_MS,
+            "Capsule preview upload timed out"
+          ).catch((error) => {
+            console.warn("Using inline capsule preview after timeout:", error);
+            return previewDataUrl;
+          })
           : ""
       );
       const passwordHashPromise = hashPassword(trimmedCapsulePassword);
@@ -1369,6 +1375,19 @@ export default function HoraCapsule({ onBack }) {
 
       persistLocalCapsuleDraft(uploadedSnapshot);
 
+
+      if (state?.flowType === "lova") {
+        const emailReceiver = doc(db, "users", backupEmail);
+        const snap = await getDoc(emailReceiver);
+
+        console.log("Receiver snap:", snap);
+        if (!snap.exists()) {
+          setErrorMessage("The backup email does not correspond to a valid user.");
+          return;
+        }
+      }
+
+
       const payload = {
         userId: currentUser.uid,
         backupEmail,
@@ -1380,6 +1399,9 @@ export default function HoraCapsule({ onBack }) {
         capsuleState: serializeCapsuleState(uploadedSnapshot),
         draftStage: "complete",
         updatedAt: serverTimestamp(),
+        ...(state?.flowType !== "hora" && {
+          reciverId: state?.receiverId || null,
+        })
       };
 
       const approxPayloadBytes = estimateSerializedSize({
@@ -1387,6 +1409,7 @@ export default function HoraCapsule({ onBack }) {
         openAt: openDateIso,
         updatedAt: "serverTimestamp",
       });
+
       if (approxPayloadBytes > 900000) {
         console.warn(
           `Hora capsule payload is large before Firestore save: ${Math.round(approxPayloadBytes / 1024)} KB`
@@ -1401,9 +1424,9 @@ export default function HoraCapsule({ onBack }) {
       }
 
       if (capsuleId) {
-        await updateDoc(doc(db, "horaCapsules", finalCapsuleId), payload);
+        await updateDoc(doc(db, state?.flowType === "hora" ? "horaCapsules" : "lovaNotes", finalCapsuleId), payload);
       } else {
-        await setDoc(doc(collection(db, "horaCapsules"), finalCapsuleId), {
+        await setDoc(doc(collection(db, state?.flowType === "hora" ? "horaCapsules" : "lovaNotes"), finalCapsuleId), {
           ...payload,
           createdAt: serverTimestamp(),
         });
@@ -1419,6 +1442,10 @@ export default function HoraCapsule({ onBack }) {
       setSaving(false);
     }
   };
+
+  useEffect(() => {
+    console.log("state change", state);
+  }, [state]);
 
   return (
     <div

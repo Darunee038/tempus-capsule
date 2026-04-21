@@ -160,7 +160,6 @@ export default function HoraCreate() {
       return;
     }
 
-    console.log("Next step clicked. Current user:", currentUser);
     if (!currentUser) {
       setErrorMessage("Please log in before saving a capsule.");
       return;
@@ -198,7 +197,7 @@ export default function HoraCreate() {
       window.sessionStorage.setItem(HORA_DRAFT_STORAGE_KEY, JSON.stringify(localDraft));
 
       setStatusMessage("Moving to capsule design...");
-      navigate(capsuleId ? `/feature/hora/capsule?capsuleId=${capsuleId}` : "/feature/hora/capsule");
+      navigate(capsuleId ? `/feature/hora/capsule?capsuleId=${capsuleId}` : "/feature/hora/capsule", { state: { flowType: state?.flowType }});
     } catch (err) {
       console.error("Failed to prepare capsule draft:", err);
       setErrorMessage("Could not continue to capsule design. Please try again.");
@@ -326,11 +325,11 @@ export default function HoraCreate() {
 
             <section className="bottom-section">
               <div className="field">
-                <label>Backup Email</label>
+                <label>{state?.flowType === "hora" ? "Backup Email" : "LovaNote Email"}</label>
                 <input
                   id="backupEmailInput"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={state?.flowType === "hora" ? "Enter your email" : "Enter your LovaNote email"}
                   readOnly={isViewMode}
                 />
               </div>
