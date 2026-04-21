@@ -1412,7 +1412,7 @@ export default function HoraCapsule({ onBack }) {
         draftStage: "complete",
         updatedAt: serverTimestamp(),
         ...(state?.flowType === "lova" && {
-          reciverId: receiverId,
+          receiverId,
         })
       };
 

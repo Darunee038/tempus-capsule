@@ -69,7 +69,6 @@ export default function LovaNote() {
         //   query(collection(db, "lovaNotes"), where("userId", "==", user.uid))
         // );
 
-        console.log("Loading capsules for user:", user.uid);
         const q1 = query(
           collection(db, "lovaNotes"),
           where("userId", "==", user.uid)
@@ -77,7 +76,7 @@ export default function LovaNote() {
 
         const q2 = query(
           collection(db, "lovaNotes"),
-          where("reciverId", "==", user.uid)
+          where("receiverId", "==", user.uid)
         );
 
         const [snap1, snap2] = await Promise.all([
