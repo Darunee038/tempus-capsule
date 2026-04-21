@@ -83,7 +83,10 @@ export default function HoraCreate() {
         setLoadingCapsule(true);
         setErrorMessage("");
 
-        const capsuleRef = doc(db, "horaCapsules", capsuleId);
+
+        const capsuleRef = state.flowType === "lova" 
+          ? doc(db, "lovaNotes", capsuleId)
+          : doc(db, "horaCapsules", capsuleId);
         const capsuleSnap = await getDoc(capsuleRef);
 
         if (!capsuleSnap.exists()) {

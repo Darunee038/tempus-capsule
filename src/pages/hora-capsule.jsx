@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams, useLocation } from "react-router-do
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows, useTexture } from "@react-three/drei";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc,  query, where, getDocs  } from "firebase/firestore";
+import { collection, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc, query, where, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import * as THREE from "three";
 import "../styles/home.css";
@@ -16,23 +16,23 @@ const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
 const capsuleHeader = (
   <>
-      {/* HEADER */}
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
+    {/* HEADER */}
+    <header className="hp-nav">
+      <div className="hp-nav-inner">
+        <Link to="/home" className="hp-logo">
+          <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
+        </Link>
+        <nav className="hp-menu">
+          <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
+          <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
+          <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
+          <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
+        </nav>
+        <Link className="hp-user" to="/profile" aria-label="Profile">
+          <span className="hp-user-icon">👤</span>
+        </Link>
+      </div>
+    </header>
 
   </>
 );
@@ -1303,7 +1303,7 @@ export default function HoraCapsule({ onBack }) {
     setStatusMessage("");
     setErrorMessage("");
     const trimmedCapsuleName = capsuleName.trim();
-    const trimmedCapsulePassword = capsulePassword.trim();
+    const trimmedCapsulePassword = capsulePassword.trim() || "hora-default-password";
 
     if (!currentUser) {
       setErrorMessage("Please log in before saving your capsule.");
@@ -1378,8 +1378,10 @@ export default function HoraCapsule({ onBack }) {
       persistLocalCapsuleDraft(uploadedSnapshot);
 
 
-      
+
       let receiverId = null;
+      let receiverName = null;
+      let senderName = null;
 
       if (state?.flowType === "lova") {
 
@@ -1394,11 +1396,23 @@ export default function HoraCapsule({ onBack }) {
           return;
         }
 
+        const sender = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(sender);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          senderName = data.user_name;
+        }
+
         receiverId = snap.docs[0].id;
-        console.log("Found receiver ID for Lova note:", receiverId);
-       
+        receiverName = snap.docs[0].data().user_name
+        console.log("Found receiver ID for Lova note:", snap.docs[0].data().user_name);
+
       }
 
+      console.log('currentUser', senderName)
+      console.log('receiverName', receiverName)
+      console.log('receiverId', receiverId)
 
       const payload = {
         userId: currentUser.uid,
@@ -1413,6 +1427,8 @@ export default function HoraCapsule({ onBack }) {
         updatedAt: serverTimestamp(),
         ...(state?.flowType === "lova" && {
           receiverId,
+          receiverName,
+          senderName,
         })
       };
 
@@ -1436,7 +1452,7 @@ export default function HoraCapsule({ onBack }) {
       }
 
       console.log(capsuleId)
-      
+
       if (capsuleId) {
         await updateDoc(doc(db, state?.flowType === "hora" ? "horaCapsules" : "lovaNotes", finalCapsuleId), payload);
       } else {
@@ -1750,15 +1766,17 @@ export default function HoraCapsule({ onBack }) {
             />
           </div>
 
-          <div className="form-box">
-            <label>Capsule Password</label>
-            <input
-              type="password"
-              placeholder="Enter capsule password"
-              value={capsulePassword}
-              onChange={(event) => setCapsulePassword(event.target.value)}
-            />
-          </div>
+          {state?.flowType !== "lova" && (
+            <div className="form-box">
+              <label>Capsule Password</label>
+              <input
+                type="password"
+                placeholder="Enter capsule password"
+                value={capsulePassword}
+                onChange={(event) => setCapsulePassword(event.target.value)}
+              />
+            </div>
+          )}
         </div>
 
         <button
