@@ -84,37 +84,7 @@ export default function LovaNote() {
           getDocs(q2),
         ]);
 
-        // const map = new Map();
-
-        // [...snap1.docs, ...snap2.docs].forEach((docSnap) => {
-        //   map.set(docSnap.id, {
-        //     id: docSnap.id,
-        //     ...docSnap.data(),
-        //   });
-        // });
-
-        // console.log("Loaded capsules:", Array.from(map.values()));
-
-        // const nextCapsules = snapshot.docs
-        //   .map((docSnap) => ({
-        //     id: docSnap.id,
-        //     ...docSnap.data(),
-        //   }))
-        //   .filter(
-        //     (capsule) =>
-        //       capsule.draftStage === "complete" ||
-        //       capsule.capsuleState ||
-        //       capsule.capsuleName ||
-        //       capsule.capsulePreviewUrl
-        //   )
-        //   .sort((a, b) => {
-        //     const aTime = a.openAt?.toMillis?.() ?? 0;
-        //     const bTime = b.openAt?.toMillis?.() ?? 0;
-        //     return aTime - bTime;
-        //   });
-
-        // setCapsules(nextCapsules);
-
+ 
         const map = new Map();
 
         [...snap1.docs, ...snap2.docs].forEach((docSnap) => {
