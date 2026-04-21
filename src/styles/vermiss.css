@@ -1,81 +1,87 @@
 /* ===== PAGE ===== */
-.ver-page{
-  width: 100vw;
+.ver-page {
+  width: 100%;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
-.ver-bg{
+.ver-bg {
   width: 100%;
-  min-height: 100vh;   /* ✅ สำคัญมาก */
+  height: 100vh;
+  max-height: 100vh;
   padding: 22px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background:
     radial-gradient(1000px 700px at 60% 20%,
-      rgba(120,150,220,.45) 0%,
-      rgba(70,90,160,.35) 50%,
-      rgba(40,55,110,.40) 70%,
-      rgba(20,30,70,.45) 120%),
+      rgba(120, 150, 220, .45) 0%,
+      rgba(70, 90, 160, .35) 50%,
+      rgba(40, 55, 110, .40) 70%,
+      rgba(20, 30, 70, .45) 120%),
     linear-gradient(180deg, #2a3360 0%, #1b2248 100%);
 }
 
 /* ===== NAV ===== */
-.ver-nav{
+.ver-nav {
   width: 100%;
   margin-top: 8px;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
 
 
-.ver-nav-inner{
-  width: min(980px, 92vw);
-  height: 54px;
+.ver-nav-inner {
+  width: min(1100px, 92vw);
+  height: 57px;
   margin: 0 auto;
 
   display: grid;
   grid-template-columns: 140px 1fr 54px;
   align-items: center;
 
-  padding: 10px 14px;
+
   border-radius: 999px;
 
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, .08);
   backdrop-filter: blur(16px);
 }
 
 
-.ver-logo-img{
-  height: 36px;
+.ver-logo-img {
+  height: 50px;
   align-items: center;
   padding: 8px 25px;
-  filter: drop-shadow(0 0 12px rgba(180,220,255,.8));
+  filter: drop-shadow(0 0 12px rgba(180, 220, 255, .8));
 }
 
 /* menu */
-.ver-menu{
+.ver-menu {
   display: flex;
   justify-content: center;
   gap: 110px;
 }
-.ver-menu-item{
+
+.ver-menu-item {
   font-size: 18px;
   text-decoration: none;
-  color: rgba(255,255,255,.82);
+  color: rgba(255, 255, 255, .82);
 }
-.ver-menu-item.active{
+
+.ver-menu-item.active {
   color: rgba(255, 255, 255, .96);
-  text-shadow: 0 0 12px rgba(180,220,255,.6);
+  text-shadow: 0 0 12px rgba(180, 220, 255, .6);
 }
 
 /* user */
-.ver-user{
+.ver-user {
   width: 42px;
   height: 42px;
   border-radius: 999px;
@@ -83,32 +89,32 @@ html, body {
   place-items: center;
   text-decoration: none;
 
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .12);
 }
 
 /* ===== MAIN ===== */
-.ver-main{
+.ver-main {
   width: min(980px, 92vw);
   margin: 40px auto 0;
   text-align: center;
 }
 
-.ver-title{
+.ver-title {
   margin: 42px 0 10px;
   font-size: 44px;
   font-weight: 500;
-  color: rgba(255,255,255,.95);
-  text-shadow: 0 30px 80px rgba(0,0,0,.5);
+  color: rgba(255, 255, 255, .95);
+  text-shadow: 0 30px 80px rgba(0, 0, 0, .5);
 }
 
-.ver-subtitle{
+.ver-subtitle {
   font-size: 14px;
-  color: rgba(255,255,255,.75);
+  color: rgba(255, 255, 255, .75);
 }
 
 /* ===== HERO ===== */
-.ver-hero{
+.ver-hero {
   margin-top: 36px;
   display: grid;
   grid-template-columns: 180px 1fr 180px;
@@ -118,70 +124,256 @@ html, body {
 
 /* glass cards */
 .ver-sidecard,
-.ver-lockcard{
-  width: 130px; 
+.ver-lockcard {
+  width: 150px;
   height: 200px;
   border-radius: 18px;
   padding: 18px 14px;
 
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .08);
   backdrop-filter: blur(16px);
-  box-shadow: 0 20px 70px rgba(0,0,0,.35);
+  box-shadow: 0 20px 70px rgba(0, 0, 0, .35);
 }
 
 .ver-time,
-.ver-date{
-  font-size: 12px;
-  color: rgba(255,255,255,.9);
+.ver-date {
+  font-size: 15px;
+  color: rgba(255, 255, 255, .9);
 }
 
-.ver-line{
+.ver-line {
   height: 1px;
   width: 80%;
   margin: 12px auto;
-  background: rgba(255,255,255,.25);
+  background: rgba(255, 255, 255, .25);
 }
 
-.ver-question{
-  font-size: 12px;
-  color: rgba(255,255,255,.75);
+.ver-question {
+  font-size: 15px;
+  color: rgba(255, 255, 255, .75);
 }
 
-/* hourglass */
-.ver-center{
+/* ===== REALISTIC HOURGLASS ===== */
+.ver-center {
   display: grid;
   place-items: center;
 }
-.ver-hourglass{
-  width: 170px;
-  height: 210px;
-  border-radius: 22px;
 
-  background:
-    radial-gradient(circle at 50% 20%, rgba(140,220,255,.7), transparent 60%),
-    radial-gradient(circle at 50% 80%, rgba(140,220,255,.4), transparent 65%),
-    rgba(255,255,255,.05);
+.hourglass-wrapper {
+  position: relative;
+  width: 180px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  border: 1px solid rgba(180,230,255,.25);
+.hourglass-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 40px rgba(160, 180, 240, 0.4)) drop-shadow(0 0 80px rgba(140, 160, 220, 0.2));
+}
+
+/* Glass bulbs styling */
+.glass-bulb {
+  transition: all 0.3s ease;
+}
+
+.top-bulb,
+.bottom-bulb {
+  filter: url(#innerGlow);
+}
+
+/* Sand animations */
+.sand-top-svg {
+  animation: sandDrainSvg 12s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes sandDrainSvg {
+
+  0%,
+  100% {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scaleY(0.4) translateY(30px);
+    opacity: 0.85;
+  }
+}
+
+.sand-bottom-svg {
+  animation: sandFillSvg 12s ease-in-out infinite;
+  transform-origin: center top;
+}
+
+@keyframes sandFillSvg {
+
+  0%,
+  100% {
+    transform: scaleY(0.5) translateY(20px);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scaleY(1.2) translateY(-10px);
+    opacity: 1;
+  }
+}
+
+.sand-pile-svg {
+  animation: pileGrowSvg 12s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+@keyframes pileGrowSvg {
+
+  0%,
+  100% {
+    transform: scaleY(0.3) scaleX(0.5);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scaleY(1) scaleX(1);
+    opacity: 0.8;
+  }
+}
+
+/* Sand stream animation */
+.sand-stream-svg {
+  animation: streamPulseSvg 1s ease-in-out infinite;
+}
+
+@keyframes streamPulseSvg {
+
+  0%,
+  100% {
+    opacity: 1;
+    stroke-width: 4;
+  }
+
+  50% {
+    opacity: 0.7;
+    stroke-width: 3;
+  }
+}
+
+/* Glass reflection shimmer */
+.glass-reflection {
+  animation: shimmerReflection 4s ease-in-out infinite;
+}
+
+@keyframes shimmerReflection {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    stroke-width: 4;
+  }
+
+  50% {
+    opacity: 0.6;
+    stroke-width: 5;
+  }
+}
+
+/* Sand particles container */
+.sand-particles-container {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 60px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.sand-particle-new {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(210, 190, 240, 0.95);
+  border-radius: 50%;
+  animation: particleFallNew 1s linear infinite;
   box-shadow:
-    0 0 50px rgba(120,200,255,.25),
-    0 30px 100px rgba(0,0,0,.45);
+    0 0 6px rgba(200, 180, 230, 1),
+    0 0 12px rgba(180, 160, 210, 0.7);
+}
+
+@keyframes particleFallNew {
+  0% {
+    top: 0;
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(0.8) translateX(1px);
+  }
+
+  100% {
+    top: 60px;
+    opacity: 0;
+    transform: scale(0.3) translateX(-1px);
+  }
+}
+
+/* Outer glow pulse animation */
+.hourglass-svg ellipse:first-of-type {
+  animation: outerGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes outerGlowPulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
 }
 
 /* locks */
-.ver-lockcard{
+.ver-lockcard {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: center;
 }
-.ver-lock{
-  opacity: .85;
+
+.ver-lock-lines {
+  position: absolute;
+  width: 100%;
+  height: 320px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ver-lock-svg {
+  width: 48px;
+  height: 48px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6))
+          drop-shadow(0 0 16px rgba(200, 220, 255, 0.4));
+  position: relative;
+  z-index: 1;
 }
 
 /* ===== CHAPTERS ===== */
-.ver-chapters{
+.ver-chapters {
   margin: 46px auto 0;
   margin-top: 80px;
   width: min(760px, 92vw);
@@ -191,30 +383,31 @@ html, body {
   gap: 32px;
 }
 
-.ver-chapter{
+.ver-chapter {
   height: 120px;
   border-radius: 16px;
 
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .08);
   backdrop-filter: blur(16px);
-  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
 
   display: grid;
   place-items: center;
 }
 
-.ver-chapter-title{
+.ver-chapter-title {
   font-size: 12px;
-  color: rgba(255,255,255,.95);
+  color: rgba(255, 255, 255, .95);
 }
-.ver-chapter-emo{
+
+.ver-chapter-emo {
   font-size: 12px;
   margin-top: 4px;
 }
 
 /* ===== BUTTON ===== */
-.ver-btn{
+.ver-btn {
   margin-top: 44px;
   padding: 14px 36px;
   border: none;
@@ -226,32 +419,34 @@ html, body {
 
   background: linear-gradient(90deg, #8fd3ff, #f3a9df);
   box-shadow:
-    0 18px 44px rgba(0,0,0,.4),
-    0 0 28px rgba(180,220,255,.35);
+    0 18px 44px rgba(0, 0, 0, .4),
+    0 0 28px rgba(180, 220, 255, .35);
 }
 
-.ver-btn:hover{
+.ver-btn:hover {
   transform: translateY(-1px);
 }
 
 
 /* ===== MOBILE ===== */
-@media (max-width: 820px){
-  .ver-hero{
+@media (max-width: 820px) {
+  .ver-hero {
     grid-template-columns: 1fr;
     gap: 18px;
   }
-  .ver-chapters{
+
+  .ver-chapters {
     grid-template-columns: 1fr;
   }
 }
 
 /* ✅ ห้ามใส่ body{} แล้วนะ ให้คุมเฉพาะหน้านี้ */
-.vermiss-page{
+.vermiss-page {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow: hidden; /* กันดาววิ่งออกนอกจอ */
+  overflow: hidden;
+  /* กันดาววิ่งออกนอกจอ */
 }
 
 /* layer ดาวตกอยู่หลังสุด */
@@ -262,12 +457,12 @@ html, body {
 }
 
 /* ถ้าต้องการพื้นหลังดำแบบอวกาศ */
-.vermiss-page{
+.vermiss-page {
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 
 /* คอนเทนต์จริงอยู่บนดาว */
-.vermiss-content{
+.vermiss-content {
   position: relative;
   z-index: 2;
   width: min(980px, 92vw);
@@ -276,97 +471,252 @@ html, body {
 }
 
 /* ====== NIGHT SKY ====== */
-.night{
+.night {
   position: absolute;
   inset: 0;
   transform: rotateZ(45deg);
 }
 
 /* ====== SHOOTING STAR ====== */
-.shooting_star{
+.shooting_star {
   position: absolute;
   left: 10%;
   top: 10%;
   height: 2px;
   width: 0;
-  background: linear-gradient(-45deg, rgba(95,145,255,1), rgba(0,0,255,0));
+  background: linear-gradient(-45deg, rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
   border-radius: 999px;
-  filter: drop-shadow(0 0 6px rgba(105,155,255,1));
+  filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
   animation:
     tail 3000ms ease-in-out infinite,
     shooting 3000ms ease-in-out infinite;
 }
 
 .shooting_star::before,
-.shooting_star::after{
+.shooting_star::after {
   content: "";
   position: absolute;
   top: calc(50% - 1px);
   right: 0;
   height: 2px;
   width: 0;
-  background: linear-gradient(-45deg, rgba(0,0,255,0), rgba(95,145,255,1), rgba(0,0,255,0));
+  background: linear-gradient(-45deg, rgba(0, 0, 255, 0), rgba(95, 145, 255, 1), rgba(0, 0, 255, 0));
   border-radius: 100%;
   animation: shining 3000ms ease-in-out infinite;
 }
 
-.shooting_star::before{
+.shooting_star::before {
   transform: translateX(50%) rotateZ(45deg);
 }
 
-.shooting_star::after{
+.shooting_star::after {
   transform: translateX(50%) rotateZ(-45deg);
 }
 
 /* ====== STAR POSITIONS (แทน @for + random) ====== */
 /* ปรับได้ตามใจ: top/left คือระยะจากจุดกึ่งกลาง */
-.shooting_star:nth-child(1){  top: calc(50% - 180px); left: calc(50% - 120px); animation-delay: 0ms; }
-.shooting_star:nth-child(2){  top: calc(50% - 60px);  left: calc(50% - 220px); animation-delay: 800ms; }
-.shooting_star:nth-child(3){  top: calc(50% + 40px);  left: calc(50% - 90px);  animation-delay: 1600ms; }
-.shooting_star:nth-child(4){  top: calc(50% - 140px); left: calc(50% + 60px);  animation-delay: 2400ms; }
-.shooting_star:nth-child(5){  top: calc(50% + 120px); left: calc(50% - 160px); animation-delay: 3200ms; }
-.shooting_star:nth-child(6){  top: calc(50% - 200px); left: calc(50% + 140px); animation-delay: 4000ms; }
-.shooting_star:nth-child(7){  top: calc(50% + 80px);  left: calc(50% + 40px);  animation-delay: 4800ms; }
-.shooting_star:nth-child(8){  top: calc(50% - 20px);  left: calc(50% + 180px); animation-delay: 5600ms; }
-.shooting_star:nth-child(9){  top: calc(50% + 160px); left: calc(50% + 100px); animation-delay: 6400ms; }
-.shooting_star:nth-child(10){ top: calc(50% - 100px); left: calc(50% - 40px);  animation-delay: 7200ms; }
-.shooting_star:nth-child(11){ top: calc(50% + 20px);  left: calc(50% - 300px); animation-delay: 8000ms; }
-.shooting_star:nth-child(12){ top: calc(50% - 260px); left: calc(50% + 220px); animation-delay: 8800ms; }
-.shooting_star:nth-child(13){ top: calc(50% + 200px); left: calc(50% - 20px);  animation-delay: 9600ms; }
-.shooting_star:nth-child(14){ top: calc(50% - 40px);  left: calc(50% + 260px); animation-delay: 10400ms; }
-.shooting_star:nth-child(15){ top: calc(50% + 100px); left: calc(50% - 200px); animation-delay: 11200ms; }
+.shooting_star:nth-child(1) {
+  top: calc(50% - 180px);
+  left: calc(50% - 120px);
+  animation-delay: 0ms;
+}
+
+.shooting_star:nth-child(2) {
+  top: calc(50% - 60px);
+  left: calc(50% - 220px);
+  animation-delay: 800ms;
+}
+
+.shooting_star:nth-child(3) {
+  top: calc(50% + 40px);
+  left: calc(50% - 90px);
+  animation-delay: 1600ms;
+}
+
+.shooting_star:nth-child(4) {
+  top: calc(50% - 140px);
+  left: calc(50% + 60px);
+  animation-delay: 2400ms;
+}
+
+.shooting_star:nth-child(5) {
+  top: calc(50% + 120px);
+  left: calc(50% - 160px);
+  animation-delay: 3200ms;
+}
+
+.shooting_star:nth-child(6) {
+  top: calc(50% - 200px);
+  left: calc(50% + 140px);
+  animation-delay: 4000ms;
+}
+
+.shooting_star:nth-child(7) {
+  top: calc(50% + 80px);
+  left: calc(50% + 40px);
+  animation-delay: 4800ms;
+}
+
+.shooting_star:nth-child(8) {
+  top: calc(50% - 20px);
+  left: calc(50% + 180px);
+  animation-delay: 5600ms;
+}
+
+.shooting_star:nth-child(9) {
+  top: calc(50% + 160px);
+  left: calc(50% + 100px);
+  animation-delay: 6400ms;
+}
+
+.shooting_star:nth-child(10) {
+  top: calc(50% - 100px);
+  left: calc(50% - 40px);
+  animation-delay: 7200ms;
+}
+
+.shooting_star:nth-child(11) {
+  top: calc(50% + 20px);
+  left: calc(50% - 300px);
+  animation-delay: 8000ms;
+}
+
+.shooting_star:nth-child(12) {
+  top: calc(50% - 260px);
+  left: calc(50% + 220px);
+  animation-delay: 8800ms;
+}
+
+.shooting_star:nth-child(13) {
+  top: calc(50% + 200px);
+  left: calc(50% - 20px);
+  animation-delay: 9600ms;
+}
+
+.shooting_star:nth-child(14) {
+  top: calc(50% - 40px);
+  left: calc(50% + 260px);
+  animation-delay: 10400ms;
+}
+
+.shooting_star:nth-child(15) {
+  top: calc(50% + 100px);
+  left: calc(50% - 200px);
+  animation-delay: 11200ms;
+}
 
 /* ให้ before/after delay ตามดวงดาวดวงนั้น */
-.shooting_star:nth-child(1)::before,  .shooting_star:nth-child(1)::after{  animation-delay: 0ms; }
-.shooting_star:nth-child(2)::before,  .shooting_star:nth-child(2)::after{  animation-delay: 800ms; }
-.shooting_star:nth-child(3)::before,  .shooting_star:nth-child(3)::after{  animation-delay: 1600ms; }
-.shooting_star:nth-child(4)::before,  .shooting_star:nth-child(4)::after{  animation-delay: 2400ms; }
-.shooting_star:nth-child(5)::before,  .shooting_star:nth-child(5)::after{  animation-delay: 3200ms; }
-.shooting_star:nth-child(6)::before,  .shooting_star:nth-child(6)::after{  animation-delay: 4000ms; }
-.shooting_star:nth-child(7)::before,  .shooting_star:nth-child(7)::after{  animation-delay: 4800ms; }
-.shooting_star:nth-child(8)::before,  .shooting_star:nth-child(8)::after{  animation-delay: 5600ms; }
-.shooting_star:nth-child(9)::before,  .shooting_star:nth-child(9)::after{  animation-delay: 6400ms; }
-.shooting_star:nth-child(10)::before, .shooting_star:nth-child(10)::after{ animation-delay: 7200ms; }
-.shooting_star:nth-child(11)::before, .shooting_star:nth-child(11)::after{ animation-delay: 8000ms; }
-.shooting_star:nth-child(12)::before, .shooting_star:nth-child(12)::after{ animation-delay: 8800ms; }
-.shooting_star:nth-child(13)::before, .shooting_star:nth-child(13)::after{ animation-delay: 9600ms; }
-.shooting_star:nth-child(14)::before, .shooting_star:nth-child(14)::after{ animation-delay: 10400ms; }
-.shooting_star:nth-child(15)::before, .shooting_star:nth-child(15)::after{ animation-delay: 11200ms; }
+.shooting_star:nth-child(1)::before,
+.shooting_star:nth-child(1)::after {
+  animation-delay: 0ms;
+}
+
+.shooting_star:nth-child(2)::before,
+.shooting_star:nth-child(2)::after {
+  animation-delay: 800ms;
+}
+
+.shooting_star:nth-child(3)::before,
+.shooting_star:nth-child(3)::after {
+  animation-delay: 1600ms;
+}
+
+.shooting_star:nth-child(4)::before,
+.shooting_star:nth-child(4)::after {
+  animation-delay: 2400ms;
+}
+
+.shooting_star:nth-child(5)::before,
+.shooting_star:nth-child(5)::after {
+  animation-delay: 3200ms;
+}
+
+.shooting_star:nth-child(6)::before,
+.shooting_star:nth-child(6)::after {
+  animation-delay: 4000ms;
+}
+
+.shooting_star:nth-child(7)::before,
+.shooting_star:nth-child(7)::after {
+  animation-delay: 4800ms;
+}
+
+.shooting_star:nth-child(8)::before,
+.shooting_star:nth-child(8)::after {
+  animation-delay: 5600ms;
+}
+
+.shooting_star:nth-child(9)::before,
+.shooting_star:nth-child(9)::after {
+  animation-delay: 6400ms;
+}
+
+.shooting_star:nth-child(10)::before,
+.shooting_star:nth-child(10)::after {
+  animation-delay: 7200ms;
+}
+
+.shooting_star:nth-child(11)::before,
+.shooting_star:nth-child(11)::after {
+  animation-delay: 8000ms;
+}
+
+.shooting_star:nth-child(12)::before,
+.shooting_star:nth-child(12)::after {
+  animation-delay: 8800ms;
+}
+
+.shooting_star:nth-child(13)::before,
+.shooting_star:nth-child(13)::after {
+  animation-delay: 9600ms;
+}
+
+.shooting_star:nth-child(14)::before,
+.shooting_star:nth-child(14)::after {
+  animation-delay: 10400ms;
+}
+
+.shooting_star:nth-child(15)::before,
+.shooting_star:nth-child(15)::after {
+  animation-delay: 11200ms;
+}
+
 
 /* ====== ANIMATIONS ====== */
-@keyframes tail{
-  0%{ width: 0; }
-  30%{ width: 120px; }
-  100%{ width: 0; }
+@keyframes tail {
+  0% {
+    width: 0;
+  }
+
+  30% {
+    width: 120px;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 
-@keyframes shining{
-  0%{ width: 0; }
-  50%{ width: 30px; }
-  100%{ width: 0; }
+@keyframes shining {
+  0% {
+    width: 0;
+  }
+
+  50% {
+    width: 30px;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 
-@keyframes shooting{
-  from{ transform: translateX(0); }
-  to{ transform: translateX(230px); }
+@keyframes shooting {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(230px);
+  }
 }

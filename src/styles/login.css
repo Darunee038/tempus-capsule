@@ -162,9 +162,9 @@
 }
 
 .login-link{
-  font-size: 12px;
+  font-size: 14px;
   text-decoration: none;
-  color: rgba(255,255,255,.60);
+  color: rgba(255,255,255,.90);
 }
 
 .login-link:hover{

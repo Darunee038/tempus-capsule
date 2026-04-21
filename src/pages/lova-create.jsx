@@ -1,120 +1,162 @@
 import { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/home.css";
 import "../styles/lova-create.css";
 import "../scripts/lova-create.js";
+import logo from "../assets/logo/tempus-logo.png";
 
-export default function HoraCreate({ onNext }) {
-    useEffect(() => {
-    if (window.initHoraCreate) {
-      window.initHoraCreate();
+export default function LovaCreate({ onNext }) {
+  const navigate = useNavigate(); // ✅ ต้องมี
+
+  useEffect(() => {
+    document.body.classList.add("lova-create-route");
+
+    if (window.initLovaCreate) {
+      window.initLovaCreate();
     }
+
+    return () => {
+      document.body.classList.remove("lova-create-route");
+    };
   }, []);
 
   return (
     <>
       {/* HEADER */}
-      <header className="top-bar">
-        <div className="page-center top-bar-inner">
-          <div className="logo">Tempus Capsule</div>
-          <nav className="menu">
-            <span>HoraWhisper+</span>
-            <span className="active">LovaNote</span>
-            <span>EtereaMoment</span>
-            <span>VermissSandglass</span>
+      <header className="hp-nav">
+        <div className="hp-nav-inner">
+          <Link to="/home" className="hp-logo">
+            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
+          </Link>
+
+          <nav className="hp-menu">
+            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
+            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
+            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
+            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
           </nav>
-          <div className="profile">👤</div>
+
+          <Link className="hp-user" to="/profile">
+            <span className="hp-user-icon">👤</span>
+          </Link>
         </div>
       </header>
+
+       <div className="lova-create-page">
+        <div className="dreamscape-layer" aria-hidden="true">
+          <div className="falling-star falling-star-fourpoint falling-star-one" />
+          <div className="falling-star falling-star-fourpoint falling-star-two" />
+          <div className="falling-star falling-star-fourpoint falling-star-three" />
+          <div className="falling-star falling-star-fourpoint falling-star-four" />
+          <div className="falling-star falling-star-fourpoint falling-star-five" />
+          <div className="falling-star falling-star-fourpoint falling-star-six" />
+          <div className="falling-star falling-star-fourpoint falling-star-seven" />
+          <div className="falling-star falling-star-fourpoint falling-star-eight" />
+          <div className="falling-star falling-star-fourpoint falling-star-nine" />
+          <div className="falling-star falling-star-fourpoint falling-star-ten" />
+          <div className="falling-star falling-star-fourpoint falling-star-eleven" />
+          <div className="falling-star falling-star-fourpoint falling-star-twelve" />
+        </div>
 
       {/* MAIN */}
       <main className="layout">
         <div className="page-center">
 
-          {/* TITLE */}
           <section className="title-section">
             <h1>LovaNote</h1>
             <p>A message for the one who makes your heart softer.</p>
           </section>
 
           {/* BOOK */}
-          <section className="book-section">
-            <div className="book unified">
-              <div className="page left"></div>
-              <div className="page right"></div>
-              <canvas id="canvas" width={720} height={460}></canvas>
-            </div>
-          </section>
-
-          {/* TOOLBAR */}
-          <section className="toolbar-section">
-            <div className="toolbar">
-              <div className="tools-left">
-                <button id="undoBtn">⟲</button>
-                <button id="redoBtn">⟳</button>
-                <button id="penBtn">🖊️</button>
-                <button id="eraserBtn">🧽</button>
-                <button id="textBtn">T</button>
-                <button id="stickerBtn">⭐</button>
-                <button id="imageBtn">🖼️</button>
-                <input
-                  type="file"
-                  id="imageInput"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                />
-
-                <label className="color-box">
-                  <input type="color" id="penColor" defaultValue="#000000" />
-                </label>
-
-                <input type="range" min={2} max={12} defaultValue={4} />
+            <section className="book-section">
+              <div className="book unified">
+                <div className="page left"></div>
+                <div className="page right"></div>
+                <canvas id="canvas" width={720} height={460}></canvas>
               </div>
+            </section>
 
-              <div className="divider"></div>
+            {/* TOOLBAR */}
+            <section className="toolbar-section">
+              <div className="toolbar">
+                <div className="tools-left">
+                  <button id="undoBtn" data-tooltip="Undo the last change">⟲</button>
+                  <button id="redoBtn" data-tooltip="Redo the last undone change">⟳</button>
+                  <button id="penBtn" data-tooltip="Draw with the pen tool">🖊️</button>
+                  <button id="eraserBtn" data-tooltip="Erase strokes from the page">🧽</button>
+                  <button id="textBtn" data-tooltip="Add a text note">T</button>
+                  <button id="stickerBtn" data-tooltip="Open the sticker library">⭐</button>
+                  <button id="imageBtn" data-tooltip="Upload a photo">🖼️</button>
+                  <label className="paper-color-trigger" data-tooltip="Change paper color">
+                    <span className="paper-color-icon">🪣</span>
+                    <input type="color" id="paperColorInput" defaultValue="#ffffff" />
+                  </label>
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                  />
 
-              <div className="tools-right">
-                <span>Background</span>
-                <div className="bg-list">
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
+                  <label className="color-box" data-tooltip="Choose pen color">
+                    <input type="color" id="penColor" defaultValue="#000000" />
+                  </label>
+
+                  <input
+                    type="range"
+                    min={2}
+                    max={12}
+                    defaultValue={4}
+                    data-tooltip="Adjust pen size"
+                  />
+                </div>
+
+                <div className="divider"></div>
+
+                <div className="tools-right">
+                  <span>Background</span>
+                  <div className="bg-list">
+                    <button type="button" className="bg-item bg-stars active" data-bg="stars" data-tooltip="Pastel stars paper"></button>
+                    <button type="button" className="bg-item bg-blue-floral" data-bg="blueFloral" data-tooltip="Blue floral paper"></button>
+                    <button type="button" className="bg-item bg-clover" data-bg="sprinkles" data-tooltip="Clover paper"></button>
+                    <button type="button" className="bg-item bg-pastel-grid" data-bg="pastelGrid" data-tooltip="Pastel grid paper"></button>
+                    <button type="button" className="bg-item bg-confetti-dots" data-bg="confettiDots" data-tooltip="Soft confetti dots"></button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section className="bottom-section">
-            <div className="field">
-              <label>Username of friend</label>
-              <input type="email" placeholder="Enter Username" />
-            </div>
-
-            <div className="field">
-              <label>Capsule open on</label>
-
-              <div
-                id="dateDropdown"
-                className="date-dropdown placeholder"
-              >
-                Select open date
+            <section className="bottom-section">
+              <div className="field">
+                <label>Backup Email</label>
+                <input type="email" placeholder="Enter your email" />
               </div>
-            </div>
-          </section>
 
-          <div className="next-row">
+              <div className="field">
+                <label>Capsule open on</label>
+
+                <div
+                  id="dateDropdown"
+                  className="date-dropdown placeholder"
+                >
+                  Select open date
+                </div>
+              </div>
+            </section>
+
             <button
               className="next-btn"
               onClick={() => {
                 console.log("NEXT CLICK");
-                onNext();
+                navigate("/feature/lova/capsule"); 
               }}
             >
               Next
             </button>
+
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 }

@@ -1,10 +1,12 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/otp.css";
 
 export default function OTPVerify() {
   const navigate = useNavigate();
+  const location = useLocation();
   const inputs = useRef([]);
+  const email = location.state?.email || "your registered email";
 
   const handleChange = (e, i) => {
     const value = e.target.value;
@@ -15,7 +17,7 @@ export default function OTPVerify() {
   };
 
   const handleSubmit = () => {
-    alert("✅ OTP verified");
+    alert("OTP verified");
     navigate("/reset");
   };
 
@@ -25,9 +27,9 @@ export default function OTPVerify() {
         <h1>Change Password</h1>
 
         <p>
-          We’ve sent a password reset link to your email
+          We&apos;ve sent a password reset OTP to
           <br />
-          <b>TempusCap@gmail.com</b>
+          <b>{email}</b>
         </p>
 
         <div className="otp-box">
@@ -43,7 +45,7 @@ export default function OTPVerify() {
         </div>
 
         <button className="otp-btn" onClick={handleSubmit}>
-          Send OTP
+          Verify OTP
         </button>
 
         <button className="otp-back" onClick={() => navigate(-1)}>

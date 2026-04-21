@@ -51,14 +51,18 @@
 }
 
 /* กล่อง nav glass */
-.hp-nav-inner{
-    width: min(980px, 92vw);
-    height: 54px;
+.hp-nav-inner {
+    width: min(1100px, 92vw);
+    height: 57px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 140px 1fr 54px;
+    
+    /* แก้จาก 54px เป็น auto เพื่อให้มันขยายตามความกว้างของปุ่ม Logout ครับ */
+    grid-template-columns: 140px 1fr auto; 
+    
     align-items: center;
-    padding: 12px 14px;
+    padding: 0 25px; /* เพิ่ม Padding ฝั่งขวาให้มีระยะห่างจากขอบหน่อย */
+    
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.301);
     background: rgba(255, 255, 255, 0.014);
@@ -67,10 +71,16 @@
 
 /* logo pill */
 .hp-logo{
-  height: 36px;
-  align-items: center;
+  height: 30px;
   padding: 8px 25px;
   filter: drop-shadow(0 0 12px rgba(180,220,255,.8));
+  display: flex;
+  align-items: center;
+}
+
+.hp-logo-img {
+  height: 35px;
+  width: auto;
 }
 
 
@@ -189,6 +199,20 @@
 
   box-shadow: 0 18px 50px rgba(0,0,0,.06);
 }
+
+.logout-btn {
+    padding: 6px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+    white-space: nowrap; /* ห้ามตัดบรรทัด */
+}
+
+
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 820px){

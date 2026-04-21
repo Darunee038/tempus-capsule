@@ -208,6 +208,11 @@
   text-decoration: none;
 }
 
+.reg-input::placeholder {
+  color: #999;
+  opacity: 0.8;
+}
+
 @keyframes bgShift {
   0% {
     background-position: 0% 50%;

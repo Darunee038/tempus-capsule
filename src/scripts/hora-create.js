@@ -96,6 +96,220 @@ window.initHoraCreate = function () {
 
   const imageBtn = document.getElementById("imageBtn");
   const imageInput = document.getElementById("imageInput");
+  const paperColorInput = document.getElementById("paperColorInput");
+  const backupEmailInput = document.getElementById("backupEmailInput");
+  const bgButtons = Array.from(document.querySelectorAll(".bg-list .bg-item"));
+  const pageEls = Array.from(document.querySelectorAll(".book.unified .page"));
+
+  const isReadOnly = () => document.body.dataset.horaReadOnly === "true";
+
+  function patternSvgUrl(svg) {
+    return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  }
+
+  const PAPER_PATTERNS = {
+    stars: {
+      color: "#f6f0db",
+      image: patternSvgUrl(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+          <rect width="320" height="320" fill="#f6f0db"/>
+          <g opacity="0.95">
+            <path d="M40 18l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#8fc0ec"/>
+            <path d="M116 58l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#b57d4c"/>
+            <path d="M208 12l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#8fc0ec"/>
+            <path d="M276 30l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#ea6a73"/>
+            <path d="M72 130l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#72c7a6"/>
+            <path d="M168 106l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#e7a8d2"/>
+            <path d="M260 120l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#b57d4c"/>
+            <path d="M20 234l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#8fc0ec"/>
+            <path d="M126 198l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#72c7a6"/>
+            <path d="M226 206l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#ea6a73"/>
+            <path d="M82 282l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#e7a8d2"/>
+            <path d="M286 274l4 12h13l-10 7 4 12-11-8-11 8 4-12-10-7h13z" fill="#72c7a6"/>
+          </g>
+        </svg>
+      `),
+      size: "240px 240px"
+    },
+    blueFloral: {
+      color: "#f6f0e2",
+      image: patternSvgUrl(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+          <rect width="160" height="160" fill="#f6f0e2"/>
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <g transform="translate(20 22)">
+              <path d="M0 14c6-2 10-8 13-13" stroke="#c7cfdd" stroke-width="2"/>
+              <path d="M2 12c4 8 10 12 18 16" stroke="#909a7b" stroke-width="2.4"/>
+              <circle cx="16" cy="10" r="4.4" fill="#aebad5" stroke="none"/>
+              <circle cx="11" cy="8" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="19" cy="6" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="14" cy="15" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="17" cy="12" r="1.6" fill="#6f82ad" stroke="none"/>
+            </g>
+            <g transform="translate(88 30) scale(0.9)">
+              <path d="M0 14c6-2 10-8 13-13" stroke="#c7cfdd" stroke-width="2"/>
+              <path d="M2 12c4 8 10 12 18 16" stroke="#909a7b" stroke-width="2.4"/>
+              <circle cx="16" cy="10" r="4.4" fill="#aebad5" stroke="none"/>
+              <circle cx="11" cy="8" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="19" cy="6" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="14" cy="15" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="17" cy="12" r="1.6" fill="#6f82ad" stroke="none"/>
+            </g>
+            <g transform="translate(44 86) scale(0.82)">
+              <path d="M0 14c6-2 10-8 13-13" stroke="#c7cfdd" stroke-width="2"/>
+              <path d="M2 12c4 8 10 12 18 16" stroke="#909a7b" stroke-width="2.4"/>
+              <circle cx="16" cy="10" r="4.4" fill="#aebad5" stroke="none"/>
+              <circle cx="11" cy="8" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="19" cy="6" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="14" cy="15" r="4" fill="#aebad5" stroke="none"/>
+              <circle cx="17" cy="12" r="1.6" fill="#6f82ad" stroke="none"/>
+            </g>
+            <ellipse cx="32" cy="74" rx="2.2" ry="4.2" fill="#909a7b" stroke="none" transform="rotate(-22 32 74)"/>
+            <ellipse cx="112" cy="96" rx="2.2" ry="4.2" fill="#909a7b" stroke="none" transform="rotate(18 112 96)"/>
+            <ellipse cx="132" cy="54" rx="2.2" ry="4.2" fill="#c7cfdd" stroke="none" transform="rotate(-32 132 54)"/>
+          </g>
+        </svg>
+      `),
+      size: "92px 92px"
+    },
+    sprinkles: {
+      color: "#fbfaf6",
+      image: patternSvgUrl(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+          <rect width="180" height="180" fill="#fbfaf6"/>
+          <g>
+            <g transform="translate(18 14) scale(0.74)">
+              <circle cx="12" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="22" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="17" cy="6" r="6.2" fill="#6bb667"/>
+              <circle cx="17" cy="18" r="6.2" fill="#6bb667"/>
+              <path d="M17 22C19 27 20 30 19 35" stroke="#427d42" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            </g>
+            <g transform="translate(112 22) scale(0.74)">
+              <circle cx="12" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="22" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="17" cy="6" r="6.2" fill="#6bb667"/>
+              <circle cx="17" cy="18" r="6.2" fill="#6bb667"/>
+              <path d="M17 22C19 27 20 30 19 35" stroke="#427d42" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            </g>
+            <g transform="translate(54 76) scale(0.74)">
+              <circle cx="12" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="22" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="17" cy="6" r="6.2" fill="#6bb667"/>
+              <circle cx="17" cy="18" r="6.2" fill="#6bb667"/>
+              <path d="M17 22C19 27 20 30 19 35" stroke="#427d42" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            </g>
+            <g transform="translate(130 112) scale(0.74)">
+              <circle cx="12" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="22" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="17" cy="6" r="6.2" fill="#6bb667"/>
+              <circle cx="17" cy="18" r="6.2" fill="#6bb667"/>
+              <path d="M17 22C19 27 20 30 19 35" stroke="#427d42" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            </g>
+            <g transform="translate(16 130) scale(0.74)">
+              <circle cx="12" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="22" cy="12" r="6.2" fill="#5ea95d"/>
+              <circle cx="17" cy="6" r="6.2" fill="#6bb667"/>
+              <circle cx="17" cy="18" r="6.2" fill="#6bb667"/>
+              <path d="M17 22C19 27 20 30 19 35" stroke="#427d42" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+            </g>
+          </g>
+        </svg>
+      `),
+      size: "180px 180px"
+    },
+    pastelGrid: {
+      color: "#fdf9f3",
+      image: patternSvgUrl(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
+          <rect width="96" height="96" fill="#fdf9f3"/>
+          <path d="M0 0H96M0 12H96M0 24H96M0 36H96M0 48H96M0 60H96M0 72H96M0 84H96M0 96H96M0 0V96M12 0V96M24 0V96M36 0V96M48 0V96M60 0V96M72 0V96M84 0V96M96 0V96" stroke="#e4cfc0" stroke-width="0.8"/>
+          <rect x="52" y="36" width="6" height="6" fill="#f39caf"/>
+          <rect x="58" y="42" width="6" height="6" fill="#77d7e6"/>
+          <rect x="64" y="36" width="6" height="6" fill="#f6c35b"/>
+          <rect x="70" y="42" width="6" height="6" fill="#9edb8c"/>
+          <rect x="10" y="78" width="6" height="6" fill="#8bc8f2"/>
+          <rect x="16" y="84" width="6" height="6" fill="#f29db0"/>
+        </svg>
+      `),
+      size: "96px 96px"
+    },
+    confettiDots: {
+      color: "#fcfbf7",
+      image: patternSvgUrl(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+          <rect width="160" height="160" fill="#fcfbf7"/>
+          <g opacity="0.88">
+            <circle cx="28" cy="30" r="3.2" fill="#f08fa1"/>
+            <circle cx="74" cy="48" r="3.2" fill="#9cd7f5"/>
+            <circle cx="120" cy="34" r="3.2" fill="#bde6a7"/>
+            <circle cx="44" cy="104" r="3.2" fill="#f4c68e"/>
+            <circle cx="130" cy="94" r="3.2" fill="#f6c6da"/>
+            <circle cx="18" cy="138" r="3.2" fill="#f08fa1"/>
+            <circle cx="88" cy="126" r="3.2" fill="#9cd7f5"/>
+          </g>
+        </svg>
+      `),
+      size: "160px 160px"
+    }
+  };
+
+  const backgroundThemes = PAPER_PATTERNS;
+  let currentPaperColor = paperColorInput?.value || "#f6f0db";
+  let currentPattern = "stars";
+  let selectedBackground = currentPattern;
+
+  function renderPaperSurface() {
+    const patternConfig = currentPattern ? (PAPER_PATTERNS[currentPattern] || PAPER_PATTERNS.stars) : null;
+
+    pageEls.forEach((page) => {
+      const edgeShadow = page.classList.contains("left")
+        ? "linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 84%, rgba(224, 211, 218, 0.08) 100%)"
+        : "linear-gradient(270deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 84%, rgba(224, 211, 218, 0.08) 100%)";
+
+      page.style.backgroundColor = currentPaperColor;
+      page.style.setProperty("--page-base", currentPaperColor);
+
+      if (patternConfig) {
+        page.style.backgroundImage = [patternConfig.image, edgeShadow].join(", ");
+        page.style.backgroundSize = [patternConfig.size, "auto"].join(", ");
+        page.style.setProperty("--page-pattern", patternConfig.image);
+        page.style.setProperty("--page-pattern-size", patternConfig.size);
+      } else {
+        page.style.backgroundImage = edgeShadow;
+        page.style.backgroundSize = "auto";
+        page.style.setProperty("--page-pattern", "none");
+        page.style.setProperty("--page-pattern-size", "auto");
+      }
+    });
+  }
+
+  function syncBackgroundButtons() {
+    bgButtons.forEach((button) => {
+      button.classList.toggle("active", !!currentPattern && button.dataset.bg === currentPattern);
+    });
+  }
+
+  function applyPageAppearance() {
+    currentPaperColor = paperColorInput?.value || currentPaperColor;
+    renderPaperSurface();
+    syncBackgroundButtons();
+  }
+
+  function setBackground(patternName) {
+    if (!backgroundThemes[patternName]) return;
+
+    selectedBackground = patternName;
+    currentPattern = patternName;
+
+    if (backgroundThemes[patternName]?.color) {
+      currentPaperColor = backgroundThemes[patternName].color;
+      if (paperColorInput) paperColorInput.value = currentPaperColor;
+    }
+
+    renderPaperSurface();
+    syncBackgroundButtons();
+  }
 
   // ===== ACTIVE BUTTON =====
   function setActiveButton(btn) {
@@ -198,23 +412,27 @@ window.initHoraCreate = function () {
 
   // ===== TOOL SWITCH =====
   penBtn.onclick = () => {
+    if (isReadOnly()) return;
     closeTextPopup();
     tool = "pen";
     setActiveButton(penBtn);
     updateCursor();
   };
   eraserBtn.onclick = () => {
+    if (isReadOnly()) return;
     closeTextPopup();
     tool = "eraser";
     setActiveButton(eraserBtn);
     updateCursor();
   };
   textBtn.onclick = () => {
+    if (isReadOnly()) return;
     tool = "text";
     setActiveButton(textBtn);
     openTextPopup();
   };
   imageBtn.onclick = () => {
+    if (isReadOnly()) return;
     closeTextPopup();
     tool = "image";
     imageInput.click();
@@ -230,9 +448,17 @@ window.initHoraCreate = function () {
     size = Number(e.target.value);
     updateCursor();
   };
+  paperColorInput?.addEventListener("input", applyPageAppearance);
+  bgButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (isReadOnly()) return;
+      setBackground(btn.dataset.bg);
+    });
+  });
 
   // ===== CANVAS POINTER EVENTS =====
   canvas.addEventListener("pointerdown", e => {
+    if (isReadOnly()) return;
     isCanvasActive = true;
     draggingItem = false;
     resizingItem = false;
@@ -379,27 +605,34 @@ window.initHoraCreate = function () {
 
   // ====== ADD IMAGE INPUT ======
   imageInput.onchange = e => {
+    if (isReadOnly()) return;
     const file = e.target.files[0];
     if (!file) return;
-    const img = new Image();
-    img.onload = () => {
-      saveHistory();
-      const scale = Math.min(300 / img.width, 300 / img.height, 1);
-      const w = img.width * scale;
-      const h = img.height * scale;
-      strokes.push({
-        type: "image",
-        src: img.src,
-        img,
-        x: canvas.width / 2,
-        y: canvas.height / 2,
-        w,
-        h,
-        rotation: 0
-      });
-      redraw();
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") return;
+
+      const img = new Image();
+      img.onload = () => {
+        saveHistory();
+        const scale = Math.min(300 / img.width, 300 / img.height, 1);
+        const w = img.width * scale;
+        const h = img.height * scale;
+        strokes.push({
+          type: "image",
+          src: reader.result,
+          img,
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          w,
+          h,
+          rotation: 0
+        });
+        redraw();
+      };
+      img.src = reader.result;
     };
-    img.src = URL.createObjectURL(file);
+    reader.readAsDataURL(file);
     imageInput.value = "";
   };
 
@@ -675,6 +908,7 @@ window.initHoraCreate = function () {
 
     // ===== OPEN POPUP =====
     stickerBtn.onclick = () => {
+      if (isReadOnly()) return;
       if (stickerPopup.style.display === "block") return;
 
       stickerOverlay = document.createElement("div");
@@ -698,6 +932,7 @@ window.initHoraCreate = function () {
 
     // ===== CLICK STICKER → ADD TO CANVAS =====
     stickerPopup.querySelector(".sticker-grid").onclick = (e) => {
+      if (isReadOnly()) return;
       const item = e.target.closest(".sticker-item");
       if (!item) return;
 
@@ -832,6 +1067,7 @@ window.initHoraCreate = function () {
 
   // ===== DOUBLE CLICK TEXT TO EDIT =====
   canvas.addEventListener("dblclick", e => {
+    if (isReadOnly()) return;
     const p = getPos(e);
     for (let i = strokes.length - 1; i >= 0; i--) {
       const s = strokes[i];
@@ -848,6 +1084,7 @@ window.initHoraCreate = function () {
 
   // ===== DELETE SELECTED TEXT =====
   document.addEventListener("keydown", e => {
+    if (isReadOnly()) return;
     if (editingText) return;
     if (popup.style.display === "block") return;
     if (!selectedItem) return;
@@ -864,6 +1101,7 @@ window.initHoraCreate = function () {
   // ===== KEYBOARD SHORTCUT : UNDO / REDO =====
   document.addEventListener("keydown", e => {
     // ❌ ถ้าไม่ได้โฟกัส canvas → ไม่ทำ
+    if (isReadOnly()) return;
     if (!isCanvasActive) return;
 
     // ❌ ถ้ากำลังพิมพ์ text / popup เปิด → ไม่ทำ
@@ -970,15 +1208,146 @@ window.initHoraCreate = function () {
     }
   }
 
-  function updateDatePreview() {
-    const d = String(daySelect.value).padStart(2, "0");
-    const m = String(monthSelect.value).padStart(2, "0");
-    const y = yearSelect.value;
+  function updateDatePreview(dateValue = null) {
+    const isDateObject =
+      dateValue instanceof Date && !Number.isNaN(dateValue.getTime());
+    const date = isDateObject
+      ? dateValue
+      : new Date(
+          Number(yearSelect.value),
+          Number(monthSelect.value) - 1,
+          Number(daySelect.value)
+        );
+
+    if (Number.isNaN(date.getTime())) {
+      clearDatePreview();
+      return;
+    }
+
+    const d = String(date.getDate()).padStart(2, "0");
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const y = date.getFullYear();
     dateDropdown.textContent = `${d}/${m}/${y}`;
     dateDropdown.classList.remove("placeholder");
   }
 
-  dateDropdown.onclick = openDatePopup;
+  function clearDatePreview() {
+    dateDropdown.textContent = "Select open date";
+    dateDropdown.classList.add("placeholder");
+  }
+
+  function serializeStroke(item) {
+    if (item.type === "stroke") {
+      return {
+        type: "stroke",
+        color: item.color,
+        size: item.size,
+        points: item.points.map(point => ({ x: point.x, y: point.y }))
+      };
+    }
+
+    if (item.type === "text") {
+      return {
+        type: "text",
+        text: item.text,
+        font: item.font,
+        size: item.size,
+        color: item.color,
+        bold: !!item.bold,
+        italic: !!item.italic,
+        align: item.align || "center",
+        rotation: item.rotation || 0,
+        x: item.x,
+        y: item.y
+      };
+    }
+
+    if (item.type === "image") {
+      return {
+        type: "image",
+        src: item.src,
+        x: item.x,
+        y: item.y,
+        w: item.w,
+        h: item.h,
+        rotation: item.rotation || 0
+      };
+    }
+
+    return item;
+  }
+
+  function resetEditorState() {
+    strokes.length = 0;
+    undoStack.length = 0;
+    redoStack.length = 0;
+    selectedItem = null;
+    drawing = false;
+    currentStroke = null;
+  }
+
+  function loadSnapshot(snapshot = {}) {
+    resetEditorState();
+
+    selectedBackground = backgroundThemes[snapshot.background]
+      ? snapshot.background
+      : "stars";
+    setBackground(selectedBackground);
+
+    if (paperColorInput && snapshot.paperColor) {
+      paperColorInput.value = snapshot.paperColor;
+      applyPageAppearance();
+    }
+
+    if (backupEmailInput) {
+      backupEmailInput.value = snapshot.backupEmail || "";
+    }
+
+    if (snapshot.openDate) {
+      const parsedDate = new Date(snapshot.openDate);
+      if (!Number.isNaN(parsedDate.getTime())) {
+        selectedOpenDate = parsedDate;
+        yearSelect.value = parsedDate.getFullYear();
+        monthSelect.value = parsedDate.getMonth() + 1;
+        daySelect.value = parsedDate.getDate();
+        updateDatePreview(parsedDate);
+      } else {
+        selectedOpenDate = null;
+        clearDatePreview();
+      }
+    } else {
+      selectedOpenDate = null;
+      clearDatePreview();
+    }
+
+    (snapshot.strokes || []).forEach(item => {
+      const nextItem = { ...item };
+      if (nextItem.type === "image" && nextItem.src) {
+        const img = new Image();
+        img.onload = redraw;
+        img.src = nextItem.src;
+        nextItem.img = img;
+      }
+      strokes.push(nextItem);
+    });
+
+    redraw();
+  }
+
+  function getSnapshot() {
+    return {
+      background: selectedBackground,
+      paperColor: paperColorInput?.value || backgroundThemes[selectedBackground]?.base || "#ffffff",
+      backupEmail: backupEmailInput?.value?.trim() || "",
+      openDate: selectedOpenDate ? selectedOpenDate.toISOString() : null,
+      strokes: strokes.map(serializeStroke)
+    };
+  }
+
+  dateDropdown.onclick = () => {
+    if (isReadOnly()) return;
+    openDatePopup();
+  };
   yearSelect.onchange = updateDatePreview;
   monthSelect.onchange = updateDatePreview;
   daySelect.onchange = updateDatePreview;
@@ -993,5 +1362,10 @@ window.initHoraCreate = function () {
     updateDatePreview();
     closeDatePopup();
   };
+  window.horaCreateApi = {
+    getSnapshot,
+    loadSnapshot,
+  };
+  setBackground(selectedBackground);
   updateCursor();
 };

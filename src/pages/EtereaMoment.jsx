@@ -6,7 +6,7 @@ import logo from "../assets/logo/tempus-logo.png";
 export default function EtereaMoment() {
   const handleJoin = (e) => {
     e.preventDefault();
-    // เดี๋ยวค่อยทำระบบจริงทีหลังได้
+    // เดี๋ยวค่อยทำระบบจริงทีหลัง
     alert("Code received ✨ (demo)");
   };
 
@@ -16,9 +16,9 @@ export default function EtereaMoment() {
         {/* NAV */}
         <header className="et-nav">
           <div className="et-nav-inner">
-            <div className="et-logo">
+            <Link to="/home" className="et-logo">
               <img src={logo} alt="Tempus Capsule" className="et-logo-img" />
-            </div>
+            </Link>
 
             <nav className="et-menu">
               <Link className="et-menu-item" to="/feature/hora">HoraWhisper+</Link>
@@ -68,6 +68,7 @@ export default function EtereaMoment() {
           <Link to="/feature/eterea/create" className="et-create-btn">
             Create Capsule
           </Link>
+          
         </main>
       </div>
     </div>

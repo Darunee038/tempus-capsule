@@ -1,151 +1,177 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/home.css";
 import "../styles/eterea-create.css";
 import "../scripts/eterea-create.js";
+import logo from "../assets/logo/tempus-logo.png";
 
-export default function HoraCreate({ onNext }) {
-  // ====== STATE ======
+export default function EtereaCreate({ onNext }) {
+  const navigate = useNavigate();
   const [code, setCode] = useState("");
 
-  // ====== EFFECT ======
-  useEffect(() => {
-    if (window.initHoraCreate) {
-      window.initHoraCreate();
-    }
-  }, []);
+  const handleGenerateCode = () => {
+    const generatedCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+    setCode(generatedCode);
+  };
 
-  // ====== HANDLER ======
-  function handleGenerateCode() {
-    const randomCode = Math.random()
-      .toString(36)
-      .substring(2, 8)
-      .toUpperCase();
-    setCode(randomCode);
-  }
+  useEffect(() => {
+    document.body.classList.add("eterea-create-route");
+
+    if (window.initEtereaCreate) {
+      window.initEtereaCreate();
+    }
+
+    return () => {
+      document.body.classList.remove("eterea-create-route");
+    };
+  }, []);
 
   return (
     <>
-      {/* HEADER */}
-      <header className="top-bar">
-        <div className="page-center top-bar-inner">
-          <div className="logo">Tempus Capsule</div>
-          <nav className="menu">
-            <span>HoraWhisper+</span>
-            <span>LoveNote</span>
-            <span className="active">EtereaMoment</span>
-            <span>VermissSandglass</span>
+      <header className="hp-nav">
+        <div className="hp-nav-inner">
+          <Link to="/home" className="hp-logo">
+            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
+          </Link>
+          <nav className="hp-menu">
+            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
+            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
+            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
+            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
           </nav>
-          <div className="profile">👤</div>
+          <Link className="hp-user" to="/profile" aria-label="Profile">
+            <span className="hp-user-icon">👤</span>
+          </Link>
         </div>
       </header>
 
-      {/* MAIN */}
-      <main className="layout">
-        <div className="page-center">
+      <div className="eterea-create-page">
+        <div className="dreamscape-layer" aria-hidden="true">
+          <div className="falling-star falling-star-fourpoint falling-star-one" />
+          <div className="falling-star falling-star-fourpoint falling-star-two" />
+          <div className="falling-star falling-star-fourpoint falling-star-three" />
+          <div className="falling-star falling-star-fourpoint falling-star-four" />
+          <div className="falling-star falling-star-fourpoint falling-star-five" />
+          <div className="falling-star falling-star-fourpoint falling-star-six" />
+          <div className="falling-star falling-star-fourpoint falling-star-seven" />
+          <div className="falling-star falling-star-fourpoint falling-star-eight" />
+          <div className="falling-star falling-star-fourpoint falling-star-nine" />
+          <div className="falling-star falling-star-fourpoint falling-star-ten" />
+          <div className="falling-star falling-star-fourpoint falling-star-eleven" />
+          <div className="falling-star falling-star-fourpoint falling-star-twelve" />
+        </div>
 
-          {/* TITLE */}
-          <section className="title-section">
-            <h1>EtereaMoment</h1>
-            <p>Collect precious memories with someone who matters.</p>
-          </section>
+        <main className="layout">
+          <div className="page-center">
+            <section className="title-section">
+              <h1>EtereaMoment</h1>
+              <p>Collect precious memories with someone who matters.</p>
+            </section>
 
-          {/* BOOK */}
-          <section className="book-section">
-            <div className="book unified">
-              <div className="page left"></div>
-              <div className="page right"></div>
-              <canvas id="canvas" width={720} height={460}></canvas>
-            </div>
-          </section>
-
-          {/* TOOLBAR */}
-          <section className="toolbar-section">
-            <div className="toolbar">
-              <div className="tools-left">
-                <button id="undoBtn">⟲</button>
-                <button id="redoBtn">⟳</button>
-                <button id="penBtn">🖊️</button>
-                <button id="eraserBtn">🧽</button>
-                <button id="textBtn">T</button>
-                <button id="stickerBtn">⭐</button>
-                <button id="imageBtn">🖼️</button>
-
-                <input
-                  type="file"
-                  id="imageInput"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                />
-
-                <label className="color-box">
-                  <input type="color" id="penColor" defaultValue="#000000" />
-                </label>
-
-                <input type="range" min={2} max={12} defaultValue={4} />
+            <section className="book-section">
+              <div className="book unified">
+                <div className="page left"></div>
+                <div className="page right"></div>
+                <canvas id="canvas" width={720} height={460}></canvas>
               </div>
+            </section>
 
-              <div className="divider"></div>
+            <section className="toolbar-section">
+              <div className="toolbar">
+                <div className="tools-left">
+                  <button id="undoBtn" data-tooltip="Undo the last change">↶</button>
+                  <button id="redoBtn" data-tooltip="Redo the last undone change">↷</button>
+                  <button id="penBtn" data-tooltip="Draw with the pen tool">✎</button>
+                  <button id="eraserBtn" data-tooltip="Erase strokes from the page">⌫</button>
+                  <button id="textBtn" data-tooltip="Add a text note">T</button>
+                  <button id="stickerBtn" data-tooltip="Open the sticker library">✦</button>
+                  <button id="imageBtn" data-tooltip="Upload a photo">🖼</button>
+                  <label className="paper-color-trigger" data-tooltip="Change paper color">
+                    <span className="paper-color-icon">🎨</span>
+                    <input type="color" id="paperColorInput" defaultValue="#ffffff" />
+                  </label>
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                  />
 
-              <div className="tools-right">
-                <span>Background</span>
-                <div className="bg-list">
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
-                  <div className="bg-item"></div>
+                  <label className="color-box" data-tooltip="Choose pen color">
+                    <input type="color" id="penColor" defaultValue="#000000" />
+                  </label>
+
+                  <input
+                    type="range"
+                    min={2}
+                    max={12}
+                    defaultValue={4}
+                    data-tooltip="Adjust pen size"
+                  />
+                </div>
+
+                <div className="divider"></div>
+
+                <div className="tools-right">
+                  <span>Background</span>
+                  <div className="bg-list">
+                    <button type="button" className="bg-item bg-stars active" data-bg="stars" data-tooltip="Pastel stars paper"></button>
+                    <button type="button" className="bg-item bg-blue-floral" data-bg="blueFloral" data-tooltip="Blue floral paper"></button>
+                    <button type="button" className="bg-item bg-clover" data-bg="sprinkles" data-tooltip="Clover paper"></button>
+                    <button type="button" className="bg-item bg-pastel-grid" data-bg="pastelGrid" data-tooltip="Pastel grid paper"></button>
+                    <button type="button" className="bg-item bg-confetti-dots" data-bg="confettiDots" data-tooltip="Soft confetti dots"></button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
 
-          {/* BOTTOM */}
-          <section className="bottom-section">
-            <div className="field">
-              <label>Create Code</label>
+            <section className="bottom-section">
+              <div className="field">
+                <label>Create Code</label>
 
-              <div className="code-row">
-                <input
-                  type="text"
-                  placeholder="Enter Code"
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                />
+                <div className="code-row">
+                  <input
+                    type="text"
+                    placeholder="Enter Code"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                  />
 
-                <button
-                  className="generate-btn"
-                  onClick={handleGenerateCode}
+                  <button
+                    type="button"
+                    className="generate-btn"
+                    onClick={handleGenerateCode}
+                  >
+                    Generate
+                  </button>
+                </div>
+              </div>
+
+              <div className="field">
+                <label>Capsule open on</label>
+                <div
+                  id="dateDropdown"
+                  className="date-dropdown placeholder"
                 >
-                  Generate
-                </button>
+                  Select open date
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div className="field">
-              <label>Capsule open on</label>
-              <div
-                id="dateDropdown"
-                className="date-dropdown placeholder"
+            <div className="next-row">
+              <button
+                type="button"
+                className="next-btn"
+                onClick={() => {
+                  navigate("/feature/eterea/capsule");
+                }}
               >
-                Select open date
-              </div>
+                Next
+              </button>
             </div>
-          </section>
-
-          {/* NEXT */}
-          <div className="next-row">
-            <button
-              className="next-btn"
-              onClick={() => {
-                console.log("NEXT CLICK", code);
-                onNext && onNext(code);
-              }}
-            >
-              Next
-            </button>
           </div>
-
-        </div>
-      </main>
+        </main>
+      </div>
     </>
   );
 }

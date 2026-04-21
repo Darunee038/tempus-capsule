@@ -1,21 +1,38 @@
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/lova.css";
 import logo from "../assets/logo/tempus-logo.png";
 
 export default function LovaNote() {
   return (
     <div className="lova-page">
+      {/* FLOATING HEARTS */}
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+      <div className="rose-petal">❤️</div>
+
       <div className="lova-bg">
 
         {/* NAV */}
         <header className="lova-nav">
           <div className="lova-nav-inner">
-            <div className="lova-logo">
+            <Link to="/home" className="lova-logo">
               <img src={logo} alt="Tempus Capsule" className="lova-logo-img" />
-
-
-
-            </div>
+            </Link>
 
             <nav className="lova-menu">
               <Link className="lova-menu-item" to="/feature/hora">HoraWhisper+</Link>

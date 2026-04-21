@@ -1,6 +1,6 @@
-window.initHoraCreate = function () {
-  if (window.__horaCreateInited) return; // ⛔ กันรันซ้ำ
-  window.__horaCreateInited = true;
+window.initEtereaCreate = function () {
+  if (window.__etereaCreateInited) return; // ⛔ กันรันซ้ำ
+  window.__etereaCreateInited = true;
   console.log("create.js init");
 
   const canvas = document.getElementById("canvas");
@@ -94,6 +94,91 @@ window.initHoraCreate = function () {
 
   const imageBtn = document.getElementById("imageBtn");
   const imageInput = document.getElementById("imageInput");
+  const paperColorInput = document.getElementById("paperColorInput");
+  const bgButtons = Array.from(document.querySelectorAll(".bg-list .bg-item"));
+  const pageEls = Array.from(document.querySelectorAll(".book.unified .page"));
+
+  const backgroundThemes = {
+    stars: {
+      base: "#f6f0db",
+      pattern: `
+        radial-gradient(circle at 6px 6px, #8fc0ec 0 2px, transparent 2.2px),
+        radial-gradient(circle at 18px 7px, #ea6a73 0 2px, transparent 2.2px),
+        radial-gradient(circle at 12px 15px, #72c7a6 0 2px, transparent 2.2px),
+        radial-gradient(circle at 19px 18px, #e7a8d2 0 2px, transparent 2.2px),
+        radial-gradient(circle at 7px 19px, #b57d4c 0 2px, transparent 2.2px)
+      `,
+      size: "24px 24px"
+    },
+    blueFloral: {
+      base: "#f6f0e2",
+      pattern: `
+        radial-gradient(circle at 6px 6px, #7f93bb 0 1px, transparent 1.2px),
+        radial-gradient(circle at 4px 4px, #b8c5de 0 2.3px, transparent 2.5px),
+        radial-gradient(circle at 8px 4px, #b8c5de 0 2.3px, transparent 2.5px),
+        radial-gradient(circle at 4px 8px, #b8c5de 0 2.3px, transparent 2.5px),
+        radial-gradient(circle at 8px 8px, #b8c5de 0 2.3px, transparent 2.5px),
+        linear-gradient(35deg, transparent 0 42%, #8f9a7c 42% 46%, transparent 46% 100%)
+      `,
+      size: "18px 18px"
+    },
+    sprinkles: {
+      base: "#fbfaf6",
+      pattern: `
+        radial-gradient(circle at 6px 6px, #5da45d 0 2px, transparent 2.2px),
+        radial-gradient(circle at 12px 6px, #5da45d 0 2px, transparent 2.2px),
+        radial-gradient(circle at 9px 2px, #5da45d 0 2px, transparent 2.2px),
+        radial-gradient(circle at 9px 10px, #5da45d 0 2px, transparent 2.2px),
+        linear-gradient(70deg, transparent 0 52%, #3f7c43 52% 56%, transparent 56% 100%)
+      `,
+      size: "24px 24px"
+    },
+    pastelGrid: {
+      base: "#fdf9f3",
+      pattern: `
+        linear-gradient(rgba(227, 205, 192, 0.6) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(227, 205, 192, 0.6) 1px, transparent 1px),
+        radial-gradient(circle at 10px 8px, #f39caf 0 1.2px, transparent 1.4px),
+        radial-gradient(circle at 14px 12px, #77d7e6 0 1.2px, transparent 1.4px),
+        radial-gradient(circle at 6px 16px, #9edb8c 0 1.2px, transparent 1.4px)
+      `,
+      size: "12px 12px, 12px 12px, 24px 24px, 24px 24px, 24px 24px"
+    },
+    confettiDots: {
+      base: "#fcfbf7",
+      pattern: `
+        radial-gradient(circle at 6px 6px, #f08fa1 0 1.3px, transparent 1.5px),
+        radial-gradient(circle at 18px 8px, #9cd7f5 0 1.3px, transparent 1.5px),
+        radial-gradient(circle at 10px 18px, #bde6a7 0 1.3px, transparent 1.5px),
+        radial-gradient(circle at 22px 22px, #f4c68e 0 1.3px, transparent 1.5px)
+      `,
+      size: "28px 28px"
+    }
+  };
+
+  let selectedBackground = "stars";
+
+  function applyPageAppearance() {
+    const theme = backgroundThemes[selectedBackground] || backgroundThemes.stars;
+    const pageBase = paperColorInput?.value || theme.base;
+    pageEls.forEach(page => {
+      page.style.setProperty("--page-base", pageBase);
+      page.style.setProperty("--page-pattern", theme.pattern);
+      page.style.setProperty("--page-pattern-size", theme.size);
+    });
+  }
+
+  function setBackground(bgKey) {
+    if (!backgroundThemes[bgKey]) return;
+    selectedBackground = bgKey;
+    bgButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.bg === bgKey);
+    });
+    if (paperColorInput) {
+      paperColorInput.value = backgroundThemes[bgKey].base;
+    }
+    applyPageAppearance();
+  }
 
   // ===== ACTIVE BUTTON =====
   function setActiveButton(btn) {
@@ -228,6 +313,10 @@ window.initHoraCreate = function () {
     size = Number(e.target.value);
     updateCursor();
   };
+  paperColorInput?.addEventListener("input", applyPageAppearance);
+  bgButtons.forEach(btn => {
+    btn.addEventListener("click", () => setBackground(btn.dataset.bg));
+  });
 
   // ===== CANVAS POINTER EVENTS =====
   canvas.addEventListener("pointerdown", e => {
@@ -971,5 +1060,6 @@ window.initHoraCreate = function () {
     updateDatePreview();
     closeDatePopup();
   };
+  setBackground(selectedBackground);
   updateCursor();
 };

@@ -1,10 +1,10 @@
 /* เต็มจอ */
-.et-page{
+.et-page {
   width: 100vw;
   height: 100vh;
 }
 
-.et-bg{
+.et-bg {
   width: 100%;
   height: 100%;
   padding: 22px;
@@ -14,30 +14,30 @@
 
   /* โทนม่วง-ชมพู-ทองแบบในรูป */
   background:
-    radial-gradient(900px 700px at 18% 28%, rgba(142,163,255,.70) 0%, rgba(142,163,255,0) 60%),
-    radial-gradient(900px 700px at 82% 35%, rgba(255,194,212,.70) 0%, rgba(255,194,212,0) 60%),
-    radial-gradient(1100px 900px at 78% 78%, rgba(255,231,168,.60) 0%, rgba(255,231,168,0) 60%),
-    radial-gradient(1100px 900px at 22% 82%, rgba(167,214,255,.55) 0%, rgba(167,214,255,0) 60%),
-    linear-gradient(135deg, rgba(120,130,255,.55), rgba(255,170,210,.55), rgba(255,240,200,.50));
+    radial-gradient(900px 700px at 18% 28%, rgba(142, 163, 255, .70) 0%, rgba(142, 163, 255, 0) 60%),
+    radial-gradient(900px 700px at 82% 35%, rgba(255, 194, 212, .70) 0%, rgba(255, 194, 212, 0) 60%),
+    radial-gradient(1100px 900px at 78% 78%, rgba(255, 231, 168, .60) 0%, rgba(255, 231, 168, 0) 60%),
+    radial-gradient(1100px 900px at 22% 82%, rgba(167, 214, 255, .55) 0%, rgba(167, 214, 255, 0) 60%),
+    linear-gradient(135deg, rgba(120, 130, 255, .55), rgba(255, 170, 210, .55), rgba(255, 240, 200, .50));
 }
 
 
 
 /* NAV */
-.et-nav{
+.et-nav {
   width: 100%;
 }
 
-.et-nav-inner{
-  width: min(980px, 92vw);
-  height: 54px;
+.et-nav-inner {
+  width: min(1100px, 92vw);
+  height: 57px;
   margin: 0 auto;
 
   display: grid;
   grid-template-columns: 140px 1fr 54px;
   align-items: center;
 
-  padding: 12px 14px;
+ 
   border-radius: 999px;
 
   border: 1px solid rgba(255, 255, 255, 0.301);
@@ -46,34 +46,34 @@
 }
 
 /* logo pill */
-.et-logo-img{
-  height: 36px;
+.et-logo-img {
+  height: 50px;
   align-items: center;
   padding: 8px 25px;
-  filter: drop-shadow(0 0 12px rgba(180,220,255,.8));
+  filter: drop-shadow(0 0 12px rgba(180, 220, 255, .8));
 }
 
 /* menu */
-.et-menu{
+.et-menu {
   display: flex;
   justify-content: center;
   gap: 110px;
 }
 
-.et-menu-item{
+.et-menu-item {
   font-size: 18px;
   text-decoration: none;
-  color: rgba(255,255,255,.82);
+  color: rgba(255, 255, 255, .82);
   font-weight: 500;
 }
 
-.et-menu-item.active{
-  color: rgba(255,255,255,.96);
+.et-menu-item.active {
+  color: rgba(255, 255, 255, .96);
   font-weight: 700;
 }
 
 /* user */
-.et-user{
+.et-user {
   width: 42px;
   height: 42px;
   border-radius: 999px;
@@ -81,16 +81,16 @@
   place-items: center;
   text-decoration: none;
 
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255, 255, 255, .35);
+  background: rgba(255, 255, 255, .18);
 }
 
-.et-user-icon{
-  filter: drop-shadow(0 10px 30px rgba(0,0,0,.12));
+.et-user-icon {
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .12));
 }
 
 /* MAIN */
-.et-main{
+.et-main {
   width: min(980px, 92vw);
   margin: 0 auto;
   padding-top: 44px;
@@ -98,82 +98,82 @@
   position: relative;
 }
 
-.et-title{
+.et-title {
   margin: 34px 0 34px;
   font-size: 56px;
   font-weight: 500;
-  color: rgba(255,255,255,.92);
-  text-shadow: 0 22px 70px rgba(0,0,0,.16);
+  color: rgba(255, 255, 255, .92);
+  text-shadow: 0 22px 70px rgba(0, 0, 0, .16);
 }
 
 /* Sections */
-.et-section{
+.et-section {
   width: 100%;
   margin-top: 26px;
   text-align: left;
 }
 
-.et-section-title{
+.et-section-title {
   margin: 0 0 14px;
   font-size: 18px;
   font-weight: 500;
-  color: rgba(255,255,255,.70);
+  color: rgba(255, 255, 255, .70);
 }
 
 /* Grid 3 ช่อง */
-.et-grid{
+.et-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
 }
 
-.et-card{
+.et-card {
   height: 150px;
   width: 250px;
   border-radius: 16px;
 
-  border: 1px solid rgba(255,255,255,.28);
-  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .10);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
-  box-shadow: 0 18px 55px rgba(0,0,0,.10);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .10);
   position: relative;
 }
 
-.et-card-hasimg{
+.et-card-hasimg {
   overflow: hidden;
 }
 
-.et-sticker{
+.et-sticker {
   position: absolute;
   left: 18px;
   top: 22px;
   font-size: 40px;
-  filter: drop-shadow(0 12px 25px rgba(0,0,0,.18));
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, .18));
 }
 
 /* Join Group */
-.et-join{
+.et-join {
   margin-top: 30px;
   text-align: center;
 }
 
-.et-join-title{
+.et-join-title {
   font-size: 22px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.918);
   margin-bottom: 12px;
 }
 
-.et-join-bar{
+.et-join-bar {
   width: min(500px, 92vw);
   height: 46px;
   margin: 0 auto;
 
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.30);
-  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255, 255, 255, .30);
+  background: rgba(255, 255, 255, .12);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 
@@ -182,34 +182,34 @@
   overflow: hidden;
 }
 
-.et-join-input{
+.et-join-input {
   border: none;
   outline: none;
   background: transparent;
   padding: 0 18px;
-  color: rgba(255,255,255,.90);
+  color: rgba(255, 255, 255, .90);
   font-size: 14px;
 }
 
-.et-join-input::placeholder{
+.et-join-input::placeholder {
   color: rgba(85, 85, 85, 0.212);
 }
 
-.et-join-btn{
+.et-join-btn {
   border: none;
   cursor: pointer;
   font-weight: 700;
-  color: rgba(255,255,255,.92);
+  color: rgba(255, 255, 255, .92);
 
-  background: linear-gradient(90deg, rgba(120,170,255,.85), rgba(255,150,210,.85));
+  background: linear-gradient(90deg, rgba(120, 170, 255, .85), rgba(255, 150, 210, .85));
 }
 
 /* Create Capsule Button */
 .et-create-btn {
-  margin-top: 24px;
+  margin: 24px auto 0;
 
-  width: min(250px, 92vw);
-  height: 72px;
+  width: min(210px, 70vw);
+  height: 60px;
 
   display: flex;
   align-items: center;
@@ -221,18 +221,17 @@
   cursor: pointer;
 
   color: rgba(255, 255, 255, 0.92);
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
 
-  text-decoration: none;   /* 🔥 สำคัญมาก */
+  text-decoration: none;
+  /* 🔥 สำคัญมาก */
   user-select: none;
 
-  background: linear-gradient(
-    90deg,
-    rgba(150, 210, 255, 0.55),
-    rgba(255, 170, 220, 0.55),
-    rgba(255, 235, 190, 0.45)
-  );
+  background: linear-gradient(90deg,
+      rgba(150, 210, 255, 0.55),
+      rgba(255, 170, 220, 0.55),
+      rgba(255, 235, 190, 0.45));
 
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -251,63 +250,78 @@
   transform: translateY(0);
 }
 
-@media (max-width: 820px){
-  .et-title{ font-size: 44px; }
-  .et-grid{ grid-template-columns: 1fr; }
-  .et-menu{ gap: 14px; }
+@media (max-width: 820px) {
+  .et-title {
+    font-size: 44px;
+  }
+
+  .et-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .et-menu {
+    gap: 14px;
+  }
 }
 
-.et-bg{
+.et-bg {
   position: relative;
   overflow: hidden;
 }
 
 /* layer หิมะ */
 .et-bg::before,
-.et-bg::after{
+.et-bg::after {
   content: "";
   position: absolute;
-  inset: -200px -20vw 0 -20vw;
+  top: -100%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   pointer-events: none;
   background-repeat: repeat;
-  animation: snow-fall linear infinite;
-  animation-fill-mode: both;
 }
 
 
 /* หิมะชั้นหน้า (เม็ดใหญ่ ตกเร็ว) */
-.et-bg::before{
+.et-bg::before {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.9) 2px, transparent 2.5px),
-    radial-gradient(circle, rgba(255,255,255,.7) 1.5px, transparent 2px),
-    radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1.5px);
-  background-size: 120px 120px, 200px 200px, 300px 300px;
-  animation: snow-fall 18s linear infinite;
-  animation-duration: 14s;
-  animation-delay: -7s;
-  opacity: .8;
+    radial-gradient(circle, rgba(255, 255, 255, .98) 0 2.2px, rgba(255, 255, 255, .3) 2.8px, transparent 3.2px),
+    radial-gradient(circle, rgba(255, 255, 255, .92) 0 1.8px, rgba(255, 255, 255, .22) 2.3px, transparent 2.8px),
+    radial-gradient(circle, rgba(255, 255, 255, .78) 0 1.2px, rgba(255, 255, 255, .14) 1.7px, transparent 2.1px);
+  background-size: 90px 90px, 130px 130px, 190px 190px;
+  animation: snow-fall-1 12s linear infinite;
+  opacity: .95;
+  filter: blur(.2px);
 }
 
 /* หิมะชั้นหลัง (เม็ดเล็ก เบา ช้า) */
-.et-bg::after{
+.et-bg::after {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,.6) 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,.4) 1px, transparent 2px);
-  background-size: 180px 180px, 260px 260px;
-  animation: snow-fall 60s linear infinite;
-  animation-duration: 40s;
-  animation-delay: -20s;
-  opacity: .6;
+    radial-gradient(circle, rgba(255, 255, 255, .8) 0 1.8px, rgba(255, 255, 255, .22) 2.2px, transparent 2.6px),
+    radial-gradient(circle, rgba(255, 255, 255, .62) 0 1.1px, rgba(255, 255, 255, .12) 1.5px, transparent 1.9px);
+  background-size: 110px 110px, 165px 165px;
+  animation: snow-fall-2 20s linear infinite;
+  opacity: .72;
+  filter: blur(.35px);
 }
 
-@keyframes snow-fall {
+@keyframes snow-fall-1 {
   0% {
-    /* เริ่มจากด้านบนนอกจอ และเยื้องไปทางซ้าย -10% ของความกว้างจอ */
-    transform: translate(-10vw, -200px);
+    transform: translateY(-50%);
   }
+
   100% {
-    /* ตกทะลุขอบล่างจอ และเฉียงไปทางขวา 20% ของความกว้างจอ */
-    transform: translate(80vw, 110vh);
+    transform: translateY(0%);
   }
 }
 
+@keyframes snow-fall-2 {
+  0% {
+    transform: translateY(-50%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}

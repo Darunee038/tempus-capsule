@@ -2,6 +2,7 @@
 .lova-page {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 .lova-bg{
@@ -10,7 +11,7 @@
   padding: 22px;
   box-sizing: border-box;
 
-  /* Gradient แบบ LovaNote */
+  
   background: linear-gradient(
     -14deg,
     #F6D6EA 0%,
@@ -21,6 +22,154 @@
 
   position: relative;
 }
+
+/* ===== FALLING ROSE PETALS ===== */
+@keyframes float-down {
+  0% {
+    opacity: 1;
+    transform: translateY(-100vh) translateX(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) translateX(100px) rotate(360deg);
+  }
+}
+
+.rose-petal {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 1;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.8));
+}
+
+/* สีแดงเรืองแสง (คู่) */
+.rose-petal:nth-child(even) {
+  color: #ff1744;
+  filter: drop-shadow(0 0 12px rgba(255, 23, 68, 0.9)) drop-shadow(0 0 6px rgba(255, 107, 157, 0.6));
+  text-shadow: 0 0 10px rgba(255, 23, 68, 0.8);
+}
+
+/* สีชมพูเรืองแสง (คี่) */
+.rose-petal:nth-child(odd) {
+  color: #ff69b4;
+  filter: drop-shadow(0 0 12px rgba(255, 105, 180, 0.9)) drop-shadow(0 0 6px rgba(255, 182, 193, 0.7));
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+.rose-petal:nth-child(1) {
+  left: 10%;
+  animation: float-down 3s linear infinite;
+  animation-delay: 0s;
+}
+
+.rose-petal:nth-child(2) {
+  left: 15%;
+  animation: float-down 3.5s linear infinite;
+  animation-delay: -0.2s;
+}
+
+.rose-petal:nth-child(3) {
+  left: 20%;
+  animation: float-down 4s linear infinite;
+  animation-delay: -0.4s;
+}
+
+.rose-petal:nth-child(4) {
+  left: 25%;
+  animation: float-down 3.2s linear infinite;
+  animation-delay: -0.6s;
+}
+
+.rose-petal:nth-child(5) {
+  left: 30%;
+  animation: float-down 3.8s linear infinite;
+  animation-delay: -0.8s;
+}
+
+.rose-petal:nth-child(6) {
+  left: 35%;
+  animation: float-down 3s linear infinite;
+  animation-delay: -1s;
+}
+
+.rose-petal:nth-child(7) {
+  left: 40%;
+  animation: float-down 3.5s linear infinite;
+  animation-delay: -1.2s;
+}
+
+.rose-petal:nth-child(8) {
+  left: 50%;
+  animation: float-down 4s linear infinite;
+  animation-delay: -1.4s;
+}
+
+.rose-petal:nth-child(9) {
+  left: 60%;
+  animation: float-down 3.2s linear infinite;
+  animation-delay: -1.6s;
+}
+
+.rose-petal:nth-child(10) {
+  left: 65%;
+  animation: float-down 3.8s linear infinite;
+  animation-delay: -1.8s;
+}
+
+.rose-petal:nth-child(11) {
+  left: 70%;
+  animation: float-down 3s linear infinite;
+  animation-delay: -2s;
+}
+
+.rose-petal:nth-child(12) {
+  left: 75%;
+  animation: float-down 3.5s linear infinite;
+  animation-delay: -2.2s;
+}
+
+.rose-petal:nth-child(13) {
+  left: 80%;
+  animation: float-down 4s linear infinite;
+  animation-delay: -2.4s;
+}
+
+.rose-petal:nth-child(14) {
+  left: 85%;
+  animation: float-down 3.2s linear infinite;
+  animation-delay: -2.6s;
+}
+
+.rose-petal:nth-child(15) {
+  left: 90%;
+  animation: float-down 3.8s linear infinite;
+  animation-delay: -2.8s;
+}
+
+.rose-petal:nth-child(16) {
+  left: 5%;
+  animation: float-down 3s linear infinite;
+  animation-delay: -0.5s;
+}
+
+.rose-petal:nth-child(17) {
+  left: 45%;
+  animation: float-down 3.5s linear infinite;
+  animation-delay: -1s;
+}
+
+.rose-petal:nth-child(18) {
+  left: 95%;
+  animation: float-down 4s linear infinite;
+  animation-delay: -1.5s;
+}
+
 .lova-nav{
   width: 100%;
   margin-top: 8px;
@@ -32,15 +181,15 @@
   text-align: center;
 }
 .lova-nav-inner{
-  width: min(980px, 92vw);
-  height: 54px;
+  width: min(1100px, 92vw);
+  height: 57px;
   margin: 0 auto;
 
   display: grid;
   grid-template-columns: 140px 1fr 54px;
   align-items: center;
 
-  padding: 10px 14px;
+
   border-radius: 999px;
 
   border: 2px solid rgba(255,255,255,0.18);
@@ -50,7 +199,7 @@
 /* logo */
 
 .lova-logo-img{
-  height: 36px;
+  height: 50px;
   align-items: center;
   padding: 8px 25px;
   filter: drop-shadow(0 0 12px rgba(180,220,255,.8));
