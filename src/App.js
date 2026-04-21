@@ -31,12 +31,15 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/create" element={<CreateCapsule />} />
+      
       <Route path="/feature/hora" element={<HoraWhisper />} />
       <Route path="/feature/hora/create" element={<HoraCreate />} />
       <Route path="/feature/hora/capsule" element={<HoraCapsule />} />
+
       <Route path="/feature/lova" element={<LovaNote />} />
       <Route path="/feature/lova/create" element={<LovaCreate />} />
       <Route path="/feature/lova/capsule" element={<LovaCapsule />} />
+
       <Route path="/feature/vermis" element={<VermissSandglass />} />
       <Route path="/feature/vermiss/create" element={<VermissCreate />} />
       <Route path="/feature/vermiss/view" element={<VermissView/>} />
