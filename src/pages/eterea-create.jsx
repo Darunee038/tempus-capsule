@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/eterea-create.css";
 import "../scripts/eterea-create.js";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 export default function EtereaCreate({ onNext }) {
   const navigate = useNavigate();
@@ -28,22 +28,7 @@ export default function EtereaCreate({ onNext }) {
 
   return (
     <>
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
+      <Navbar variant="hp" activeFeature="eterea" />
 
       <div className="eterea-create-page">
         <div className="dreamscape-layer" aria-hidden="true">

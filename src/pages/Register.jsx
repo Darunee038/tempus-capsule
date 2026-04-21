@@ -6,6 +6,7 @@ import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { serverTimestamp } from "firebase/firestore";
+import { notify } from "../utils/notify";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Register() {
 
     // 🔥 กันกรอกไม่ครบ
     if (!normalizedEmail || !form.password || !form.username) {
-      alert("Please fill all required fields ❗");
+      notify.error("Please fill all required fields ❗");
       return;
     }
 
@@ -51,7 +52,7 @@ export default function Register() {
         user_doc: serverTimestamp(),
       });
 
-      alert("Account created successfully 🎉");
+      notify.success("Account created successfully 🎉");
 
       navigate("/login");
 
@@ -63,11 +64,11 @@ export default function Register() {
 
       // 🔥 แปลง error ให้อ่านง่าย
       if (err.code === "auth/email-already-in-use") {
-        alert("This email is already registered ❌");
+        notify.error("This email is already registered ❌");
       } else if (err.code === "auth/weak-password") {
-        alert("Password must be at least 6 characters ❌");
+        notify.error("Password must be at least 6 characters ❌");
       } else {
-        alert(err.message);
+        notify.error(err.message);
       }
     }
   };

@@ -4,7 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import "../styles/hora.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 function formatOpenDate(value) {
   if (!value) return "No open date";
@@ -235,39 +235,7 @@ export default function HoraWhisper() {
   return (
     <div className="hora-page">
       <div className="hora-bg">
-        <header className="hora-nav">
-          <div className="hora-nav-inner">
-            <Link to="/home" className="hora-logo">
-              <img
-                src={logo}
-                alt="Tempus Capsule"
-                className="hora-logo-img"
-              />
-            </Link>
-
-            <nav className="hora-menu">
-              <Link className="hora-menu-item active" to="/feature/hora">
-                HoraWhisper+
-              </Link>
-
-              <Link className="hora-menu-item" to="/feature/lova">
-                LovaNote
-              </Link>
-
-              <Link className="hora-menu-item" to="/feature/eterea">
-                EtereaMoment
-              </Link>
-
-              <Link className="hora-menu-item" to="/feature/vermis">
-                VermissSandglass
-              </Link>
-            </nav>
-
-            <Link className="hora-user" to="/profile">
-              👤
-            </Link>
-          </div>
-        </header>
+        <Navbar variant="hora" activeFeature="hora" />
 
         <main className="hora-content">
           <h1 className="hora-title">HoraWhisper+</h1>

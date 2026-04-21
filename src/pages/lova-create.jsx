@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import "../styles/lova-create.css";
 import "../scripts/lova-create.js";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 export default function LovaCreate({ onNext }) {
   const navigate = useNavigate(); // ✅ ต้องมี
@@ -23,24 +23,7 @@ export default function LovaCreate({ onNext }) {
   return (
     <>
       {/* HEADER */}
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-
-          <Link className="hp-user" to="/profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
+      <Navbar variant="hp" activeFeature="lova" />
 
        <div className="lova-create-page">
         <div className="dreamscape-layer" aria-hidden="true">

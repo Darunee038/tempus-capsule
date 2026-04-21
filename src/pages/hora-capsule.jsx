@@ -1,5 +1,5 @@
 import { useEffect, useRef,useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows, useTexture} from "@react-three/drei";
 import { onAuthStateChanged } from "firebase/auth";
@@ -10,32 +10,9 @@ import "../styles/home.css";
 import "../styles/hora-capsule.css";
 import { CapsuleModel } from "../scripts/capsule.jsx";
 import { auth, db, storage } from "../firebase";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
-
-const capsuleHeader = (
-  <>
-      {/* HEADER */}
-      <header className="hp-nav">
-        <div className="hp-nav-inner">
-          <Link to="/home" className="hp-logo">
-            <img src={logo} alt="Tempus Capsule" className="hp-logo-img" />
-          </Link>
-          <nav className="hp-menu">
-            <Link className="hp-menu-item" to="/feature/hora">HoraWhisper+</Link>
-            <Link className="hp-menu-item" to="/feature/lova">LovaNote</Link>
-            <Link className="hp-menu-item" to="/feature/eterea">EtereaMoment</Link>
-            <Link className="hp-menu-item" to="/feature/vermis">VermissSandglass</Link>
-          </nav>
-          <Link className="hp-user" to="/profile" aria-label="Profile">
-            <span className="hp-user-icon">👤</span>
-          </Link>
-        </div>
-      </header>
-
-  </>
-);
 
 
 const STICKER_FILES = [
@@ -1424,6 +1401,7 @@ export default function HoraCapsule({ onBack }) {
     <div
       className="capsule-page"
     >
+      <Navbar variant="hp" activeFeature="hora" />
       <button
         type="button"
         className="capsule-back-button"

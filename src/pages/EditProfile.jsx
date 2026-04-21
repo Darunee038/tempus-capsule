@@ -9,6 +9,7 @@ import {
   reauthenticateWithCredential,
 } from "firebase/auth";
 import "../styles/editProfile.css";
+import { notify } from "../utils/notify";
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -60,7 +61,10 @@ export default function EditProfile() {
   const handleComplete = async () => {
     try {
       const user = auth.currentUser;
-      if (!user) return alert("Not logged in");
+      if (!user) {
+        notify.error("Not logged in");
+        return;
+      }
 
       const docRef = doc(db, "users", user.uid);
       const normalizedEmail = form.email.trim().toLowerCase();
@@ -79,7 +83,8 @@ export default function EditProfile() {
       // 🔐 เปลี่ยนรหัส (ถ้ามีกรอก)
       if (form.newPassword) {
         if (!form.currentPassword) {
-          return alert("❗ กรุณากรอกรหัสเดิม");
+          notify.error("❗ กรุณากรอกรหัสเดิม");
+          return;
         }
 
         const credential = EmailAuthProvider.credential(
@@ -94,12 +99,12 @@ export default function EditProfile() {
         await updatePassword(user, form.newPassword);
       }
 
-      alert("✅ Profile updated successfully");
+      notify.success("✅ Profile updated successfully");
       navigate("/profile");
 
     } catch (error) {
       console.error("🔥 ERROR:", error);
-      alert(error.message);
+      notify.error(error.message);
     }
   };
 

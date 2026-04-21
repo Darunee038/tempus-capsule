@@ -1,37 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/eterea.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
+import { notify } from "../utils/notify";
 
 export default function EtereaMoment() {
   const handleJoin = (e) => {
     e.preventDefault();
     // เดี๋ยวค่อยทำระบบจริงทีหลัง
-    alert("Code received ✨ (demo)");
+    notify.info("Code received ✨ (demo)");
   };
 
   return (
     <div className="et-page">
       <div className="et-bg">
         {/* NAV */}
-        <header className="et-nav">
-          <div className="et-nav-inner">
-            <Link to="/home" className="et-logo">
-              <img src={logo} alt="Tempus Capsule" className="et-logo-img" />
-            </Link>
-
-            <nav className="et-menu">
-              <Link className="et-menu-item" to="/feature/hora">HoraWhisper+</Link>
-              <Link className="et-menu-item" to="/feature/lova">LovaNote</Link>
-              <Link className="et-menu-item active" to="/feature/eterea">EtereaMoment</Link>
-              <Link className="et-menu-item" to="/feature/vermis">VermissSandglass</Link>
-            </nav>
-
-            <Link className="et-user" to="/profile" aria-label="Profile">
-              <span className="et-user-icon">👤</span>
-            </Link>
-          </div>
-        </header>
+        <Navbar variant="et" activeFeature="eterea" />
 
         {/* CONTENT */}
         <main className="et-main">

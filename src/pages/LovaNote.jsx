@@ -1,6 +1,6 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../styles/lova.css";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 export default function LovaNote() {
   return (
@@ -28,22 +28,7 @@ export default function LovaNote() {
       <div className="lova-bg">
 
         {/* NAV */}
-        <header className="lova-nav">
-          <div className="lova-nav-inner">
-            <Link to="/home" className="lova-logo">
-              <img src={logo} alt="Tempus Capsule" className="lova-logo-img" />
-            </Link>
-
-            <nav className="lova-menu">
-              <Link className="lova-menu-item" to="/feature/hora">HoraWhisper+</Link>
-              <Link className="lova-menu-item active" to="/feature/lova">LovaNote</Link>
-              <Link className="lova-menu-item" to="/feature/eterea">EtereaMoment</Link>
-              <Link className="lova-menu-item" to="/feature/vermis">VermissSandglass</Link>
-            </nav>
-
-            <Link className="lova-user" to="/profile">👤</Link>
-          </div>
-        </header>
+        <Navbar variant="lova" activeFeature="lova" />
 
         {/* CONTENT */}
         <main className="lova-content">
