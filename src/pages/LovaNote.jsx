@@ -52,7 +52,12 @@ export default function LovaNote() {
             </div>
           </section>
 
-          <Link className="lova-create" to="/feature/lova/create">
+          {/* <Link className="lova-create" to="/feature/lova/create"> */}
+          <Link 
+            className="hora-create" 
+            to="/feature/hora/create"
+            state={{flowType: "lova"}}
+          >
             Create Capsule
           </Link>
 

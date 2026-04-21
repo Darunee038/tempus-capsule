@@ -125,7 +125,11 @@ export default function HoraWhisper() {
 
     if (!unlockingCapsule.capsulePasswordHash) {
       closePasswordModal();
-      navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`);
+      navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`, {
+        state: {
+          flowType : "hora"
+        }
+      });
       return;
     }
 
@@ -145,7 +149,13 @@ export default function HoraWhisper() {
       }
 
       closePasswordModal();
-      navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`);
+      navigate(`/feature/hora/create?capsuleId=${unlockingCapsule.id}&mode=view`,
+        {
+          state: {
+            flowType : "hora"
+          }
+        }
+      );
     } catch (err) {
       console.error("Failed to verify capsule password:", err);
       setPasswordError("Could not verify the password right now.");
@@ -231,6 +241,15 @@ export default function HoraWhisper() {
       </button>
     );
   };
+  
+
+  const goToCreatePage = () =>{
+    navigate("/feature/hora/create", {
+      state: {
+        flowType : "hora"
+      }
+    });
+  }
 
   return (
     <div className="hora-page">
@@ -263,7 +282,12 @@ export default function HoraWhisper() {
             </div>
           </section>
 
-          <Link className="hora-create" to="/feature/hora/create">
+          <Link 
+            className="hora-create" 
+            to="/feature/hora/create"
+            state={{flowType: "hora"}}
+          >
+
             Create Capsule
           </Link>
         </main>
