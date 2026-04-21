@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* <CapsuleGrid /> */}
+        <CapsuleGrid />
       </main>
     </div>
   );
