@@ -56,6 +56,9 @@ export default function Register() {
       navigate("/login");
 
     } catch (err) {
+      if (auth.currentUser) {
+        await auth.currentUser.delete();
+      }
       console.error(err);
 
       // 🔥 แปลง error ให้อ่านง่าย

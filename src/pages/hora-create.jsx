@@ -54,7 +54,9 @@ export default function HoraCreate() {
   }, []);
 
   useEffect(() => {
+    console.log("Setting up auth state listener for HoraCreate. Current user:", auth);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth state changed. Current user:", user);
       setCurrentUser(user);
     });
 
@@ -152,6 +154,7 @@ export default function HoraCreate() {
       return;
     }
 
+    console.log("Next step clicked. Current user:", currentUser);
     if (!currentUser) {
       setErrorMessage("Please log in before saving a capsule.");
       return;
