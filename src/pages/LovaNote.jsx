@@ -69,6 +69,7 @@ export default function LovaNote() {
         //   query(collection(db, "lovaNotes"), where("userId", "==", user.uid))
         // );
 
+        console.log("Loading capsules for user:", user.uid);
         const q1 = query(
           collection(db, "lovaNotes"),
           where("userId", "==", user.uid)
@@ -76,7 +77,7 @@ export default function LovaNote() {
 
         const q2 = query(
           collection(db, "lovaNotes"),
-          where("receiverId", "==", user.uid)
+          where("reciverId", "==", user.uid)
         );
 
         const [snap1, snap2] = await Promise.all([
@@ -84,8 +85,6 @@ export default function LovaNote() {
           getDocs(q2),
         ]);
 
-        console.log("snap1", snap1);
-        console.log("snap2", snap2);
         // const map = new Map();
 
         // [...snap1.docs, ...snap2.docs].forEach((docSnap) => {
@@ -126,6 +125,7 @@ export default function LovaNote() {
           });
         });
 
+
         const nextCapsules = Array.from(map.values())
           .filter(
             (capsule) =>
@@ -140,6 +140,7 @@ export default function LovaNote() {
             return aTime - bTime;
           });
 
+        console.log("Loaded capsules:", nextCapsules); 
         setCapsules(nextCapsules);
       } catch (err) {
         console.error("Failed to load Hora capsules:", err);
