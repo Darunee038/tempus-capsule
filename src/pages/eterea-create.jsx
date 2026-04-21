@@ -8,7 +8,7 @@ import "../scripts/eterea-create.js";
 import Navbar from "../components/Navbar";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp, onSnapshot, updateDoc } from "firebase/firestore";
 const eterea_DRAFT_STORAGE_KEY = "etereaCapsuleDraft";
 
 
@@ -18,6 +18,9 @@ export default function EtereaCreate({ onNext }) {
   const state = location.state;
   const [searchParams] = useSearchParams();
   const capsuleId = searchParams.get("capsuleId");
+
+  const roomCode = searchParams.get("roomCode");
+
   const mode = searchParams.get("mode");
   const isViewMode = mode === "view";
   const [code, setCode] = useState("");
@@ -28,19 +31,10 @@ export default function EtereaCreate({ onNext }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [capsuleRecord, setCapsuleRecord] = useState(null);
 
+  const clientId = useMemo(() => crypto.randomUUID(), []);
 
-  // useEffect(() => {
-  //   handleGenerateCode();
-  // }, []);
 
-  // useEffect(() => {
-  //   handleCreateRoom(code);
-  // }, [code]);
 
-  const handleGenerateCode = () => {
-    const generatedCode = Math.random().toString(36).slice(2, 8).toUpperCase();
-    setCode(generatedCode);
-  };
 
   useEffect(() => {
     document.body.classList.add("eterea-create-route");
@@ -232,25 +226,69 @@ export default function EtereaCreate({ onNext }) {
   };
 
 
-  const handleCreateRoom = async (capsuleId) => {
-    // console.log("Creating room with code:", code, "and capsuleId:", capsuleId);
-    const newCode = Math.random().toString(36).slice(2, 8).toUpperCase();
+  useEffect(() => {
+    if (!roomCode) return;
 
-    setCode(newCode); // อัพ UI
-
-    await setDoc(doc(db, "etereaRooms", code), {
-      code: code,
-      capsuleId: capsuleId,
-      ownerId: auth.currentUser.uid,
-      createdAt: serverTimestamp(),
+    const cleanData = (data) => ({
+      ...data,
+      strokes: data.strokes.map((s) => {
+        if (s.type === "image") {
+          const { img, ...rest } = s;
+          return rest;
+        }
+        return s;
+      }),
     });
-  };
+
+    let saveTimer;
+
+    window.etereaCreateApi = {
+      ...window.etereaCreateApi,
+      onChange: async (data) => {
+        clearTimeout(saveTimer);
+
+        saveTimer = setTimeout(async () => {
+          try {
+            const cleaned = cleanData(data);
+
+            await updateDoc(doc(db, "etereaRooms", roomCode), {
+              canvasState: cleaned,
+              updatedAt: serverTimestamp(),
+              updatedBy: clientId,
+            });
+          } catch (err) {
+            console.error("save realtime error:", err);
+          }
+        }, 250);
+      },
+    };
+
+    return () => clearTimeout(saveTimer);
+  }, [roomCode, clientId]);
 
   useEffect(() => {
-    if (!code) return;
-    console.log("Code changed, creating room with code:", code, "and capsuleId:", capsuleId);
-    // handleCreateRoom(capsuleId);
-  }, [code, capsuleId]);
+    if (!roomCode) return;
+    if (!window.etereaCreateApi?.loadSnapshot) return;
+
+    let lastData = null;
+
+    const unsub = onSnapshot(doc(db, "etereaRooms", roomCode), (snap) => {
+      const data = snap.data();
+      if (!data?.canvasState) return;
+
+      if (data.updatedBy === clientId) return;
+
+      const json = JSON.stringify(data.canvasState);
+      if (json === lastData) return;
+
+      lastData = json;
+      window.etereaCreateApi.loadSnapshot(data.canvasState);
+    });
+
+    setCode(roomCode);
+    return () => unsub();
+  }, [roomCode, clientId]);
+
 
   return (
     <>

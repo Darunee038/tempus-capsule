@@ -9,7 +9,7 @@ import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export default function EtereaMoment() {
   const navigate = useNavigate();
-  
+
   // const handleJoin = (e) => {
   //   e.preventDefault();
   //   // เดี๋ยวค่อยทำระบบจริงทีหลัง
@@ -21,14 +21,29 @@ export default function EtereaMoment() {
     const snap = await getDoc(roomRef);
 
     if (!snap.exists()) {
-       notify.info("Invalid code");
+      notify.info("Invalid code");
       return;
     }
 
-    const data = snap.data();
+    navigate(`/feature/eterea/create?roomCode=${joinCode}`);
+  };
 
-    // 👉 ไปหน้า editor
-    navigate(`/feature/eterea/create?capsuleId=${data.capsuleId}`);
+
+  const handleCreateRoom = async () => {
+    if (!auth.currentUser) {
+      notify.info("Please login first");
+      return;
+    }
+
+    const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+
+    await setDoc(doc(db, "etereaRooms", code), {
+      code: code,
+      ownerId: auth.currentUser.uid,
+      createdAt: serverTimestamp(),
+    });
+
+    return code;
   };
 
   return (
@@ -74,9 +89,22 @@ export default function EtereaMoment() {
             </form>
           </div>
 
-          <Link to="/feature/eterea/create" className="et-create-btn">
+          {/* <Link to="/feature/eterea/create" className="et-create-btn">
             Create Capsule
-          </Link>
+          </Link> */}
+
+          <button
+            className="et-create-btn"
+            onClick={async () => {
+              const code = await handleCreateRoom();
+
+              if (!code) return;
+
+              navigate(`/feature/eterea/create?roomCode=${code}`);
+            }}
+          >
+            Create Capsule
+          </button>
 
         </main>
       </div>

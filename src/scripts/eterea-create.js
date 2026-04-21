@@ -1,4 +1,6 @@
 window.initEtereaCreate = function () {
+
+
   if (window.__etereaCreateInited) return; // ⛔ กันรันซ้ำ
   window.__etereaCreateInited = true;
   console.log("create.js init");
@@ -51,6 +53,8 @@ window.initEtereaCreate = function () {
   const undoStack = [];
   const redoStack = [];
   const MAX_HISTORY = 50;
+
+  let isSyncing = false;
 
   function saveHistory() {
     undoStack.push(JSON.stringify(strokes));
@@ -447,44 +451,73 @@ window.initEtereaCreate = function () {
   canvas.addEventListener("pointerup", stopAll);
   canvas.addEventListener("pointercancel", stopAll);
   function stopAll(e) {
-    draggingItem = false;
-    resizingItem = false;
-    rotatingItem = false;
-    resizeHandle = null;
-    lastTapText = null;
-    if (drawing && currentStroke && tool === "pen") {
-      saveHistory();
-      strokes.push(currentStroke);
-    }
-    drawing = false;
-    currentStroke = null;
-    updateCursor();
-    try { canvas.releasePointerCapture(e.pointerId); } catch { }
+  const wasDrawing = drawing;
+  const wasDragging = draggingItem;
+  const wasResizing = resizingItem;
+  const wasRotating = rotatingItem;
+
+  draggingItem = false;
+  resizingItem = false;
+  rotatingItem = false;
+  resizeHandle = null;
+  lastTapText = null;
+
+  if (wasDrawing && currentStroke && tool === "pen") {
+    saveHistory();
+    strokes.push(currentStroke);
   }
+
+  drawing = false;
+  currentStroke = null;
+  updateCursor();
+
+  if (wasDrawing || wasDragging || wasResizing || wasRotating) {
+    redraw();
+    triggerSave();
+  }
+
+  try { canvas.releasePointerCapture(e.pointerId); } catch {}
+}
 
   // ====== ADD IMAGE INPUT ======
   imageInput.onchange = e => {
     const file = e.target.files[0];
     if (!file) return;
-    const img = new Image();
-    img.onload = () => {
-      saveHistory();
-      const scale = Math.min(300 / img.width, 300 / img.height, 1);
-      const w = img.width * scale;
-      const h = img.height * scale;
-      strokes.push({
-        type: "image",
-        src: img.src,
-        img,
-        x: canvas.width / 2,
-        y: canvas.height / 2,
-        w,
-        h,
-        rotation: 0
-      });
-      redraw();
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const img = new Image();
+
+      img.onload = () => {
+        saveHistory();
+
+        const scale = Math.min(300 / img.width, 300 / img.height, 1);
+        const w = img.width * scale;
+        const h = img.height * scale;
+
+        strokes.push({
+          type: "image",
+          src: reader.result, // ✅ data URL ข้าม client ได้
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          w,
+          h,
+          rotation: 0
+        });
+
+        redraw();
+        triggerSave();
+      };
+
+      img.onerror = () => {
+        console.error("Failed to load uploaded image");
+      };
+
+      img.src = reader.result;
     };
-    img.src = URL.createObjectURL(file);
+
+    reader.readAsDataURL(file);
     imageInput.value = "";
   };
 
@@ -594,6 +627,8 @@ window.initEtereaCreate = function () {
     setActiveButton(null);
     tool = null;
     redraw();
+    triggerSave();
+
   };
 
   // ===== RENDER =====
@@ -601,6 +636,7 @@ window.initEtereaCreate = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     strokes.forEach(drawItem);
     if (currentStroke) drawItem(currentStroke);
+
   }
   function drawItem(s) {
     if (s.type === "stroke") {
@@ -634,11 +670,26 @@ window.initEtereaCreate = function () {
     if (s.type === "image") {
       if (!s.img && s.src) {
         const im = new Image();
-        im.onload = redraw;
+
+        im.onload = () => {
+          s.img = im;
+          redraw();
+        };
+
+        im.onerror = () => {
+          console.warn("Image failed to load:", s.src);
+          s.img = null;
+        };
+
         im.src = s.src;
-        s.img = im;
         return;
       }
+
+      // ✅ กัน broken / not ready
+      if (!s.img || !s.img.complete || s.img.naturalWidth === 0) {
+        return;
+      }
+
       ctx.save();
       ctx.translate(s.x, s.y);
       ctx.rotate(s.rotation || 0);
@@ -650,6 +701,7 @@ window.initEtereaCreate = function () {
         s.h
       );
       ctx.restore();
+
       if (s === selectedItem) drawImageSelection(s);
     }
   }
@@ -796,7 +848,7 @@ window.initEtereaCreate = function () {
 
         strokes.push({
           type: "image",
-          img,
+          // img,
           src,
           x: canvas.width / 2,
           y: canvas.height / 2,
@@ -807,6 +859,7 @@ window.initEtereaCreate = function () {
 
         redraw();
         closeStickerPopup();
+        triggerSave();
       };
 
       img.src = src;
@@ -943,6 +996,7 @@ window.initEtereaCreate = function () {
       strokes.splice(i, 1);
       selectedItem = null;
       redraw();
+      triggerSave();
     }
   });
 
@@ -1045,6 +1099,30 @@ window.initEtereaCreate = function () {
     dateDropdown.classList.remove("placeholder");
   }
 
+  let saveTimer = null;
+
+  function triggerSave() {
+    if (!window.etereaCreateApi?.onChange) return;
+    if (isSyncing) return;
+
+    clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(() => {
+      const cleanStrokes = strokes.map(s => {
+        if (s.type === "image") {
+          const { img, ...rest } = s;
+          return rest;
+        }
+        return s;
+      });
+
+      window.etereaCreateApi.onChange({
+        strokes: cleanStrokes,
+        openDate: selectedOpenDate,
+      });
+    }, 300); // 👈 ปรับได้ 200–500ms
+  }
+
   dateDropdown.onclick = openDatePopup;
   yearSelect.onchange = updateDatePreview;
   monthSelect.onchange = updateDatePreview;
@@ -1062,4 +1140,45 @@ window.initEtereaCreate = function () {
   };
   setBackground(selectedBackground);
   updateCursor();
+
+
+  window.etereaCreateApi = {
+    loadSnapshot(snapshot) {
+      if (!snapshot) return;
+      if (drawing || draggingItem || resizingItem || rotatingItem) return;
+
+      isSyncing = true;
+
+      strokes.length = 0;
+      if (snapshot.strokes) {
+        strokes.push(...snapshot.strokes);
+      }
+
+      selectedOpenDate = snapshot.openDate
+        ? new Date(snapshot.openDate)
+        : null;
+
+      reviveImages();
+      redraw();
+
+      setTimeout(() => {
+        isSyncing = false;
+      }, 0);
+    },
+
+    getSnapshot() {
+      return {
+        strokes: strokes.map(s => {
+          if (s.type === "image") {
+            const { img, ...rest } = s;
+            return rest;
+          }
+          return s;
+        }),
+        openDate: selectedOpenDate,
+      };
+    },
+
+    onChange: null, // ให้ React มา inject ทีหลัง
+  };
 };

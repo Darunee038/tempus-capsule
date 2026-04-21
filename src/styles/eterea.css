@@ -1,8 +1,10 @@
 /* เต็มจอ */
 
 .et-page {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .et-bg {
@@ -242,9 +244,11 @@
     .et-title {
         font-size: 44px;
     }
+
     .et-grid {
         grid-template-columns: 1fr;
     }
+
     .et-menu {
         gap: 14px;
     }
@@ -296,6 +300,7 @@
     0% {
         transform: translateY(-50%);
     }
+
     100% {
         transform: translateY(0%);
     }
@@ -305,6 +310,7 @@
     0% {
         transform: translateY(-50%);
     }
+
     100% {
         transform: translateY(0%);
     }
