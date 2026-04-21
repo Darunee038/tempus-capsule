@@ -10,7 +10,7 @@ import "../styles/home.css";
 import "../styles/hora-capsule.css";
 import { CapsuleModel } from "../scripts/capsule.jsx";
 import { auth, db, storage } from "../firebase";
-import logo from "../assets/logo/tempus-logo.png";
+import Navbar from "../components/Navbar";
 
 const HORA_DRAFT_STORAGE_KEY = "horaCapsuleDraft";
 
