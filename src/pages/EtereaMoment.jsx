@@ -98,6 +98,58 @@ export default function EtereaMoment() {
     return code;
   };
 
+
+  const renderEtereaCard = (capsule, isLocked) => {
+    const previewUrl = capsule.image || capsule.capsulePreviewUrl || null;
+    const itemCount = capsule.canvasState?.strokes?.length || 0;
+
+    return (
+      <button
+        key={capsule.id}
+        type="button"
+        className={`et-card et-card-button ${isLocked ? "is-locked" : "is-opened"}`}
+        onClick={() => {
+          if (isLocked) return;
+          navigate(`/feature/eterea/create?capsuleId=${capsule.id}&mode=view&roomCode=${capsule.roomCode || ""}`);
+        }}
+      >
+        <div className="et-card-top">
+          <span className={`et-card-chip ${isLocked ? "locked" : "opened"}`}>
+            {isLocked ? "Locked" : "Opened"}
+          </span>
+
+          <div className="et-card-meta">
+            <span className="et-card-date">
+              {capsule.openAt?.seconds
+                ? new Date(capsule.openAt.seconds * 1000).toLocaleDateString("en-GB")
+                : "No date"}
+            </span>
+          </div>
+        </div>
+
+        <div className="et-card-body">
+          {previewUrl ? (
+            <img
+              src={previewUrl}
+              alt={capsule.capsuleName || "Capsule preview"}
+              className="et-card-preview"
+            />
+          ) : (
+            <div className="et-card-preview et-card-preview-placeholder" aria-hidden="true" />
+          )}
+
+          <h4>{capsule.capsuleName || "Eterea Capsule"}</h4>
+          <p>{itemCount} item{itemCount === 1 ? "" : "s"} saved on the page</p>
+        </div>
+
+        <div className="et-card-footer">
+          <span>{isLocked ? "Available on open date" : "Open capsule"}</span>
+        </div>
+      </button>
+    );
+  };
+
+
   return (
     <div className="et-page">
       <div className="et-bg">
@@ -114,7 +166,7 @@ export default function EtereaMoment() {
               {opened.length === 0 ? (
                 <div className="et-empty">No opened capsules yet</div>
               ) : opened.map(c => (
-                <div  key={c.id} >
+                <div key={c.id} >
                   <div className="et-card et-card-hasimg">
                     <h4>{c.capsuleName}</h4>
                     <img src={c.image} alt={c.title} />
