@@ -31,12 +31,42 @@
     height: 57px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 140px 1fr 75px;
+    grid-template-columns: 140px 1fr;
     align-items: center;
+    padding: 0 16px;
     border-radius: 999px;
     border: 2px solid rgba(255, 255, 255, .18);
     background: rgba(255, 255, 255, .08);
     backdrop-filter: blur(16px);
+}
+
+.hora-menu-panel {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+}
+
+.hora-nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .12);
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hora-nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .95);
 }
 
 
@@ -54,7 +84,8 @@
 .hora-menu {
     display: flex;
     justify-content: center;
-    gap: 110px;
+    gap: clamp(18px, 6vw, 110px);
+    flex: 1;
 }
 
 .hora-menu-item {
@@ -364,9 +395,54 @@
 
 /* responsive */
 
-@media (max-width:820px) {
+@media (max-width: 992px) {
     .hora-title {
         font-size: 36px;
+    }
+    .hora-menu {
+        gap: 14px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hora-nav-inner {
+        height: auto;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        border-radius: 20px;
+        padding: 12px 14px;
+    }
+    .hora-logo {
+        display: flex;
+        align-items: center;
+    }
+    .hora-nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+    }
+    .hora-menu-panel {
+        display: none;
+        grid-column: 1 / -1;
+        border: 1px solid rgba(255, 255, 255, .22);
+        background: rgba(255, 255, 255, .08);
+        border-radius: 16px;
+        padding: 12px;
+    }
+    .hora-menu-panel.is-open {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .hora-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .hora-menu-item {
+        font-size: 14px;
+    }
+    .hora-user {
+        margin: 0;
     }
     .hora-grid {
         grid-template-columns: 1fr;
@@ -383,5 +459,11 @@
     }
     .hora-password-actions button {
         width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .hora-title {
+        font-size: 28px;
     }
 }

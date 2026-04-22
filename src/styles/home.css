@@ -1,8 +1,8 @@
 /* ====== FULL SCREEN ====== */
 
 .hp-page {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
 }
 
 
@@ -10,7 +10,7 @@
 
 .hp-bg {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     padding: 22px;
     box-sizing: border-box;
     position: relative;
@@ -60,8 +60,7 @@
     height: 57px;
     margin: 0 auto;
     display: grid;
-    /* แก้จาก 54px เป็น auto เพื่อให้มันขยายตามความกว้างของปุ่ม Logout ครับ */
-    grid-template-columns: 140px 1fr auto;
+    grid-template-columns: 140px 1fr;
     align-items: center;
     padding: 0 25px;
     /* เพิ่ม Padding ฝั่งขวาให้มีระยะห่างจากขอบหน่อย */
@@ -93,7 +92,9 @@
 .hp-menu {
     display: flex;
     justify-content: center;
-    gap: 110px;
+    gap: clamp(18px, 6vw, 110px);
+    flex-wrap: wrap;
+    flex: 1;
 }
 
 .hp-menu-item {
@@ -121,6 +122,35 @@
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .12));
 }
 
+.hp-menu-panel {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+}
+
+.hp-nav-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .12);
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hp-nav-toggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .95);
+}
+
 
 /* ====== CONTENT (อยู่กลาง) ====== */
 
@@ -137,7 +167,7 @@
 
 .hp-title {
     margin: 26px 0 22px;
-    font-size: 44px;
+    font-size: clamp(30px, 4.5vw, 44px);
     font-weight: 500;
     color: rgba(255, 255, 255, .92);
     text-shadow: 0 20px 60px rgba(0, 0, 0, .14);
@@ -151,10 +181,11 @@
     justify-content: center;
     gap: 34px;
     margin-bottom: 46px;
+    flex-wrap: wrap;
 }
 
 .hp-action {
-    width: 210px;
+    width: clamp(170px, 28vw, 210px);
     height: 64px;
     border-radius: 14px;
     display: grid;
@@ -226,12 +257,60 @@
 
 /* ====== RESPONSIVE ====== */
 
-@media (max-width: 820px) {
+@media (max-width: 992px) {
+    .hp-bg {
+        padding: 18px 14px;
+    }
     .hp-menu {
-        gap: 14px;
+        gap: 14px 20px;
     }
     .hp-title {
         font-size: 36px;
+    }
+    .hp-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hp-nav-inner {
+        height: auto;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 14px 16px;
+        border-radius: 20px;
+    }
+    .hp-nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+    }
+    .hp-logo {
+        justify-content: flex-start;
+        padding: 4px 0;
+    }
+    .hp-menu-panel {
+        display: none;
+        grid-column: 1 / -1;
+        border: 1px solid rgba(255, 255, 255, .22);
+        background: rgba(255, 255, 255, .08);
+        border-radius: 16px;
+        padding: 12px;
+    }
+    .hp-menu-panel.is-open {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .hp-menu {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .hp-menu-item {
+        font-size: 14px;
+    }
+    .hp-user {
+        margin: 0;
     }
     .hp-actions {
         flex-direction: column;
@@ -246,5 +325,19 @@
     }
     .hp-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .hp-bg {
+        padding: 14px 10px;
+    }
+    .hp-content {
+        width: 100%;
+        padding-top: 24px;
+    }
+    .hp-title {
+        margin: 18px 0 16px;
+        font-size: 28px;
     }
 }
