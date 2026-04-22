@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
+import "../styles/home.css";
 import "../styles/eterea-capsule.css";
 import { CapsuleModel } from "../scripts/capsule.jsx";
 import Navbar from "../components/Navbar";

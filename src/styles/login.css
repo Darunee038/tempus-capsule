@@ -1,178 +1,196 @@
 /* พื้นหลังเต็มหน้า */
-.login-page{
-  width: 100vw;
-  height: 100vh;
-  padding: 0;     /* 👈 เอา padding ออก */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    /* 👈 เอา padding ออก */
 }
 
 
 /* โทนพื้นหลังเหมือนฟิกม่า (ชมพูซ้ายบน / ฟ้าขวาบน / มิ้นท์ซ้ายล่าง / ม่วงขวาล่าง) */
-.login-bg{
-  width: 100%;
-  height: 100%;
 
-  /* ❌ ไม่ต้องมีขอบมนแล้ว */
-  border-radius: 0;
-
-  display: grid;
-  place-items: center;
-
-
-  background:
-    radial-gradient(800px 600px at 18% 12%, rgba(255,185,233,1), transparent 130%),
-    radial-gradient(900px 650px at 78% 18%, rgba(170,220,255,1), transparent 100%),
-    radial-gradient(900px 700px at 82% 88%, rgba(206,190,255,1), transparent 100%),
-    radial-gradient(900px 700px at 22% 89%, rgba(178,255,235,1), transparent 120%),
-    linear-gradient(135deg, rgba(255,244,250,.92), rgba(240,252,255,.92));
-
-  display: grid;
-  place-items: center;
+.login-bg {
+    width: 100%;
+    min-height: 100vh;
+    /* ❌ ไม่ต้องมีขอบมนแล้ว */
+    border-radius: 0;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(800px 600px at 18% 12%, rgba(255, 185, 233, 1), transparent 130%), radial-gradient(900px 650px at 78% 18%, rgba(170, 220, 255, 1), transparent 100%), radial-gradient(900px 700px at 82% 88%, rgba(206, 190, 255, 1), transparent 100%), radial-gradient(900px 700px at 22% 89%, rgba(178, 255, 235, 1), transparent 120%), linear-gradient(135deg, rgba(255, 244, 250, .92), rgba(240, 252, 255, .92));
+    display: grid;
+    place-items: center;
 }
+
 
 /* จัดกลางทั้งหน้า */
-.login-wrap{
-  width: min(760px, 92vw);
-  text-align: center;
+
+.login-wrap {
+    width: min(760px, 92vw);
+    text-align: center;
 }
+
 
 /* หัวข้อ Tempus Capsule */
-.login-brand{
-  margin: 10px 0 42px;
-  font-size: 54px;
-  font-weight: 500;
-  letter-spacing: .2px;
-  color: rgba(255,255,255,.90);
-  text-shadow: 0 18px 60px rgba(0,0,0,.14);
+
+.login-brand {
+    margin: 10px 0 42px;
+    font-size: clamp(36px, 7vw, 54px);
+    font-weight: 500;
+    letter-spacing: .2px;
+    color: rgba(255, 255, 255, .90);
+    text-shadow: 0 18px 60px rgba(0, 0, 0, .14);
 }
+
 
 /* กล่องฟอร์มแบบ glass */
-.login-card{
-  width: min(520px, 92vw);
-  margin: 0 auto;
-  padding: 28px 28px 22px;
-  border-radius: 22px;
 
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(255,255,255,.14);
-
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  box-shadow: 0 26px 70px rgba(0,0,0,.10);
+.login-card {
+    width: min(520px, 92vw);
+    margin: 0 auto;
+    padding: 28px 28px 22px;
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    background: rgba(255, 255, 255, .14);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .10);
 }
+
 
 /* LOGIN ตัวใหญ่ */
-.login-title{
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: rgba(255,255,255,.92);
-  margin-bottom: 16px;
+
+.login-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, .92);
+    margin-bottom: 16px;
 }
+
 
 /* ฟอร์ม */
-.login-form{
-  display: grid;
-  gap: 14px;
+
+.login-form {
+    display: grid;
+    gap: 14px;
 }
+
 
 /* ช่อง input แบบฟิกม่า (pill + ขอบขาว + โปร่ง) */
-.login-input{
-  height: 44px;
-  border-radius: 999px;
-  padding: 0 16px;
 
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(255,255,255,.12);
-
-  color: rgba(172, 149, 239, 0.92);
-  outline: none;
-
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+.login-input {
+    height: 44px;
+    border-radius: 999px;
+    padding: 0 16px;
+    border: 1px solid rgba(255, 255, 255, .35);
+    background: rgba(255, 255, 255, .12);
+    color: rgba(172, 149, 239, 0.92);
+    outline: none;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
-.login-input::placeholder{
-  color: rgba(180, 174, 174, 0.795);
+.login-input::placeholder {
+    color: rgba(180, 174, 174, 0.795);
 }
+
 
 /* โฟกัสแล้วเด่นขึ้น */
-.login-input:focus{
-  border-color: rgba(255,255,255,.55);
-  background: rgba(255,255,255,.16);
+
+.login-input:focus {
+    border-color: rgba(255, 255, 255, .55);
+    background: rgba(255, 255, 255, .16);
 }
+
 
 /* Remember me */
-.remember-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
 
-  font-size: 12px;
-  color: rgba(255,255,255,.65);
-  justify-content: flex-start;
-  padding-left: 6px;
+.remember-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .65);
+    justify-content: flex-start;
+    padding-left: 6px;
 }
 
-.remember-check{
-  width: 14px;
-  height: 14px;
-  accent-color: rgba(255,255,255,.85);
+.remember-check {
+    width: 14px;
+    height: 14px;
+    accent-color: rgba(255, 255, 255, .85);
 }
+
 
 /* ปุ่ม Sign in แบบ gradient pill */
-.signin-btn{
-  height: 42px;
-  width: 220px;
-  margin: 8px auto 0;
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
 
-  color: rgba(255,255,255,.92);
-  font-weight: 600;
-  border: 1px solid rgba(255,255,255,1);
-
-  background: linear-gradient(
-    90deg,
-    rgba(160,210,255,.90),
-    rgba(205,170,255,.90),
-    rgba(255,170,210,.90)
-  );
-
-  box-shadow: 0 18px 45px rgba(0,0,0,.16);
-  transition: transform .15s ease, filter .15s ease;
+.signin-btn {
+    height: 42px;
+    width: min(220px, 100%);
+    margin: 8px auto 0;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, .92);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 1);
+    background: linear-gradient( 90deg, rgba(160, 210, 255, .90), rgba(205, 170, 255, .90), rgba(255, 170, 210, .90));
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .16);
+    transition: transform .15s ease, filter .15s ease;
 }
 
-.signin-btn:hover{
-  transform: translateY(-1px);
-  filter: brightness(1.03);
+.signin-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
 }
 
-.signin-btn:active{
-  transform: translateY(0px) scale(.99);
+.signin-btn:active {
+    transform: translateY(0px) scale(.99);
 }
+
 
 /* ลิงก์ล่าง */
-.login-links{
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 28px;
+
+.login-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
 }
 
-.login-link{
-  font-size: 14px;
-  text-decoration: none;
-  color: rgba(255,255,255,.90);
+.login-link {
+    font-size: 14px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, .90);
 }
 
-.login-link:hover{
-  color: rgba(255,255,255,.85);
+.login-link:hover {
+    color: rgba(255, 255, 255, .85);
 }
+
 
 /* มือถือ: ลดขนาด title */
-@media (max-width: 480px){
-  .login-brand{ font-size: 40px; margin-bottom: 28px; }
-  .login-card{ padding: 22px 18px 18px; }
+
+@media (max-width: 768px) {
+    .login-bg {
+        padding: 20px 12px;
+    }
+    .login-card {
+        padding: 24px 20px 20px;
+    }
+    .login-links {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-brand {
+        font-size: 34px;
+        margin-bottom: 28px;
+    }
+    .login-card {
+        padding: 22px 16px 18px;
+    }
 }
