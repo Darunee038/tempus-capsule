@@ -5,7 +5,7 @@ import "../styles/eterea.css";
 import Navbar from "../components/Navbar";
 import { notify } from "../utils/notify";
 import { auth, db } from "../firebase";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, serverTimestamp, updateDoc, arrayUnion } from "firebase/firestore";
 
 export default function EtereaMoment() {
   const navigate = useNavigate();
@@ -25,6 +25,23 @@ export default function EtereaMoment() {
       return;
     }
 
+    if (!auth.currentUser) {
+      notify.info("Please login first");
+      return;
+    }
+
+    const uid = auth.currentUser.uid;
+    await updateDoc(roomRef, {
+      members: arrayUnion(uid),
+      [`memberInfo.${uid}`]: {
+        role: "member",
+        joinedAt: serverTimestamp(),
+      },
+      updatedAt: serverTimestamp(),
+      updatedBy: uid,
+    });
+      
+
     navigate(`/feature/eterea/create?roomCode=${joinCode}`);
   };
 
@@ -36,10 +53,18 @@ export default function EtereaMoment() {
     }
 
     const code = Math.random().toString(36).slice(2, 8).toUpperCase();
+    const uid = auth.currentUser.uid;
 
     await setDoc(doc(db, "etereaRooms", code), {
       code: code,
-      ownerId: auth.currentUser.uid,
+      ownerId: uid,
+      members: [uid],
+      memberInfo: {
+        [uid]: {
+          role: "owner",
+          joinedAt: serverTimestamp(),
+        },
+      },
       createdAt: serverTimestamp(),
     });
 

@@ -1410,10 +1410,6 @@ export default function HoraCapsule({ onBack }) {
 
       }
 
-      console.log('currentUser', senderName)
-      console.log('receiverName', receiverName)
-      console.log('receiverId', receiverId)
-
       const payload = {
         userId: currentUser.uid,
         backupEmail,
@@ -1472,10 +1468,6 @@ export default function HoraCapsule({ onBack }) {
       setSaving(false);
     }
   };
-
-  useEffect(() => {
-    console.log("state change", state);
-  }, [state]);
 
   return (
     <div
