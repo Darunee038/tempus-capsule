@@ -451,33 +451,33 @@ window.initEtereaCreate = function () {
   canvas.addEventListener("pointerup", stopAll);
   canvas.addEventListener("pointercancel", stopAll);
   function stopAll(e) {
-  const wasDrawing = drawing;
-  const wasDragging = draggingItem;
-  const wasResizing = resizingItem;
-  const wasRotating = rotatingItem;
+    const wasDrawing = drawing;
+    const wasDragging = draggingItem;
+    const wasResizing = resizingItem;
+    const wasRotating = rotatingItem;
 
-  draggingItem = false;
-  resizingItem = false;
-  rotatingItem = false;
-  resizeHandle = null;
-  lastTapText = null;
+    draggingItem = false;
+    resizingItem = false;
+    rotatingItem = false;
+    resizeHandle = null;
+    lastTapText = null;
 
-  if (wasDrawing && currentStroke && tool === "pen") {
-    saveHistory();
-    strokes.push(currentStroke);
+    if (wasDrawing && currentStroke && tool === "pen") {
+      saveHistory();
+      strokes.push(currentStroke);
+    }
+
+    drawing = false;
+    currentStroke = null;
+    updateCursor();
+
+    if (wasDrawing || wasDragging || wasResizing || wasRotating) {
+      redraw();
+      triggerSave();
+    }
+
+    try { canvas.releasePointerCapture(e.pointerId); } catch { }
   }
-
-  drawing = false;
-  currentStroke = null;
-  updateCursor();
-
-  if (wasDrawing || wasDragging || wasResizing || wasRotating) {
-    redraw();
-    triggerSave();
-  }
-
-  try { canvas.releasePointerCapture(e.pointerId); } catch {}
-}
 
   // ====== ADD IMAGE INPUT ======
   imageInput.onchange = e => {
@@ -1135,8 +1135,10 @@ window.initEtereaCreate = function () {
       monthSelect.value - 1,
       daySelect.value
     );
+    console.log("selectedOpenDate set:", selectedOpenDate);
     updateDatePreview();
     closeDatePopup();
+    triggerSave();
   };
   setBackground(selectedBackground);
   updateCursor();

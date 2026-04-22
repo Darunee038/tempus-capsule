@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp, onSnapshot, updateDoc } from "firebase/firestore";
+import { getConsoleFunction } from "three";
 const eterea_DRAFT_STORAGE_KEY = "etereaCapsuleDraft";
 
 
@@ -195,19 +196,19 @@ export default function EtereaCreate({ onNext }) {
       setErrorMessage("The page editor is not ready yet.");
       return;
     }
-
     const rawSnapshot = window.etereaCreateApi.getSnapshot();
-
-    if (!rawSnapshot.backupEmail) {
-      setErrorMessage("Please enter a backup email.");
-      return;
-    }
-
+    
+    // if (!rawSnapshot.backupEmail) {
+    //   setErrorMessage("Please enter a backup email.");
+    //   return;
+    // }
+    console.log("Getting snapshot from etereaCreateApi...", rawSnapshot);
+    
     if (!rawSnapshot.openDate) {
       setErrorMessage("Please choose the capsule open date.");
       return;
     }
-
+    console.log('rawSnapshot.openDate', rawSnapshot.openDate)
     const cleanedSnapshot = {
       ...rawSnapshot,
       strokes: (rawSnapshot.strokes || []).map((s) => {
