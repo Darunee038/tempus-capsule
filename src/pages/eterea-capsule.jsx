@@ -5,19 +5,36 @@ import * as THREE from "three";
 import "../styles/eterea-capsule.css";
 import { CapsuleModel } from "../scripts/capsule.jsx";
 import Navbar from "../components/Navbar";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
+const ETEREA_DRAFT_STORAGE_KEY = "etereaCapsuleDraft";
 
 export default function EtereaCapsule() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+
   const [selectedPart, setSelectedPart] = useState(null);
   const [hovered, setHovered] = useState(false);
   const [topColor, setTopColor] = useState("#ffffff");
   const [bottomColor, setBottomColor] = useState("#ffffff");
   const [history, setHistory] = useState([]);
-  const [historyIndex, setHistoryIndex] = useState(-1); 
+  const [historyIndex, setHistoryIndex] = useState(-1);
 
   const [showStickerPanel, setShowStickerPanel] = useState(false);
   const [placingSticker, setPlacingSticker] = useState(null);
   const [stickers, setStickers] = useState([]);
   const [activeSticker, setActiveSticker] = useState(null);
+
+  const capsuleId = searchParams.get("capsuleId");
+  const roomCode = searchParams.get("roomCode");
+
+  const [capsuleName, setCapsuleName] = useState("");
+  const [capsulePassword, setCapsulePassword] = useState("");
+  const [saving, setSaving] = useState(false);
+
+
 
   const applyColorChange = (newColor) => {
     if (!selectedPart) return;
@@ -36,6 +53,72 @@ export default function EtereaCapsule() {
     if (selectedPart === "A") setTopColor(newColor);
     if (selectedPart === "B") setBottomColor(newColor);
   };
+
+  const handleSaveCapsule = async () => {
+  try {
+    if (!auth.currentUser) {
+      alert("Please login first");
+      return;
+    }
+
+    if (!roomCode) {
+      alert("Room code missing");
+      return;
+    }
+
+    const roomRef = doc(db, "etereaRooms", roomCode);
+    const snap = await getDoc(roomRef);
+
+    if (!snap.exists()) {
+      alert("Room not found");
+      return;
+    }
+
+    const roomData = snap.data();
+
+    if (!roomData.canvasState) {
+      alert("No canvas data");
+      return;
+    }
+
+    const finalCapsuleId = crypto.randomUUID();
+
+    const payload = {
+      userId: auth.currentUser.uid,
+      roomCode,
+
+      canvasState: roomData.canvasState, // ✅ เอาจาก firestore
+      openAt: roomData.canvasState.openDate || null,
+
+      capsuleName,
+      capsulePassword,
+
+      capsuleStyle: {
+        topColor,
+        bottomColor,
+        stickers,
+      },
+
+      members: roomData.members || [],
+
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+    };
+
+    await setDoc(doc(db, "etereaCapsules", finalCapsuleId), payload);
+
+    // 👉 link กลับไปที่ room
+    await updateDoc(roomRef, {
+      capsuleId: finalCapsuleId,
+      updatedAt: serverTimestamp(),
+    });
+
+    navigate("/feature/eterea");
+
+  } catch (err) {
+    console.error("Save capsule error:", err);
+  }
+};
 
   return (
     <div
@@ -176,64 +259,79 @@ export default function EtereaCapsule() {
         <div className="form-split">
           <div className="form-box">
             <label>Capsule Name</label>
-            <input type="text" placeholder="Enter capsule name" />
+            {/* <input type="text" placeholder="Enter capsule name" /> */}
+            <input
+              type="text"
+              placeholder="Enter capsule name"
+              value={capsuleName}
+              onChange={(e) => setCapsuleName(e.target.value)}
+            />
           </div>
 
           <div className="form-box">
             <label>Capsule Password</label>
-            <input type="password" placeholder="Enter capsule password" />
+            {/* <input type="password" placeholder="Enter capsule password" /> */}
+            <input
+              type="password"
+              placeholder="Enter capsule password"
+              value={capsulePassword}
+              onChange={(e) => setCapsulePassword(e.target.value)}
+            />
           </div>
         </div>
 
-        <button className="save-btn">
+        <button
+          className="save-btn"
+          onClick={handleSaveCapsule}
+          disabled={saving}>
           Save Capsule
         </button>
       </section>
 
       {/* ✅ PUT POPUP HERE */}
       {showStickerPanel && (
-  <>
-    <div
-      className="popup-overlay"
-      onClick={() => setShowStickerPanel(false)}
-    />
-
-    <div className="sticker-popup">
-      <h3>Stickers</h3>
-
-      <div className="sticker-grid">
-        {[
-          "IMG_1283.png",
-          "IMG_1284.png",
-          "IMG_1285.png",
-          "IMG_1286.png",
-          "IMG_1287.png",
-          "IMG_1288.png",
-          "IMG_1289.png",
-          "IMG_1290.png",
-          "IMG_1291.png",
-          "IMG_1292.png",
-          "IMG_1293.png",
-          "IMG_1294.png",
-          "IMG_1295.png",
-          "IMG_1296.png",
-          "IMG_1297.png",
-          "IMG_1298.png",
-        ].map((file, i) => (
-          <img
-            key={i}
-            src={`/assets/stickers/${file}`}
-            className="sticker-item"
-            onClick={() => {
-              setPlacingSticker(`/assets/stickers/${file}`);
-              setShowStickerPanel(false);
-            }}
+        <>
+          <div
+            className="popup-overlay"
+            onClick={() => setShowStickerPanel(false)}
           />
-        ))}
-      </div>
-    </div>
-  </>
-)}
+
+          <div className="sticker-popup">
+            <h3>Stickers</h3>
+
+            <div className="sticker-grid">
+              {[
+                "IMG_1283.png",
+                "IMG_1284.png",
+                "IMG_1285.png",
+                "IMG_1286.png",
+                "IMG_1287.png",
+                "IMG_1288.png",
+                "IMG_1289.png",
+                "IMG_1290.png",
+                "IMG_1291.png",
+                "IMG_1292.png",
+                "IMG_1293.png",
+                "IMG_1294.png",
+                "IMG_1295.png",
+                "IMG_1296.png",
+                "IMG_1297.png",
+                "IMG_1298.png",
+              ].map((file, i) => (
+                <img
+                  key={i}
+                  src={`/assets/stickers/${file}`}
+                  className="sticker-item"
+                  onClick={() => {
+                    setPlacingSticker(`/assets/stickers/${file}`);
+                    setShowStickerPanel(false);
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
     </div>
   );

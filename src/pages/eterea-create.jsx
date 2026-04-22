@@ -174,6 +174,8 @@ export default function EtereaCreate({ onNext }) {
     setStatusMessage("");
     setErrorMessage("");
 
+    console.log("handleNextStep called. isViewMode:", isViewMode, "currentUser:", currentUser, "roomCode:", roomCode);
+
     if (isViewMode) {
       navigate("/feature/eterea");
       return;
@@ -184,41 +186,59 @@ export default function EtereaCreate({ onNext }) {
       return;
     }
 
+    if (!roomCode) {
+      setErrorMessage("Room code is missing.");
+      return;
+    }
+
     if (!window.etereaCreateApi?.getSnapshot) {
       setErrorMessage("The page editor is not ready yet.");
       return;
     }
 
-    const snapshot = window.etereaCreateApi.getSnapshot();
+    const rawSnapshot = window.etereaCreateApi.getSnapshot();
 
-    if (!snapshot.backupEmail) {
+    if (!rawSnapshot.backupEmail) {
       setErrorMessage("Please enter a backup email.");
       return;
     }
 
-    if (!snapshot.openDate) {
+    if (!rawSnapshot.openDate) {
       setErrorMessage("Please choose the capsule open date.");
       return;
     }
 
+    const cleanedSnapshot = {
+      ...rawSnapshot,
+      strokes: (rawSnapshot.strokes || []).map((s) => {
+        if (s.type === "image") {
+          const { img, ...rest } = s;
+          return rest;
+        }
+        return s;
+      }),
+    };
+
     try {
       setSaving(true);
 
-      const localDraft = {
-        capsuleId: capsuleId || null,
-        userId: currentUser.uid,
-        backupEmail: snapshot.backupEmail,
-        openDate: snapshot.openDate,
-        canvasState: snapshot,
-        updatedAt: Date.now(),
-      };
+      console.log("Final snapshot to save:", cleanedSnapshot);
+      console.log('rawSnapshot.openDate', rawSnapshot.openDate)
 
-      window.sessionStorage.setItem(eterea_DRAFT_STORAGE_KEY, JSON.stringify(localDraft));
+      await updateDoc(doc(db, "etereaRooms", roomCode), {
+        canvasState: cleanedSnapshot,
+        updatedAt: serverTimestamp(),
+        updatedBy: currentUser.uid,
+        isFinalized: true,
+        finalizedAt: serverTimestamp(),
+        finalizedBy: currentUser.uid,
+        // openDate: cleanedSnapshot.openDate,
+      });
 
       setStatusMessage("Moving to capsule design...");
-      navigate(capsuleId ? `/feature/eterea/capsule?capsuleId=${capsuleId}` : "/feature/eterea/capsule", { state: { flowType: state?.flowType } });
+      navigate(`/feature/eterea/capsule?roomCode=${roomCode}`);
     } catch (err) {
-      console.error("Failed to prepare capsule draft:", err);
+      console.error("Failed to finalize room:", err);
       setErrorMessage("Could not continue to capsule design. Please try again.");
     } finally {
       setSaving(false);
@@ -406,7 +426,8 @@ export default function EtereaCreate({ onNext }) {
                 type="button"
                 className="next-btn"
                 onClick={() => {
-                  navigate("/feature/eterea/capsule");
+                  // navigate(`/feature/eterea/capsule?roomCode=${roomCode}`);
+                  handleNextStep();
                 }}
               >
                 Next
